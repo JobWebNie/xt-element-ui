@@ -1,0 +1,27 @@
+@import '../../../styles/variables.scss';
+
+.xt-input .el-input__inner {
+  --xt-input-focus-color: var(--xt-color-primary, #1890ff);
+  
+  background-color: var(--xt-input-bg-color, #ffffff);
+  border-color: var(--xt-input-border-color, #DCDFE6);
+  color: var(--xt-input-text-color, #303133);
+  font-size: var(--xt-font-size-base, 14px);
+}
+
+.xt-input .el-input__inner::placeholder {
+  color: var(--xt-input-placeholder-color, #C0C4CC);
+}
+
+.xt-input .el-input__inner:focus {
+  border-color: var(--xt-input-focus-color);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--xt-input-focus-color) 20%, transparent);
+}
+
+.xt-input .el-input {
+  height: var(--xt-input-height, 32px);
+}
+
+.xt-input .el-input .el-input__wrapper {
+  padding: 0 var(--xt-input-padding-x, 15px);
+}

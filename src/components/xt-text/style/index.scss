@@ -1,0 +1,92 @@
+@import '../../../styles/variables.scss';
+
+// 文字组件
+.xt-text {
+  letter-spacing: normal;
+}
+
+// 字体大小 - 使用增量方式
+.xt-text--extra-large {
+  font-size: calc(var(--xt-font-size-base) + $xt-font-size-increment-extra-large);
+}
+
+.xt-text--large {
+  font-size: calc(var(--xt-font-size-base) + $xt-font-size-increment-large);
+}
+
+.xt-text--medium {
+  font-size: calc(var(--xt-font-size-base) + $xt-font-size-increment-medium);
+}
+
+.xt-text--base {
+  font-size: calc(var(--xt-font-size-base) + $xt-font-size-increment-base);
+}
+
+.xt-text--small {
+  font-size: calc(var(--xt-font-size-base) + $xt-font-size-increment-small);
+}
+
+.xt-text--extra-small {
+  font-size: calc(var(--xt-font-size-base) + $xt-font-size-increment-extra-small);
+}
+
+// 不同类型文字颜色
+.xt-text--primary {
+  color: var(--xt-color-primary, #1890ff);
+}
+
+.xt-text--success {
+  color: $xt-color-success;
+}
+
+.xt-text--warning {
+  color: $xt-color-warning;
+}
+
+.xt-text--danger {
+  color: $xt-color-danger;
+}
+
+// 粗体
+.xt-text--bold {
+  font-weight: bold;
+}
+
+// 金额样式
+.xt-text--money {
+  font-family: 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  letter-spacing: 0;
+  
+  &.xt-text--primary {
+    color: var(--xt-color-primary, #1890ff);
+  }
+  
+  &.xt-text--success {
+    color: $xt-color-success;
+  }
+  
+  &.xt-text--warning {
+    color: $xt-color-warning;
+  }
+  
+  &.xt-text--danger {
+    color: $xt-color-danger;
+  }
+}
+
+// 暗色主题
+[data-theme='dark'], html.dark {
+  .xt-text--primary {
+    color: $xt-dark-color-primary;
+  }
+  .xt-text--success {
+    color: $xt-dark-color-success;
+  }
+  .xt-text--warning {
+    color: $xt-dark-color-warning;
+  }
+  .xt-text--danger {
+    color: $xt-dark-color-danger;
+  }
+}

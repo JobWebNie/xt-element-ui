@@ -1,0 +1,70 @@
+// ===========================
+// 按钮专用变量
+// ===========================
+$xt-button-height: 32px;                    // 按钮高度
+$xt-button-padding-x: 15px;                 // 按钮水平内边距
+$xt-button-padding-y: 8px;                  // 按钮垂直内边距
+$xt-button-font-weight: 500;                // 按钮字体粗细
+$xt-button-border-width: 1px;               // 按钮边框宽度
+$xt-button-transition: 0.1s;                // 按钮过渡时长
+
+// ===========================
+// 卡片专用变量
+// ===========================
+$xt-card-bg-color: #ffffff;                 // 卡片背景色
+$xt-card-border-color: #EBEEF5;             // 卡片边框颜色
+$xt-card-border-radius: 4px;                // 卡片圆角
+$xt-card-padding: 20px;                     // 卡片内边距
+$xt-card-header-padding: 18px 20px;         // 卡片头部内边距
+$xt-card-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);  // 卡片阴影
+
+// ===========================
+// 卡片项专用变量
+// ===========================
+$xt-card-item-min-height: 40px;             // 卡片项最小高度
+$xt-card-item-gap: 10px;                    // 卡片项间距
+$xt-card-item-border-width: 3px;            // 卡片项边框宽度
+
+// ===========================
+// 输入框专用变量
+// ===========================
+$xt-input-height: 32px;                     // 输入框高度
+$xt-input-padding-x: 15px;                  // 输入框水平内边距
+$xt-input-bg-color: #ffffff;                // 输入框背景色
+$xt-input-border-color: #DCDFE6;            // 输入框边框颜色
+$xt-input-text-color: #303133;              // 输入框文字颜色
+$xt-input-placeholder-color: #C0C4CC;       // 输入框占位符颜色
+
+// ===========================
+// FlexBox 专用变量
+// ===========================
+$xt-flex-box-gap: 8px;                      // FlexBox 默认间距
+
+// ===========================
+// 布局 / 头部 / 导航 专用变量
+// ===========================
+$xt-header-bg: #ffffff;                      // 头部背景色
+$xt-header-text-color: #303133;              // 头部文字颜色
+$xt-header-active-text: #1890ff;             // 头部激活状态文字颜色
+$xt-header-hover-text: #1890ff;              // 头部悬停状态文字颜色
+
+$xt-hamburger-bg: #1890ff;                   // 汉堡按钮背景色
+
+$xt-menu-bg: #304156;                        // 菜单背景色
+$xt-menu-hover: #263445;                     // 菜单悬停背景色
+$xt-menu-text: #bfcbd9;                      // 菜单文字颜色
+$xt-menu-active-text: #ffffff;               // 菜单激活状态文字颜色
+
+$xt-sub-menu-bg: #1f2d3d;                    // 子菜单背景色
+$xt-sub-menu-hover: #001528;                 // 子菜单悬停背景色
+
+// ===========================
+// 弹窗专用变量
+// ===========================
+$xt-dialog-bg: #ffffff;                      // 弹窗背景色
+$xt-dialog-title: #303133;                   // 弹窗标题文字颜色
+
+// ===========================
+// TAG 标签专用变量
+// ===========================
+$xt-tag-bg: #ffffff;                         // 标签背景色

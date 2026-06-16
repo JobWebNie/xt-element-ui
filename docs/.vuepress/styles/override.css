@@ -1,0 +1,6 @@
+/* 覆盖 vuepress-theme-reco 主题的 table 样式 */
+
+/* 重置 demo-block 内的 table 样式 */
+.demo-block table {
+  margin: 0 !important;
+}

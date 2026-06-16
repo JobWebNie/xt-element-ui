@@ -1,0 +1,80 @@
+{
+  "name": "xt-element-ui",
+  "version": "1.2.5",
+  "description": "基于 Vue 2.7 + ElementUI 的企业级组件库，提供丰富的自定义组件和扩展组件",
+  "main": "lib/index.common.js",
+  "module": "lib/index.esm.js",
+  "unpkg": "lib/index.umd.min.js",
+  "style": "lib/index.css",
+  "scripts": {
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs",
+    "dev": "vue-cli-service serve",
+    "lib": "vue-cli-service build --target lib --name index --dest lib src/index.js",
+    "prepublishOnly": "npm run lib"
+  },
+  "peerDependencies": {
+    "vue": "^2.6.10"
+  },
+  "devDependencies": {
+    "@vue/cli-service": "~4.5.19",
+    "sass-loader": "^10.5.2",
+    "vue": "^2.6.10",
+    "vuepress": "^1.9.10",
+    "vuepress-plugin-demo-container": "^0.2.0",
+    "vuepress-theme-reco": "^1.6.17"
+  },
+  "files": [
+    "lib",
+    "src",
+    "README.md",
+    "CHANGELOG.md",
+    "docs/components/**/*md",
+    "docs/README.md"
+  ],
+  "dependencies": {
+    "echarts": "^6.1.0",
+    "element-ui": "^2.15.14",
+    "sass": "^1.32.13",
+    "vue-server-renderer": "^2.7.14"
+  },
+  "keywords": [
+    "vue",
+    "vue2",
+    "element-ui",
+    "element",
+    "ui",
+    "components",
+    "xt-element-ui",
+    "chart",
+    "table",
+    "echarts",
+    "component-library",
+    "vue-components",
+    "admin",
+    "dashboard"
+  ],
+  "author": "XT-Element-UI Contributors",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JobWebNie/xt-element-ui/issues"
+  },
+  "homepage": "https://JobWebNie.github.io/xt-element-ui/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JobWebNie/xt-element-ui.git"
+  },
+  "engines": {
+    "node": ">=12.0.0",
+    "npm": ">=6.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "Chrome >= 60",
+    "Firefox >= 60",
+    "Safari >= 10.1",
+    "Edge >= 15"
+  ]
+}

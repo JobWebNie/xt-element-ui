@@ -1,0 +1,67 @@
+@import '../../../styles/variables.scss';
+
+.ex-button {
+  padding: 8px 16px;
+  border-radius: var(--xt-border-radius-base);
+  font-size: var(--xt-font-size-base);
+  border: 1px solid var(--xt-border-color, #dcdfe6);
+  transition: all 0.3s;
+  &-default{
+    background-color: var(--el-bg-color-page, #ffffff);
+    border: 1px solid var(--xt-border-color, #303133);
+    color: var(--el-text-color-primary, #303133);
+  }
+  &-primary{
+    background-color: var(--el-color-primary, #ffffff);
+    border-color: var(--el-color-primary, #ffffff);
+    color: var(--el-text-color-white, #ffffff);
+  }
+  &-success{
+    background-color: var(--el-color-success, #ffffff);
+    border-color: var(--el-color-success, #ffffff);
+    color: var(--el-text-color-white, #ffffff);
+  }
+  &-warning{
+    background-color: var(--el-color-warning, #ffffff);
+    border-color: var(--el-color-warning, #ffffff);
+    color: var(--el-text-color-white, #ffffff);
+  }
+  &-danger{
+    background-color: var(--el-color-danger, #ffffff);
+    border-color: var(--el-color-danger, #ffffff);
+    color: var(--el-text-color-white, #ffffff);
+  }
+  &-info{
+    background-color: var(--el-color-info, #ffffff);
+    border-color: var(--el-color-info, #ffffff);
+    color: var(--el-text-color-white, #ffffff);
+  }
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+/* small size - 字体大小 12px */
+.ex-button-mini {
+  padding: 2px 4px;
+  font-size: calc(var(--xt-font-size-base) + $xt-font-size-increment-extra-small);
+}
+
+/* small size - 字体大小 14px */
+.ex-button-small {
+  padding: 5px 10px;
+  font-size: calc(var(--xt-font-size-base) + $xt-font-size-increment-base);
+}
+
+/* medium size - 字体大小 16px */
+.ex-button-medium {
+  padding: 8px 16px;
+  font-size: calc(var(--xt-font-size-base) + $xt-font-size-increment-medium);
+}
+
+/* large size - 字体大小 18px */
+.ex-button-large {
+  padding: 11px 22px;
+  font-size: calc(var(--xt-font-size-base) + $xt-font-size-increment-large);
+}

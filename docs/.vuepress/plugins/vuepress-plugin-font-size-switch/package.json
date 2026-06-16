@@ -1,0 +1,14 @@
+{
+  "name": "vuepress-plugin-font-size-switch",
+  "version": "1.0.0",
+  "description": "VuePress plugin for font size switching",
+  "main": "index.js",
+  "keywords": [
+    "vuepress",
+    "plugin",
+    "font-size",
+    "theme"
+  ],
+  "author": "",
+  "license": "MIT"
+}

@@ -1,0 +1,699 @@
+@import '../../../styles/variables.scss';
+
+// 按钮基础全局变量（抽离顶层，统一管控）
+:root {
+  --xt-button-divide-border-color: rgba(255, 255, 255, 0.5);
+}
+
+// 按钮组容器基础
+.xt-button-group {
+  > .xt-button + .xt-button {
+    margin-left: 0;
+  }
+
+  // 单个按钮（组内唯一）恢复完整圆角
+  > .xt-button:first-child:last-child {
+    border-radius: var(--xt-border-radius-base);
+
+    &.is-round {
+      border-radius: var(--xt-border-radius-round);
+    }
+    &.is-circle {
+      border-radius: 50%;
+    }
+  }
+
+  // 组内中间按钮 无圆角
+  > .xt-button:not(:first-child):not(:last-child) {
+    border-radius: 0;
+  }
+
+  // hover / focus / active / active 层级提升
+  > .xt-button {
+    &:hover,
+    &:focus,
+    &:active,
+    &.is-active {
+      z-index: 1;
+    }
+  }
+}
+
+// 水平按钮组
+.xt-button-group--horizontal {
+  display: inline-block;
+  vertical-align: middle;
+
+  &::before,
+  &::after {
+    display: table;
+    content: "";
+  }
+  &::after {
+    clear: both;
+  }
+
+  > .xt-button {
+    float: left;
+    position: relative;
+  }
+
+  > .xt-button:first-child {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  > .xt-button:last-child {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  > .xt-button:not(:last-child) {
+    margin-right: -1px;
+  }
+
+  // 各类主题分割线颜色
+  .xt-button--primary,
+  .xt-button--success,
+  .xt-button--warning,
+  .xt-button--danger,
+  .xt-button--info {
+    &:first-child {
+      border-right-color: var(--xt-button-divide-border-color);
+    }
+    &:last-child {
+      border-left-color: var(--xt-button-divide-border-color);
+    }
+    &:not(:first-child):not(:last-child) {
+      border-left-color: var(--xt-button-divide-border-color);
+      border-right-color: var(--xt-button-divide-border-color);
+    }
+  }
+
+  > .el-dropdown > .xt-button {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left-color: var(--xt-button-divide-border-color);
+  }
+}
+
+// 垂直按钮组
+.xt-button-group--vertical {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: stretch;
+
+  > .xt-button,
+  > .el-dropdown {
+    margin-top: -1px;
+  }
+
+  > .xt-button:first-child {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  > .xt-button:last-child {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+
+  > .el-dropdown > .xt-button {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-left-color: var(--xt-button-divide-border-color);
+  }
+
+  // 各类主题分割线颜色
+  .xt-button--primary,
+  .xt-button--success,
+  .xt-button--warning,
+  .xt-button--danger,
+  .xt-button--info {
+    &:first-child {
+      border-bottom-color: var(--xt-button-divide-border-color);
+    }
+    &:last-child {
+      border-top-color: var(--xt-button-divide-border-color);
+    }
+    &:not(:first-child):not(:last-child) {
+      border-top-color: var(--xt-button-divide-border-color);
+      border-bottom-color: var(--xt-button-divide-border-color);
+    }
+  }
+}
+
+.xt-button {
+  // 主题系列变量
+  --xt-button-font-weight: var(--xt-font-weight-primary);
+  --xt-button-border-color: var(--xt-border-color);
+  --xt-button-bg-color: var(--xt-fill-color-blank);
+  --xt-button-text-color: var(--xt-text-color-regular);
+  --xt-button-disabled-text-color: var(--xt-disabled-text-color);
+  --xt-button-disabled-bg-color: var(--xt-fill-color-blank);
+  --xt-button-disabled-border-color: var(--xt-border-color-light);
+  --xt-button-hover-text-color: var(--xt-color-primary);
+  --xt-button-hover-bg-color: var(--xt-color-primary-light-9);
+  --xt-button-hover-border-color: var(--xt-color-primary-light-7);
+  --xt-button-active-text-color: var(--xt-button-hover-text-color);
+  --xt-button-active-border-color: var(--xt-color-primary);
+  --xt-button-active-bg-color: var(--xt-button-hover-bg-color);
+  --xt-button-outline-color: var(--xt-color-primary-light-5);
+  --xt-button-hover-link-text-color: var(--xt-text-color-secondary);
+  --xt-button-active-color: var(--xt-text-color-primary);
+
+  // 布局基础
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 1.5;
+  // 关键：取消固定 height，用 min-height + padding 自适应字体
+  min-height: 32px;
+  height: auto;
+  white-space: nowrap;
+  cursor: pointer;
+  color: var(--xt-button-text-color);
+  text-align: center;
+  box-sizing: border-box;
+  outline: none;
+  transition: 0.1s;
+  font-weight: var(--xt-button-font-weight);
+  user-select: none;
+  vertical-align: middle;
+  -webkit-appearance: none;
+  background-color: var(--xt-button-bg-color);
+  border: var(--xt-border);
+  border-color: var(--xt-button-border-color);
+  padding: 8px 15px;
+  font-size: var(--xt-font-size-base);
+  border-radius: var(--xt-border-radius-base);
+
+  // 相邻按钮间距
+  & + .xt-button {
+    margin-left: 12px;
+  }
+
+  // 内部文字容器
+  > span {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  // 图标 + 文字间距
+  [class*="el-icon"] + span {
+    margin-left: 6px;
+  }
+  [class*="el-icon"] svg {
+    vertical-align: bottom;
+  }
+
+  // 清除火狐默认焦点边框
+  &::-moz-focus-inner {
+    border: 0;
+  }
+
+  // hover / active 状态
+  &:hover {
+    color: var(--xt-button-hover-text-color);
+    border-color: var(--xt-button-hover-border-color);
+    background-color: var(--xt-button-hover-bg-color);
+    outline: none;
+  }
+  &:active {
+    color: var(--xt-button-active-text-color);
+    border-color: var(--xt-button-active-border-color);
+    background-color: var(--xt-button-active-bg-color);
+    outline: none;
+  }
+
+  // 键盘焦点样式
+  &:focus-visible {
+    outline: 2px solid var(--xt-button-outline-color);
+    outline-offset: 1px;
+    transition: outline-offset 0s, outline 0s;
+  }
+
+  // 激活态
+  &.is-active {
+    color: var(--xt-button-active-text-color);
+    border-color: var(--xt-button-active-border-color);
+    background-color: var(--xt-button-active-bg-color);
+    outline: none;
+  }
+
+  // 禁用态
+  &.is-disabled {
+    cursor: not-allowed;
+    color: var(--xt-button-disabled-text-color);
+    background-image: none;
+    background-color: var(--xt-button-disabled-bg-color);
+    border-color: var(--xt-button-disabled-border-color);
+
+    &:hover {
+      color: var(--xt-button-disabled-text-color);
+      background-color: var(--xt-button-disabled-bg-color);
+      border-color: var(--xt-button-disabled-border-color);
+    }
+  }
+
+  // 加载态
+  &.is-loading {
+    position: relative;
+    pointer-events: none;
+
+    &::before {
+      z-index: 1;
+      pointer-events: none;
+      content: "";
+      position: absolute;
+      left: -1px;
+      top: -1px;
+      right: -1px;
+      bottom: -1px;
+      border-radius: inherit;
+      background-color: var(--xt-mask-color-extra-light);
+    }
+  }
+
+  // 圆角样式
+  &.is-round {
+    border-radius: var(--xt-border-radius-round);
+  }
+
+  // 虚线边框
+  &.is-dashed {
+    border-style: dashed;
+    --xt-button-hover-text-color: var(--xt-color-primary);
+    --xt-button-hover-bg-color: var(--xt-fill-color-blank);
+    --xt-button-hover-border-color: var(--xt-color-primary);
+  }
+
+  // 圆形按钮
+  &.is-circle {
+    width: 32px;
+    min-height: 32px;
+    padding: 8px;
+    border-radius: 50%;
+  }
+
+  // 文字按钮
+  &.is-text {
+    border: 0 solid transparent;
+    background-color: transparent;
+
+    &.is-disabled {
+      background-color: transparent !important;
+    }
+
+    &:not(.is-disabled) {
+      &:hover {
+        background-color: var(--xt-fill-color-light);
+      }
+      &:active {
+        background-color: var(--xt-fill-color);
+      }
+      &:focus-visible {
+        outline: 2px solid var(--xt-button-outline-color);
+        outline-offset: 1px;
+        transition: outline-offset 0s, outline 0s;
+      }
+
+      &.is-has-bg {
+        background-color: var(--xt-fill-color-light);
+        &:hover {
+          background-color: var(--xt-fill-color);
+        }
+        &:active {
+          background-color: var(--xt-fill-color-dark);
+        }
+      }
+    }
+  }
+
+  // 链接按钮
+  &.is-link {
+    border-color: transparent;
+    background: transparent;
+    padding: 2px;
+    min-height: auto;
+
+    &:hover {
+      color: var(--xt-button-hover-link-text-color);
+      border-color: transparent;
+      background-color: transparent;
+    }
+    &:active {
+      color: var(--xt-button-active-color);
+      border-color: transparent;
+      background-color: transparent;
+    }
+    &.is-disabled {
+      background-color: transparent !important;
+      border-color: transparent !important;
+    }
+  }
+
+  // 纯文字按钮变体
+  &.xt-button--text {
+    border-color: transparent;
+    background: transparent;
+    color: var(--xt-color-primary);
+    padding-left: 0;
+    padding-right: 0;
+
+    &.is-disabled {
+      color: var(--xt-button-disabled-text-color);
+      background-color: transparent !important;
+      border-color: transparent !important;
+    }
+    &:not(.is-disabled) {
+      &:hover {
+        color: var(--xt-color-primary-light-3);
+      }
+      &:active {
+        color: var(--xt-color-primary-dark-2);
+      }
+    }
+  }
+
+  // 文字加宽效果
+  &__text--expand {
+    letter-spacing: 0.3em;
+    margin-right: -0.3em;
+  }
+  &__link--expand {
+    letter-spacing: 0.3em;
+    margin-right: -0.3em;
+  }
+}
+
+// 主要按钮 - primary
+.xt-button--primary {
+  --xt-button-text-color: var(--xt-color-white);
+  --xt-button-bg-color: var(--xt-color-primary);
+  --xt-button-border-color: var(--xt-color-primary);
+  --xt-button-outline-color: var(--xt-color-primary-light-5);
+  --xt-button-active-color: var(--xt-color-primary-dark-2);
+  --xt-button-hover-text-color: var(--xt-color-white);
+  --xt-button-hover-link-text-color: var(--xt-color-primary-light-5);
+  --xt-button-hover-bg-color: var(--xt-color-primary-light-3);
+  --xt-button-hover-border-color: var(--xt-color-primary-light-3);
+  --xt-button-active-bg-color: var(--xt-color-primary-dark-2);
+  --xt-button-active-border-color: var(--xt-color-primary-dark-2);
+  --xt-button-disabled-text-color: var(--xt-color-white);
+  --xt-button-disabled-bg-color: var(--xt-color-primary-light-5);
+  --xt-button-disabled-border-color: var(--xt-color-primary-light-5);
+
+  &.is-plain,
+  &.is-text,
+  &.is-link {
+    --xt-button-text-color: var(--xt-color-primary);
+    --xt-button-bg-color: var(--xt-color-primary-light-9);
+    --xt-button-border-color: var(--xt-color-primary-light-5);
+    --xt-button-hover-text-color: var(--xt-color-white);
+    --xt-button-hover-bg-color: var(--xt-color-primary);
+    --xt-button-hover-border-color: var(--xt-color-primary);
+    --xt-button-active-text-color: var(--xt-color-white);
+
+    &.is-disabled {
+      color: var(--xt-color-primary-light-5);
+      background-color: var(--xt-color-primary-light-9);
+      border-color: var(--xt-color-primary-light-8);
+    }
+  }
+
+  &.is-dashed {
+    --xt-button-text-color: var(--xt-color-primary);
+    --xt-button-bg-color: var(--xt-color-primary-light-9);
+    --xt-button-border-color: var(--xt-color-primary-light-5);
+    --xt-button-hover-text-color: var(--xt-color-primary);
+    --xt-button-hover-bg-color: var(--xt-color-primary-light-9);
+    --xt-button-hover-border-color: var(--xt-color-primary-light-3);
+    --xt-button-active-text-color: var(--xt-color-primary-dark-2);
+    --xt-button-active-bg-color: var(--xt-color-primary-light-9);
+    --xt-button-active-border-color: var(--xt-color-primary-dark-2);
+
+    &.is-disabled {
+      color: var(--xt-color-primary-light-5);
+      background-color: var(--xt-color-primary-light-9);
+      border-color: var(--xt-color-primary-light-8);
+    }
+  }
+}
+
+// 成功按钮 - success
+.xt-button--success {
+  --xt-button-text-color: var(--xt-color-white);
+  --xt-button-bg-color: var(--xt-color-success);
+  --xt-button-border-color: var(--xt-color-success);
+  --xt-button-outline-color: var(--xt-color-success-light-5);
+  --xt-button-active-color: var(--xt-color-success-dark-2);
+  --xt-button-hover-text-color: var(--xt-color-white);
+  --xt-button-hover-link-text-color: var(--xt-color-success-light-5);
+  --xt-button-hover-bg-color: var(--xt-color-success-light-3);
+  --xt-button-hover-border-color: var(--xt-color-success-light-3);
+  --xt-button-active-bg-color: var(--xt-color-success-dark-2);
+  --xt-button-active-border-color: var(--xt-color-success-dark-2);
+  --xt-button-disabled-text-color: var(--xt-color-white);
+  --xt-button-disabled-bg-color: var(--xt-color-success-light-5);
+  --xt-button-disabled-border-color: var(--xt-color-success-light-5);
+
+  &.is-plain,
+  &.is-text,
+  &.is-link {
+    --xt-button-text-color: var(--xt-color-success);
+    --xt-button-bg-color: var(--xt-color-success-light-9);
+    --xt-button-border-color: var(--xt-color-success-light-5);
+    --xt-button-hover-text-color: var(--xt-color-white);
+    --xt-button-hover-bg-color: var(--xt-color-success);
+    --xt-button-hover-border-color: var(--xt-color-success);
+    --xt-button-active-text-color: var(--xt-color-white);
+
+    &.is-disabled {
+      color: var(--xt-color-success-light-5);
+      background-color: var(--xt-color-success-light-9);
+      border-color: var(--xt-color-success-light-8);
+    }
+  }
+
+  &.is-dashed {
+    --xt-button-text-color: var(--xt-color-success);
+    --xt-button-bg-color: var(--xt-color-success-light-9);
+    --xt-button-border-color: var(--xt-color-success-light-5);
+    --xt-button-hover-text-color: var(--xt-color-success);
+    --xt-button-hover-bg-color: var(--xt-color-success-light-9);
+    --xt-button-hover-border-color: var(--xt-color-success-light-3);
+    --xt-button-active-text-color: var(--xt-color-success-dark-2);
+    --xt-button-active-bg-color: var(--xt-color-success-light-9);
+    --xt-button-active-border-color: var(--xt-color-success-dark-2);
+
+    &.is-disabled {
+      color: var(--xt-color-success-light-5);
+      background-color: var(--xt-color-success-light-9);
+      border-color: var(--xt-color-success-light-8);
+    }
+  }
+}
+
+// 警告按钮 - warning
+.xt-button--warning {
+  --xt-button-text-color: var(--xt-color-white);
+  --xt-button-bg-color: var(--xt-color-warning);
+  --xt-button-border-color: var(--xt-color-warning);
+  --xt-button-outline-color: var(--xt-color-warning-light-5);
+  --xt-button-active-color: var(--xt-color-warning-dark-2);
+  --xt-button-hover-text-color: var(--xt-color-white);
+  --xt-button-hover-link-text-color: var(--xt-color-warning-light-5);
+  --xt-button-hover-bg-color: var(--xt-color-warning-light-3);
+  --xt-button-hover-border-color: var(--xt-color-warning-light-3);
+  --xt-button-active-bg-color: var(--xt-color-warning-dark-2);
+  --xt-button-active-border-color: var(--xt-color-warning-dark-2);
+  --xt-button-disabled-text-color: var(--xt-color-white);
+  --xt-button-disabled-bg-color: var(--xt-color-warning-light-5);
+  --xt-button-disabled-border-color: var(--xt-color-warning-light-5);
+
+  &.is-plain,
+  &.is-text,
+  &.is-link {
+    --xt-button-text-color: var(--xt-color-warning);
+    --xt-button-bg-color: var(--xt-color-warning-light-9);
+    --xt-button-border-color: var(--xt-color-warning-light-5);
+    --xt-button-hover-text-color: var(--xt-color-white);
+    --xt-button-hover-bg-color: var(--xt-color-warning);
+    --xt-button-hover-border-color: var(--xt-color-warning);
+    --xt-button-active-text-color: var(--xt-color-white);
+
+    &.is-disabled {
+      color: var(--xt-color-warning-light-5);
+      background-color: var(--xt-color-warning-light-9);
+      border-color: var(--xt-color-warning-light-8);
+    }
+  }
+
+  &.is-dashed {
+    --xt-button-text-color: var(--xt-color-warning);
+    --xt-button-bg-color: var(--xt-color-warning-light-9);
+    --xt-button-border-color: var(--xt-color-warning-light-5);
+    --xt-button-hover-text-color: var(--xt-color-warning);
+    --xt-button-hover-bg-color: var(--xt-color-warning-light-9);
+    --xt-button-hover-border-color: var(--xt-color-warning-light-3);
+    --xt-button-active-text-color: var(--xt-color-warning-dark-2);
+    --xt-button-active-bg-color: var(--xt-color-warning-light-9);
+    --xt-button-active-border-color: var(--xt-color-warning-dark-2);
+
+    &.is-disabled {
+      color: var(--xt-color-warning-light-5);
+      background-color: var(--xt-color-warning-light-9);
+      border-color: var(--xt-color-warning-light-8);
+    }
+  }
+}
+
+// 危险按钮 - danger
+.xt-button--danger {
+  --xt-button-text-color: var(--xt-color-white);
+  --xt-button-bg-color: var(--xt-color-danger);
+  --xt-button-border-color: var(--xt-color-danger);
+  --xt-button-outline-color: var(--xt-color-danger-light-5);
+  --xt-button-active-color: var(--xt-color-danger-dark-2);
+  --xt-button-hover-text-color: var(--xt-color-white);
+  --xt-button-hover-link-text-color: var(--xt-color-danger-light-5);
+  --xt-button-hover-bg-color: var(--xt-color-danger-light-3);
+  --xt-button-hover-border-color: var(--xt-color-danger-light-3);
+  --xt-button-active-bg-color: var(--xt-color-danger-dark-2);
+  --xt-button-active-border-color: var(--xt-color-danger-dark-2);
+  --xt-button-disabled-text-color: var(--xt-color-white);
+  --xt-button-disabled-bg-color: var(--xt-color-danger-light-5);
+  --xt-button-disabled-border-color: var(--xt-color-danger-light-5);
+
+  &.is-plain,
+  &.is-text,
+  &.is-link {
+    --xt-button-text-color: var(--xt-color-danger);
+    --xt-button-bg-color: var(--xt-color-danger-light-9);
+    --xt-button-border-color: var(--xt-color-danger-light-5);
+    --xt-button-hover-text-color: var(--xt-color-white);
+    --xt-button-hover-bg-color: var(--xt-color-danger);
+    --xt-button-hover-border-color: var(--xt-color-danger);
+    --xt-button-active-text-color: var(--xt-color-white);
+
+    &.is-disabled {
+      color: var(--xt-color-danger-light-5);
+      background-color: var(--xt-color-danger-light-9);
+      border-color: var(--xt-color-danger-light-8);
+    }
+  }
+
+  &.is-dashed {
+    --xt-button-text-color: var(--xt-color-danger);
+    --xt-button-bg-color: var(--xt-color-danger-light-9);
+    --xt-button-border-color: var(--xt-color-danger-light-5);
+    --xt-button-hover-text-color: var(--xt-color-danger);
+    --xt-button-hover-bg-color: var(--xt-color-danger-light-9);
+    --xt-button-hover-border-color: var(--xt-color-danger-light-3);
+    --xt-button-active-text-color: var(--xt-color-danger-dark-2);
+    --xt-button-active-bg-color: var(--xt-color-danger-light-9);
+    --xt-button-active-border-color: var(--xt-color-danger-dark-2);
+
+    &.is-disabled {
+      color: var(--xt-color-danger-light-5);
+      background-color: var(--xt-color-danger-light-9);
+      border-color: var(--xt-color-danger-light-8);
+    }
+  }
+}
+
+// 信息按钮 - info
+.xt-button--info {
+  --xt-button-text-color: var(--xt-color-white);
+  --xt-button-bg-color: var(--xt-color-info);
+  --xt-button-border-color: var(--xt-color-info);
+  --xt-button-outline-color: var(--xt-color-info-light-5);
+  --xt-button-active-color: var(--xt-color-info-dark-2);
+  --xt-button-hover-text-color: var(--xt-color-white);
+  --xt-button-hover-link-text-color: var(--xt-color-info-light-5);
+  --xt-button-hover-bg-color: var(--xt-color-info-light-3);
+  --xt-button-hover-border-color: var(--xt-color-info-light-3);
+  --xt-button-active-bg-color: var(--xt-color-info-dark-2);
+  --xt-button-active-border-color: var(--xt-color-info-dark-2);
+  --xt-button-disabled-text-color: var(--xt-color-white);
+  --xt-button-disabled-bg-color: var(--xt-color-info-light-5);
+  --xt-button-disabled-border-color: var(--xt-color-info-light-5);
+
+  &.is-plain,
+  &.is-text,
+  &.is-link {
+    --xt-button-text-color: var(--xt-color-info);
+    --xt-button-bg-color: var(--xt-color-info-light-9);
+    --xt-button-border-color: var(--xt-color-info-light-5);
+    --xt-button-hover-text-color: var(--xt-color-white);
+    --xt-button-hover-bg-color: var(--xt-color-info);
+    --xt-button-hover-border-color: var(--xt-color-info);
+    --xt-button-active-text-color: var(--xt-color-white);
+
+    &.is-disabled {
+      color: var(--xt-color-info-light-5);
+      background-color: var(--xt-color-info-light-9);
+      border-color: var(--xt-color-info-light-8);
+    }
+  }
+
+  &.is-dashed {
+    --xt-button-text-color: var(--xt-color-info);
+    --xt-button-bg-color: var(--xt-color-info-light-9);
+    --xt-button-border-color: var(--xt-color-info-light-5);
+    --xt-button-hover-text-color: var(--xt-color-info);
+    --xt-button-hover-bg-color: var(--xt-color-info-light-9);
+    --xt-button-hover-border-color: var(--xt-color-info-light-3);
+    --xt-button-active-text-color: var(--xt-color-info-dark-2);
+    --xt-button-active-bg-color: var(--xt-color-info-light-9);
+    --xt-button-active-border-color: var(--xt-color-info-dark-2);
+
+    &.is-disabled {
+      color: var(--xt-color-info-light-5);
+      background-color: var(--xt-color-info-light-9);
+      border-color: var(--xt-color-info-light-8);
+    }
+  }
+}
+
+// 大号按钮
+.xt-button--large {
+  --xt-button-size: 40px;
+  min-height: var(--xt-button-size);
+  padding: 12px 19px;
+  font-size: var(--xt-font-size-base);
+  border-radius: var(--xt-border-radius-base);
+
+  [class*="el-icon"] + span {
+    margin-left: 8px;
+  }
+
+  &.is-round {
+    padding: 12px 19px;
+  }
+  &.is-circle {
+    width: var(--xt-button-size);
+    min-height: var(--xt-button-size);
+    padding: 12px;
+  }
+}
+
+// 小号按钮
+.xt-button--small {
+  --xt-button-size: 24px;
+  min-height: var(--xt-button-size);
+  padding: 5px 11px;
+  font-size: 12px;
+  border-radius: calc(var(--xt-border-radius-base) - 1px);
+
+  [class*="el-icon"] + span {
+    margin-left: 4px;
+  }
+
+  &.is-round {
+    padding: 5px 11px;
+  }
+  &.is-circle {
+    width: var(--xt-button-size);
+    min-height: var(--xt-button-size);
+    padding: 5px;
+  }
+}

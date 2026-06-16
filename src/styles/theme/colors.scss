@@ -1,0 +1,101 @@
+$xt-color-primary: #1890ff;       // 主颜色 - XT UI 标准蓝色
+$xt-color-success: #37c3a4;       // 成功色 - XT UI 标准绿色
+$xt-color-warning: #FFB74D;       // 警告色 - XT UI 标准橙色
+$xt-color-danger: #EA1D34;        // 危险色 - XT UI 标准红色
+$xt-color-info: #999999;          // 信息色 - XT UI 标准灰色
+
+$xt-color-primary-light-3: #5DB1FF;   // 主色浅色 30%
+$xt-color-primary-light-5: #8CC8FF;   // 主色浅色 50%
+$xt-color-primary-light-7: #BADEFF;   // 主色浅色 70%
+$xt-color-primary-light-8: #D1E9FF;   // 主色浅色 80%
+$xt-color-primary-light-9: #E8F4FF;   // 主色浅色 90%
+
+// 主色调深色系列（与 config-provider darkenColor 算法保持一致）
+$xt-color-primary-dark-2: #1373cc;    // 主色深色 20%
+$xt-color-primary-dark-3: #1165b3;    // 主色深色 30%
+$xt-color-primary-dark-4: #0e5699;    // 主色深色 40%
+
+// ============================
+// Success 成功色渐变色系
+// ============================
+$xt-color-success-light-3: #5dd3b0;   // 成功色浅色 30%
+$xt-color-success-light-5: #8be9d0;   // 成功色浅色 50%
+$xt-color-success-light-7: #b8f0e0;   // 成功色浅色 70%
+$xt-color-success-light-8: #d1f5ec;   // 成功色浅色 80%
+$xt-color-success-light-9: #e8faf5;   // 成功色浅色 90%
+$xt-color-success-dark-2: #2da88a;    // 成功色深色 20%
+
+// ============================
+// Warning 警告色渐变色系
+// ============================
+$xt-color-warning-light-3: #f5c976;   // 警告色浅色 30%
+$xt-color-warning-light-5: #f9d8a3;   // 警告色浅色 50%
+$xt-color-warning-light-7: #fce7cf;   // 警告色浅色 70%
+$xt-color-warning-light-8: #fdf2e7;   // 警告色浅色 80%
+$xt-color-warning-light-9: #fff8f0;   // 警告色浅色 90%
+$xt-color-warning-dark-2: #e5a033;    // 警告色深色 20%
+
+// ============================
+// Danger 危险色渐变色系
+// ============================
+$xt-color-danger-light-3: #f04a5e;    // 危险色浅色 30%
+$xt-color-danger-light-5: #f57786;    // 危险色浅色 50%
+$xt-color-danger-light-7: #f9a4ad;    // 危险色浅色 70%
+$xt-color-danger-light-8: #fbc8cd;    // 危险色浅色 80%
+$xt-color-danger-light-9: #fee8ea;    // 危险色浅色 90%
+$xt-color-danger-dark-2: #d4162c;     // 危险色深色 20%
+
+// ============================
+// Info 信息色渐变色系
+// ============================
+$xt-color-info-light-3: #a4a6aa;      // 信息色浅色 30%
+$xt-color-info-light-5: #babbbc;      // 信息色浅色 50%
+$xt-color-info-light-7: #d0d1d3;      // 信息色浅色 70%
+$xt-color-info-light-8: #e0e1e2;      // 信息色浅色 80%
+$xt-color-info-light-9: #f0f0f0;      // 信息色浅色 90%
+$xt-color-info-dark-2: #7a7c80;       // 信息色深色 20%
+
+// ============================
+// 暗色主题渐变色系（参考 Element Plus）
+// ============================
+
+// Primary 暗色主题渐变色系
+$xt-dark-color-primary-light-3: #336eb9;   // 主色暗色 30%
+$xt-dark-color-primary-light-5: #2a598a;   // 主色暗色 50%
+$xt-dark-color-primary-light-7: #213d5b;   // 主色暗色 70%
+$xt-dark-color-primary-light-8: #1d3043;   // 主色暗色 80%
+$xt-dark-color-primary-light-9: #18222b;   // 主色暗色 90%
+$xt-dark-color-primary-dark-2: #66b1ff;    // 主色亮色 20%
+
+// Success 暗色主题渐变色系
+$xt-dark-color-success-light-3: #4e8e2f;   // 成功色暗色 30%
+$xt-dark-color-success-light-5: #3e6b27;   // 成功色暗色 50%
+$xt-dark-color-success-light-7: #2d481f;   // 成功色暗色 70%
+$xt-dark-color-success-light-8: #25371c;   // 成功色暗色 80%
+$xt-dark-color-success-light-9: #1c2518;   // 成功色暗色 90%
+$xt-dark-color-success-dark-2: #85ce61;    // 成功色亮色 20%
+
+// Warning 暗色主题渐变色系
+$xt-dark-color-warning-light-3: #a77730;   // 警告色暗色 30%
+$xt-dark-color-warning-light-5: #7d5b28;   // 警告色暗色 50%
+$xt-dark-color-warning-light-7: #533f20;   // 警告色暗色 70%
+$xt-dark-color-warning-light-8: #3e301c;   // 警告色暗色 80%
+$xt-dark-color-warning-light-9: #292218;   // 警告色暗色 90%
+$xt-dark-color-warning-dark-2: #ebb563;    // 警告色亮色 20%
+
+// Danger 暗色主题渐变色系
+$xt-dark-color-danger-light-3: #b25252;    // 危险色暗色 30%
+$xt-dark-color-danger-light-5: #854040;    // 危险色暗色 50%
+$xt-dark-color-danger-light-7: #582e2e;    // 危险色暗色 70%
+$xt-dark-color-danger-light-8: #412626;    // 危险色暗色 80%
+$xt-dark-color-danger-light-9: #2a1d1d;    // 危险色暗色 90%
+$xt-dark-color-danger-dark-2: #f78989;     // 危险色亮色 20%
+
+// Info 暗色主题渐变色系
+$xt-dark-color-info-light-3: #6b6d71;      // 信息色暗色 30%
+$xt-dark-color-info-light-5: #525457;      // 信息色暗色 50%
+$xt-dark-color-info-light-7: #393a3c;      // 信息色暗色 70%
+$xt-dark-color-info-light-8: #2d2d2f;      // 信息色暗色 80%
+$xt-dark-color-info-light-9: #202121;      // 信息色暗色 90%
+$xt-dark-color-info-dark-2: #a6a9ad;       // 信息色亮色 20%
+

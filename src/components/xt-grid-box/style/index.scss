@@ -1,0 +1,93 @@
+@import '../../../styles/variables.scss';
+
+.xt-grid-box {
+  display: grid;
+  box-sizing: border-box;
+  min-height: 0;
+}
+
+// 默认间距变量
+:root {
+  --xt-grid-box-gap: 8px;
+}
+
+// 响应式网格类
+.xt-grid-box--auto-fill {
+  grid-template-columns: repeat(auto-fill, minmax(var(--xt-grid-item-min-width, 200px), 1fr));
+}
+
+.xt-grid-box--auto-fit {
+  grid-template-columns: repeat(auto-fit, minmax(var(--xt-grid-item-min-width, 200px), 1fr));
+}
+
+// 常见列数快捷类
+.xt-grid-box--cols-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.xt-grid-box--cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.xt-grid-box--cols-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.xt-grid-box--cols-6 {
+  grid-template-columns: repeat(6, 1fr);
+}
+
+.xt-grid-box--cols-12 {
+  grid-template-columns: repeat(12, 1fr);
+}
+
+// 子项默认样式
+.xt-grid-item {
+  box-sizing: border-box;
+}
+
+// 响应式断点
+@media (min-width: 576px) {
+  .xt-grid-box--sm-cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .xt-grid-box--sm-cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 768px) {
+  .xt-grid-box--md-cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .xt-grid-box--md-cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .xt-grid-box--md-cols-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 992px) {
+  .xt-grid-box--lg-cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .xt-grid-box--lg-cols-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .xt-grid-box--lg-cols-6 {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+@media (min-width: 1200px) {
+  .xt-grid-box--xl-cols-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .xt-grid-box--xl-cols-6 {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  .xt-grid-box--xl-cols-12 {
+    grid-template-columns: repeat(12, 1fr);
+  }
+}

@@ -1,0 +1,91 @@
+@import '../../../styles/variables.scss';
+
+.xt-flex-box.flex {
+  display: flex;
+}
+
+.xt-flex-box.flex.direction-row > .flex,
+.xt-flex-box.flex.direction-row-reverse > .flex {
+  width: 100%;
+}
+
+.xt-flex-box.flex.direction-column > .flex,
+.xt-flex-box.flex.direction-column-reverse > .flex {
+  height: 100%;
+}
+
+.xt-flex-box.is-inline {
+  display: inline-flex;
+}
+
+.direction-row {
+  flex-direction: row;
+}
+
+.direction-row-reverse {
+  flex-direction: row-reverse;
+}
+
+.direction-column {
+  flex-direction: column;
+}
+
+.direction-column-reverse {
+  flex-direction: column-reverse;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.align-start {
+  align-items: flex-start;
+}
+
+.align-end {
+  align-items: flex-end;
+}
+
+.align-baseline {
+  align-items: baseline;
+}
+
+.align-stretch {
+  align-items: stretch;
+}
+
+.content-center {
+  justify-content: center;
+}
+
+.content-around {
+  justify-content: space-around;
+}
+
+.content-between {
+  justify-content: space-between;
+}
+
+.content-start {
+  justify-content: flex-start;
+}
+
+.content-end {
+  justify-content: flex-end;
+}
+
+.content-evenly {
+  justify-content: space-evenly;
+}
+
+.wrap-wrap {
+  flex-wrap: wrap;
+}
+
+.wrap-nowrap {
+  flex-wrap: nowrap;
+}
+
+.wrap-unset {
+  flex-wrap: wrap;
+}

@@ -1,0 +1,73 @@
+// ExCard 组件样式
+@import '../../../styles/element-theme.scss';
+@import '../../../styles/variables.scss';
+
+.ex-card {
+  border-radius: 8px;
+  transition: all 0.3s;
+  font-size: var(--ex-card-font-size, 14px);
+  background-color: var(--el-bg-color-block, #ffffff);
+  color: var(--el-text-color-primary, #303133);
+  border-color: var(--el-border-color, #303133);
+  
+  .el-card__header {
+    padding: var(--ex-card-header-padding, 16px 20px);
+    border-bottom: 1px solid var(--el-border-color, #ebeef5);
+    background-color: var(--el-bg-color-block-head, #ffffff);
+    font-weight: 600;
+  }
+  
+  .el-card__body {
+    padding: var(--ex-card-body-padding, 20px);
+  }
+}
+
+.ex-card-small {
+  font-size: 12px;
+  
+  .el-card__header {
+    font-size: 12px;
+  }
+}
+
+.ex-card-medium {
+  font-size: 14px;
+  
+  .el-card__header {
+    font-size: 14px;
+  }
+}
+
+.ex-card-large {
+  font-size: 16px;
+  
+  .el-card__header {
+    font-size: 16px;
+  }
+}
+
+.ex-card-always {
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+}
+
+.ex-card-hover {
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  
+  &:hover {
+    box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.15);
+  }
+}
+
+.ex-card-never {
+  box-shadow: none;
+  border: 1px solid var(--el-border-color, #ebeef5);
+}
+
+.ex-card-no-border {
+  border: none;
+  
+  .el-card__header {
+    border-bottom: none;
+  }
+}
+

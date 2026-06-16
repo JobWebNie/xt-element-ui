@@ -1,0 +1,139 @@
+/* 字体大小全局样式 - 通过 data-size 属性实现 */
+
+/* 小字体模式 */
+[data-size="small"] {
+  font-size: 14px;
+}
+
+[data-size="small"] .page {
+  font-size: 14px;
+}
+
+[data-size="small"] .reco-navbar {
+  font-size: 13px;
+}
+
+[data-size="small"] .reco-sidebar {
+  font-size: 13px;
+}
+
+[data-size="small"] .reco-sidebar .sidebar-link {
+  font-size: 13px;
+}
+
+[data-size="small"] .content h1 {
+  font-size: 24px;
+}
+
+[data-size="small"] .content h2 {
+  font-size: 20px;
+}
+
+[data-size="small"] .content h3 {
+  font-size: 18px;
+}
+
+[data-size="small"] .content p,
+[data-size="small"] .content li {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+[data-size="small"] .content code {
+  font-size: 12px;
+}
+
+/* 中字体模式（默认） */
+[data-size="medium"] {
+  font-size: 16px;
+}
+
+[data-size="medium"] .page {
+  font-size: 16px;
+}
+
+[data-size="medium"] .reco-navbar {
+  font-size: 14px;
+}
+
+[data-size="medium"] .reco-sidebar {
+  font-size: 14px;
+}
+
+[data-size="medium"] .content h1 {
+  font-size: 28px;
+}
+
+[data-size="medium"] .content h2 {
+  font-size: 22px;
+}
+
+[data-size="medium"] .content h3 {
+  font-size: 20px;
+}
+
+[data-size="medium"] .content p,
+[data-size="medium"] .content li {
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+[data-size="medium"] .content code {
+  font-size: 14px;
+}
+
+/* 大字体模式 */
+[data-size="large"] {
+  font-size: 18px;
+}
+
+[data-size="large"] .page {
+  font-size: 18px;
+}
+
+[data-size="large"] .reco-navbar {
+  font-size: 15px;
+}
+
+[data-size="large"] .reco-sidebar {
+  font-size: 15px;
+}
+
+[data-size="large"] .reco-sidebar .sidebar-link {
+  font-size: 15px;
+}
+
+[data-size="large"] .content h1 {
+  font-size: 32px;
+}
+
+[data-size="large"] .content h2 {
+  font-size: 26px;
+}
+
+[data-size="large"] .content h3 {
+  font-size: 22px;
+}
+
+[data-size="large"] .content p,
+[data-size="large"] .content li {
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+[data-size="large"] .content code {
+  font-size: 16px;
+}
+
+/* 通用样式 */
+.font-size-small {
+  font-size: 14px !important;
+}
+
+.font-size-medium {
+  font-size: 16px !important;
+}
+
+.font-size-large {
+  font-size: 18px !important;
+}
