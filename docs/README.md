@@ -95,3 +95,6 @@ Vue.use(XtElementUI)
 - **[更新日志](https://github.com/JobWebNie/xt-element-ui/blob/main/CHANGELOG.md)**
 - **[贡献指南](https://github.com/JobWebNie/xt-element-ui/blob/main/CONTRIBUTING.md)**
 - **[GitHub 仓库](https://github.com/JobWebNie/xt-element-ui)**
+
+
+# 在 GitHub 新建仓库后
