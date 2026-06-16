@@ -1,8 +1,6 @@
 const path = require('path');
 
 module.exports = {
-  // GitHub Pages 部署路径：部署到 https://JobWebNie.github.io/xt-element-ui/
-  // 如果是部署到自定义域名或根路径，将 base 改为 '/'
   base: '/xt-element-ui/',
 
   title: 'XT-Element-UI',

@@ -200,7 +200,7 @@ Closes #123
 1. **Fork 本仓库**到你的 GitHub 账号
 2. **克隆**到本地：
    ```bash
-   git clone https://github.com/<JobWebNie>/xt-element-ui.git
+   git clone https://github.com/JobWebNie/xt-element-ui.git
    cd xt-element-ui
    ```
 3. **创建新分支**：
