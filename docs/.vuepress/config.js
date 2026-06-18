@@ -111,6 +111,8 @@ module.exports = {
               ['/components/base/xt-flex-box', 'XtFlexBox 弹性布局'],
               ['/components/base/xt-grid-box', 'XtGridBox 网格布局'],
               ['/components/base/xt-text', 'XtText 文本'],
+              ['/components/base/xt-time', 'XtTime 时间'],
+              ['/components/base/xt-step-price', 'XtStepPrice 阶梯价格'],
               ['/components/base/xt-input', 'XtInput 输入框'],
               ['/components/base/xt-config-provider', 'XtConfigProvider 配置提供者']
             ]

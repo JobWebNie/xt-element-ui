@@ -83,11 +83,12 @@ export default {
     }
   },
   tooltip: {
-    backgroundColor: variables.xtColorBgOverlay,
-    borderColor: variables.xtColorBorder,
+    backgroundColor: "#333333",
     borderWidth: 1,
+    borderColor: variables.xtColorBorder,
     textStyle: {
       color: "#fff"
     }
-  }
+  },
+  trigger: "axis"
 };

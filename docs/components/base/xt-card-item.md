@@ -7,7 +7,7 @@
 ::: demo 基本用法
 ```vue
 <template>
-  <XtCardItem label="销售额" value="12345" unit="元"></XtCardItem>
+  <XtCardItem title="销售额" label="销售额" value="12345" unit="元" style="width: 350px;"></XtCardItem>
 </template>
 ```
 :::

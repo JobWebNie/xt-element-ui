@@ -23,6 +23,9 @@ import XtCard from './components/xt-card'
 import XtCardItem from './components/xt-card-item'
 import XtConfigProvider from './components/xt-config-provider'
 import XtText from './components/xt-text'
+import XtTime from './components/xt-time'
+import XtStepPrice from './components/xt-step-price'
+import XtStepPriceItem from './components/xt-step-price-item'
 import XtGridBox from './components/xt-grid-box'
 import XtGridItem from './components/xt-grid-item'
 import XtDatePicker from './components/xt-date-picker'
@@ -44,6 +47,9 @@ const components = [
   XtCardItem,
   XtConfigProvider,
   XtText,
+  XtTime,
+  XtStepPrice,
+  XtStepPriceItem,
   XtGridBox,
   XtGridItem,
   XtDatePicker,
@@ -131,6 +137,9 @@ export default {
   XtCardItem,
   XtConfigProvider,
   XtText,
+  XtTime,
+  XtStepPrice,
+  XtStepPriceItem,
   XtGridBox,
   XtGridItem,
   XtDatePicker,

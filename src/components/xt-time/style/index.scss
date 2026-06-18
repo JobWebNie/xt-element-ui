@@ -1,0 +1,23 @@
+.xt-time {
+  display: inline-block;
+  color: var(--xt-text-color, #303133);
+  font-variant-numeric: tabular-nums;
+  transition: color 0.2s ease;
+}
+
+/* 字号（同步 XtText 的 CSS 变量方案，若未定义则使用 fallback） */
+.xt-time--extra-large { font-size: var(--xt-font-size-extra-large, 20px); }
+.xt-time--large       { font-size: var(--xt-font-size-large, 18px); }
+.xt-time--medium      { font-size: var(--xt-font-size-medium, 16px); }
+.xt-time--base        { font-size: var(--xt-font-size-base, 14px); }
+.xt-time--small       { font-size: var(--xt-font-size-small, 13px); }
+.xt-time--extra-small { font-size: var(--xt-font-size-extra-small, 12px); }
+
+/* 加粗 */
+.xt-time--bold { font-weight: 700; }
+
+/* 颜色语义：与 Element UI/XT 主题色一致 */
+.xt-time--primary { color: var(--xt-color-primary, #409eff); }
+.xt-time--success { color: var(--xt-color-success, #67c23a); }
+.xt-time--warning { color: var(--xt-color-warning, #e6a23c); }
+.xt-time--danger  { color: var(--xt-color-danger, #f56c6c); }

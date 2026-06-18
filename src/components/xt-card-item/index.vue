@@ -10,7 +10,9 @@
             </div>
           </div>
           <div style="flex: 1; height: 100%;">
-            <xt-text size="extra-large" :type="type"><i class="el-icon-user"></i></xt-text>
+            <slot name="icon">
+              <xt-text size="extra-large" :type="type"><i class="el-icon-user"></i></xt-text>
+            </slot>
           </div>
         </xt-flex-box>
       </ex-card>
