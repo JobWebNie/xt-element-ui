@@ -20,7 +20,7 @@ const typeFormatEnum = {
 import FlexBox from '../xt-flex-box/index.vue'
 import Quarter from "./quarter.vue";
 export default {
-  name: "XtDatePicker",
+  name: "ExDatePicker",
   components: {
     FlexBox,
     Quarter

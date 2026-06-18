@@ -42,7 +42,7 @@ export default {
       color: "#ffffff"
     },
     itemStyle: {
-      borderColor: variables.xtColorBorder
+      borderColor: "#dcdfe6"
     }
   },
   gauge: {
@@ -85,7 +85,7 @@ export default {
   tooltip: {
     backgroundColor: "#333333",
     borderWidth: 1,
-    borderColor: variables.xtColorBorder,
+    borderColor: "#dcdfe6",
     textStyle: {
       color: "#fff"
     }

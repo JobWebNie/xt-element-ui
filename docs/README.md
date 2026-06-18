@@ -54,7 +54,6 @@ Vue.use(XtElementUI)
 | **XtGridBox** | 网格布局组件 |
 | **XtText** | 文本组件 |
 | **XtInput** | 输入框组件 |
-| **XtDatePicker** | 日期选择组件 |
 | **XtConfigProvider** | 全局配置提供器 |
 
 ### ✨ Ex 组件（扩展组件）
@@ -70,6 +69,7 @@ Vue.use(XtElementUI)
 | **ExSelectTree** | 下拉选择树组件 |
 | **ExUpload** | 上传组件（支持图片预览） |
 | **ExPage** | 页面组件 |
+| **ExDatePicker** | 日期选择组件 |
 | **ExIcon** | 图标组件（支持 SVG / 字体图标） |
 
 ---

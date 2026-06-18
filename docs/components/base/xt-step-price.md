@@ -87,6 +87,70 @@ export default {
 ```
 :::
 
+## 自定义括号与字段名
+
+::: demo 自定义括号与字段名
+```vue
+<template>
+  <XtStepPrice
+    v-model="items"
+    title="自定义括号"
+    left-bracket="("
+    right-bracket="]"
+  />
+  <XtText size="small" style="margin-top: 12px;">输出：{{ JSON.stringify(items) }}</XtText>
+
+  <XtStepPrice
+    v-model="backendItems"
+    title="适配后端字段结构"
+    :field-keys="{ min: 'low', max: 'high', price: 'unitPrice' }"
+    style="margin-top: 24px;"
+  />
+  <XtText size="small" style="margin-top: 12px;">后端字段：{{ JSON.stringify(backendItems) }}</XtText>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      items: [
+        { min: 0, max: 100, price: 10 },
+        { min: 100, max: null, price: 5 }
+      ],
+      backendItems: [
+        { low: 0, high: 200, unitPrice: 15 },
+        { low: 200, high: null, unitPrice: 8 }
+      ]
+    }
+  }
+}
+</script>
+```
+:::
+
+## 限制阶梯数量（limit）
+
+::: demo 限制阶梯数量
+```vue
+<template>
+  <XtStepPrice v-model="items" title="最多 3 档" :limit="3" />
+  <XtText size="small" style="margin-top: 12px;">输出：{{ JSON.stringify(items) }}</XtText>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      items: [
+        { min: 0, max: 100, price: 10 }
+      ]
+    }
+  }
+}
+</script>
+```
+:::
+
 ## 使用 XtStepPriceItem 自定义布局
 
 ::: demo 使用 XtStepPriceItem 自定义布局
@@ -153,6 +217,10 @@ export default {
 | `title` | String | `''` | 标题 |
 | `unit` | String | `'元'` | 价格单位 |
 | `precision` | Number | `2` | 价格小数位（失焦后自动格式化） |
+| `left-bracket` | String | `'['` | 左括号显示字符，传空字符串则不显示 |
+| `right-bracket` | String | `null` | 右括号显示字符；传 `null` 走内置规则（仅 1 条时为 `]`，多条为 `)`），传具体值则强制显示 |
+| `field-keys` | `{min, max, price}` | `{min:'min', max:'max', price:'price'}` | 自定义字段名映射 |
+| `limit` | Number | `0` | 阶梯数量上限；`<= 0` 表示不限制；达到上限时隐藏新增按钮并提示 |
 | `disabled` | Boolean | `false` | 是否禁用/只读 |
 | `tip` | String | 中文提示文案 | 底部提示文案 |
 | `default-first` | Boolean | `true` | 传入空数组时是否自动生成首条 `[0, +∞)` |
@@ -165,11 +233,14 @@ export default {
 | `index` | Number | `0` | 索引，用于事件回调 |
 | `is-first` | Boolean | `false` | 是否首条（首条 `min` 固定为 `0` 且锁定不可改） |
 | `is-last` | Boolean | `false` | 是否末条（末条 `max` 显示为 `+∞`） |
-| `items-length` | Number | `1` | 当前阶梯总数，用于决定是否可删除 |
-| `min-locked` | Boolean | `false` | 是否锁定 `min` 输入框（非首条默认锁定，由前一条的 max 联动） |
+| `items-length` | Number | `1` | 当前阶梯总数，用于决定是否可删除及右括号默认策略 |
+| `min-locked` | Boolean | `false` | 是否锁定 `min` 输入框 |
 | `unit` | String | `'元'` | 价格单位 |
 | `precision` | Number | `2` | 价格小数位 |
-| `removable` | Boolean | `true` | 是否可删除（仅当 items-length > 1 时才实际显示删除按钮） |
+| `left-bracket` | String | `'['` | 左括号显示字符 |
+| `right-bracket` | String | `null` | 右括号；为 `null` 走默认逻辑（仅 1 条→ `]`，多条→ `)`） |
+| `field-keys` | `{min, max, price}` | `{min:'min', max:'max', price:'price'}` | 自定义字段名映射 |
+| `removable` | Boolean | `true` | 是否可删除（`removable=true` 且 `items-length>1` 时才显示删除按钮） |
 | `disabled` | Boolean | `false` | 是否禁用 |
 
 ## 事件

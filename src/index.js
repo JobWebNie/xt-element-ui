@@ -28,7 +28,7 @@ import XtStepPrice from './components/xt-step-price'
 import XtStepPriceItem from './components/xt-step-price-item'
 import XtGridBox from './components/xt-grid-box'
 import XtGridItem from './components/xt-grid-item'
-import XtDatePicker from './components/xt-date-picker'
+import ExDatePicker from './components/ex-date-picker'
 import ExButton from './components/ex-button'
 import ExChart from './components/ex-chart'  // ExChart 组件（基于 ECharts 封装）
 import ExCard from './components/ex-card'
@@ -52,7 +52,7 @@ const components = [
   XtStepPriceItem,
   XtGridBox,
   XtGridItem,
-  XtDatePicker,
+  ExDatePicker,
   ExButton,
   ExChart,
   ExCard,
@@ -142,7 +142,7 @@ export default {
   XtStepPriceItem,
   XtGridBox,
   XtGridItem,
-  XtDatePicker,
+  ExDatePicker,
   ExButton,
   ExCard,
   ExIcon,

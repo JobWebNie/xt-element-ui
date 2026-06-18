@@ -102,7 +102,7 @@ export default {
   tooltip: {
     borderWidth: 1,
     backgroundColor: "#ffffff",
-    borderColor: variables.xtColorBorder,
+    borderColor: "#dcdfe6",
     textStyle: {
       color: "#333333"
     },

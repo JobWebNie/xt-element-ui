@@ -4,13 +4,14 @@
       <xt-text v-if="title" bold size="medium">{{ title }}</xt-text>
       <slot name="header" />
       <el-button
-        v-if="!disabled"
+        v-if="!disabled && !isLimitReached"
         type="primary"
         size="small"
         icon="el-icon-plus"
         plain
         @click="onAdd"
       >新增阶梯</el-button>
+      <xt-text v-if="isLimitReached" size="small" type-color="info">已达上限（{{ localItems.length }}/{{ limit }}）</xt-text>
     </div>
 
     <div class="xt-step-price__list">
@@ -22,9 +23,13 @@
         :is-first="idx === 0"
         :is-last="idx === localItems.length - 1"
         :items-length="localItems.length"
+        :removable="idx !== 0"
         :min-locked="idx !== 0 ? true : false"
         :unit="unit"
         :precision="precision"
+        :left-bracket="leftBracket"
+        :right-bracket="rightBracket"
+        :field-keys="fieldKeys"
         :disabled="disabled"
         @input="(val) => onItemInput(val, idx)"
         @max-change="onMaxChange"
@@ -48,19 +53,20 @@
 <script>
 import XtStepPriceItem from '../xt-step-price-item/index.vue'
 
-function cloneItems(items) {
-  if (!Array.isArray(items)) return []
-  return items.map((it) => ({
-    min: it.min == null ? 0 : Number(it.min),
-    max: it.max == null || it.max === '' ? null : Number(it.max),
-    price: it.price == null ? 0 : Number(it.price)
-  }))
-}
-
 export default {
   name: 'XtStepPrice',
 
   components: { XtStepPriceItem },
+
+  computed: {
+    keyMin() { return (this.fieldKeys && this.fieldKeys.min) || 'min' },
+    keyMax() { return (this.fieldKeys && this.fieldKeys.max) || 'max' },
+    keyPrice() { return (this.fieldKeys && this.fieldKeys.price) || 'price' },
+    isLimitReached() {
+      const lim = Number(this.limit)
+      return lim > 0 && this.localItems.length >= lim
+    }
+  },
 
   props: {
     value: {
@@ -70,6 +76,17 @@ export default {
     title: { type: String, default: '' },
     unit: { type: String, default: '元' },
     precision: { type: Number, default: 2 },
+    // 左括号：默认 '['，传空字符串则不显示
+    leftBracket: { type: String, default: '[' },
+    // 右括号：默认 null，走内置逻辑（只有1条为 ']'，多条为 ')'）；传具体值则强制使用
+    rightBracket: { type: String, default: null },
+    // 字段名映射：{ min, max, price }，允许传入的 value 使用自定义字段名
+    fieldKeys: {
+      type: Object,
+      default: () => ({ min: 'min', max: 'max', price: 'price' })
+    },
+    // 阶梯数量上限；<= 0 表示不限制
+    limit: { type: Number, default: 0 },
     disabled: { type: Boolean, default: false },
     tip: {
       type: String,
@@ -95,11 +112,26 @@ export default {
   },
 
   methods: {
+    // 统一数字转换：空值/非法值一律转为 fallback（默认 0）
+    safeNumber(v, fallback = 0) {
+      if (v === null || v === undefined || v === '' || v === Infinity || v === -Infinity) return fallback
+      const n = Number(v)
+      return isNaN(n) ? fallback : n
+    },
+
+    cloneItems(items) {
+      if (!Array.isArray(items)) return []
+      return items.map((it) => ({
+        [this.keyMin]: this.safeNumber(it && it[this.keyMin], 0),
+        [this.keyMax]: (it && it[this.keyMax] == null) || (it && it[this.keyMax] === '') ? null : this.safeNumber(it[this.keyMax], null),
+        [this.keyPrice]: this.safeNumber(it && it[this.keyPrice], 0)
+      }))
+    },
+
     normalize(items) {
-      const list = cloneItems(items)
-      // 空数组时自动生成首条默认阶梯 [0, +∞)
+      const list = this.cloneItems(items)
       if (list.length === 0 && this.defaultFirst) {
-        list.push({ min: 0, max: null, price: 0 })
+        list.push({ [this.keyMin]: 0, [this.keyMax]: null, [this.keyPrice]: 0 })
       }
       this.ensureContinuity(list)
       return list
@@ -108,117 +140,127 @@ export default {
     // 保证 items 连续且不重叠：items[i].max === items[i+1].min，首条 min === 0，末条 max === null
     ensureContinuity(list) {
       if (!Array.isArray(list) || list.length === 0) return
-      // 首条 min 强制为 0
-      if (list[0].min !== 0) list[0].min = 0
+      list[0][this.keyMin] = 0
 
       for (let i = 0; i < list.length; i++) {
         const cur = list[i]
         const next = list[i + 1]
-        // 非末条：若 max 为空/小于等于 min，修正为 min+1
+        const curMin = this.safeNumber(cur[this.keyMin], 0)
         if (next) {
-          if (cur.max == null || Number(cur.max) <= Number(cur.min)) {
-            cur.max = Number(cur.min) + 1
-          }
-          // 下一条的 min 必须 === 当前条的 max
-          if (Number(next.min) !== Number(cur.max)) {
-            next.min = Number(cur.max)
-          }
+          let curMax = this.safeNumber(cur[this.keyMax], curMin + 1)
+          if (curMax <= curMin) curMax = curMin + 1
+          cur[this.keyMax] = curMax
+          next[this.keyMin] = curMax
         } else {
-          // 末条：max 必须为 null
-          cur.max = null
+          cur[this.keyMax] = null
         }
-        // price 类型保护
-        cur.price = cur.price == null || isNaN(Number(cur.price)) ? 0 : Number(cur.price)
+        cur[this.keyPrice] = this.safeNumber(cur[this.keyPrice], 0)
       }
     },
 
     emit() {
-      // 先做一次连续性兜底（如组件外部直接修改 items 仍能保证正确）
       this.ensureContinuity(this.localItems)
-      const cloned = cloneItems(this.localItems)
+      const cloned = this.cloneItems(this.localItems)
       this.$emit('input', cloned)
       this.$emit('change', cloned)
     },
 
     onItemInput(val, idx) {
-      // 子组件只负责自己的 price / min / max 输入（文本框改变），
-      // 连续性由 onMinChange / onMaxChange 负责。这里只做浅层同步。
       const cur = this.localItems[idx]
       if (!cur) return
-      if (val.price !== undefined) cur.price = Number(val.price)
+      if (val && val[this.keyPrice] !== undefined) cur[this.keyPrice] = this.safeNumber(val[this.keyPrice], 0)
     },
 
     onMaxChange(val, idx) {
       const cur = this.localItems[idx]
       if (!cur) return
-      cur.max = Number(val)
-      // 联动：下一条的 min 必须 === 当前条的 max
+      const n = this.safeNumber(val, this.safeNumber(cur[this.keyMin], 0) + 1)
+      cur[this.keyMax] = n
       const next = this.localItems[idx + 1]
-      if (next) {
-        next.min = Number(val)
-      }
+      if (next) next[this.keyMin] = n
       this.emit()
     },
 
     onMinChange(val, idx) {
-      // 首条 min 必须恒为 0（用户无法通过输入框改，因为 minLocked），
-      // 这里保留防御式处理。
       const cur = this.localItems[idx]
       if (!cur) return
       if (idx === 0) {
-        cur.min = 0
+        cur[this.keyMin] = 0
       } else {
-        cur.min = Number(val)
-        // 联动：上一条的 max 必须 === 当前条的 min
+        const n = this.safeNumber(val, this.safeNumber(cur[this.keyMin], 0))
+        cur[this.keyMin] = n
         const prev = this.localItems[idx - 1]
-        if (prev) prev.max = Number(val)
+        if (prev) prev[this.keyMax] = n
       }
       this.emit()
     },
 
     onAdd() {
+      debugger
       const list = this.localItems
-      const last = list[list.length - 1]
-      // 在最后一条前插入：新条的 min = last.min，max = last.min + 1；
-      // 末条 min 变为新条的 max，末条 max 保持 null。
-      // —— 直观理解：用户点新增，通常希望在最后一个区间前“插入”一个中间段。
-      if (last == null) {
-        list.push({ min: 0, max: null, price: 0 })
-      } else {
-        const newMin = Number(last.min)
-        const newMax = newMin + 1
-        const newPrice = Number(last.price) || 0
-        // 新条插入到末条之前
-        list.splice(list.length - 1, 0, {
-          min: newMin,
-          max: newMax,
-          price: newPrice
+      const lim = Number(this.limit)
+      if (lim > 0 && list.length >= lim) return
+
+      // 场景 1：空数组 —— 直接 push 一条 [0, +∞)
+      if (list.length === 0) {
+        list.push({
+          [this.keyMin]: 0,
+          [this.keyMax]: null,
+          [this.keyPrice]: 10
         })
-        // 原末条的 min 改为新条的 max（保持末条 max = null）
-        list[list.length - 1].min = newMax
+        this.emit()
+        return
       }
+
+      // 场景 2：已有数据 —— 在末条前插入新条
+      const last = list[list.length - 1]
+      const newMin = this.safeNumber(last[this.keyMin], 0)
+      const newMax = newMin + 1
+
+      // 新条 price：优先继承「倒数第二条」的 price，其次用末条 price（>0 时），否则默认 10
+      const prev = list[list.length - 2]
+      let newPrice = 10
+      if (prev) {
+        newPrice = this.safeNumber(prev[this.keyPrice], 10)
+      } else {
+        const lastPrice = this.safeNumber(last[this.keyPrice], 0)
+        newPrice = lastPrice > 0 ? lastPrice : 10
+      }
+
+      // 关键修复：构造全新数组，避免 splice 导致 Vue 组件复用 & 响应式不同步
+      //   新条 = { newMin, newMax, newPrice }
+      //   新末条 = { min: newMax, max: null, price: newPrice }
+      const newArr = [
+        ...list.slice(0, -1),
+        {
+          [this.keyMin]: newMin,
+          [this.keyMax]: newMax,
+          [this.keyPrice]: newPrice
+        },
+        {
+          [this.keyMin]: newMax,
+          [this.keyMax]: null,
+          [this.keyPrice]: newPrice
+        }
+      ]
+
+      this.localItems = newArr
       this.emit()
     },
 
     onDelete(idx) {
       const list = this.localItems
       if (list.length <= 1) return // 至少保留一条
+      if (idx === 0) return // 首条不允许删除，保证区间起点始终为 0
       const cur = list[idx]
       const prev = list[idx - 1]
       const next = list[idx + 1]
-      // 连续性约定：items[i].max === items[i+1].min
-      // 删除 [a, b) 之后：prev.max = b，next.min 保持为 b（无需改）
       if (prev && next) {
-        // 中间被删：prev 吞并当前段的上限
-        prev.max = cur.max == null ? null : Number(cur.max)
-        // 若 prev 变为新末条（cur 是末条），上面 cur.max=null 已处理
-        // 若非末条，next.min 本就等于 cur.max，无需修改
+        prev[this.keyMax] = cur[this.keyMax] == null ? null : Number(cur[this.keyMax])
       } else if (prev && !next) {
-        // 删的是末条：prev 成为新末条
-        prev.max = null
+        prev[this.keyMax] = null
       } else if (!prev && next) {
-        // 删的是首条：next 成为新首条
-        next.min = 0
+        next[this.keyMin] = 0
       }
       list.splice(idx, 1)
       this.emit()

@@ -1,7 +1,7 @@
 <template>
   <div class="xt-step-price-item">
     <div class="xt-step-price-item__range">
-      <span class="xt-step-price-item__bracket">[</span>
+      <span class="xt-step-price-item__bracket">{{ finalLeftBracket }}</span>
       <el-input
         v-model.number="minInput"
         :disabled="disabled || minLocked"
@@ -19,7 +19,7 @@
         @blur="onMaxBlur"
       />
       <span v-else class="xt-step-price-item__infinity">+∞</span>
-      <span class="xt-step-price-item__bracket">{{ isLast ? ')' : ']' }}</span>
+      <span class="xt-step-price-item__bracket">{{ finalRightBracket }}</span>
     </div>
 
     <span class="xt-step-price-item__arrow">→</span>
@@ -37,7 +37,7 @@
     </div>
 
     <el-button
-      v-if="!disabled && (removable || itemsLength > 1)"
+      v-if="!disabled && removable && itemsLength > 1"
       type="text"
       icon="el-icon-delete"
       class="xt-step-price-item__delete"
@@ -64,14 +64,40 @@ export default {
     disabled: { type: Boolean, default: false },
     minLocked: { type: Boolean, default: false },
     unit: { type: String, default: '元' },
-    precision: { type: Number, default: 2 }
+    precision: { type: Number, default: 2 },
+    // 左括号：默认 '['，传空则不显示
+    leftBracket: { type: String, default: '[' },
+    // 右括号：默认 null，走内置规则（只有1条为 ']'，多条为 ')'）；传值则强制使用
+    rightBracket: { type: String, default: null },
+    // 字段名映射：{ min, max, price }，允许传入的 value 使用自定义字段名
+    fieldKeys: {
+      type: Object,
+      default: () => ({ min: 'min', max: 'max', price: 'price' })
+    }
+  },
+
+  computed: {
+    keyMin() { return (this.fieldKeys && this.fieldKeys.min) || 'min' },
+    keyMax() { return (this.fieldKeys && this.fieldKeys.max) || 'max' },
+    keyPrice() { return (this.fieldKeys && this.fieldKeys.price) || 'price' },
+    finalRightBracket() {
+      if (this.rightBracket !== null && this.rightBracket !== undefined && this.rightBracket !== '') return this.rightBracket
+      return this.itemsLength === 1 ? ']' : ')'
+    },
+    finalLeftBracket() {
+      return (this.leftBracket === null || this.leftBracket === undefined) ? '[' : this.leftBracket
+    }
   },
 
   data() {
+    const v = this.value
+    const minVal = this.safeNumber(v && v[this.keyMin], 0)
+    const maxVal = this.isLast ? null : this.safeNumber(v && v[this.keyMax], minVal + 1)
+    const priceVal = this.safeNumber(v && v[this.keyPrice], 0)
     return {
-      minInput: this.normalize(this.value.min),
-      maxInput: this.normalize(this.value.max),
-      priceInput: this.normalize(this.value.price)
+      minInput: minVal,
+      maxInput: maxVal,
+      priceInput: priceVal
     }
   },
 
@@ -79,25 +105,36 @@ export default {
     value: {
       deep: true,
       handler(val) {
-        this.minInput = this.normalize(val.min)
-        this.maxInput = this.normalize(val.max)
-        this.priceInput = this.normalize(val.price)
+        const minVal = this.safeNumber(val && val[this.keyMin], 0)
+        this.minInput = minVal
+        this.maxInput = this.isLast ? null : this.safeNumber(val && val[this.keyMax], minVal + 1)
+        this.priceInput = this.safeNumber(val && val[this.keyPrice], 0)
+      }
+    },
+    isLast(val) {
+      if (val) {
+        this.maxInput = null
+      } else {
+        const minVal = this.safeNumber(this.minInput, 0)
+        const v = this.value
+        this.maxInput = this.safeNumber(v && v[this.keyMax], minVal + 1)
       }
     }
   },
 
   methods: {
-    normalize(v) {
-      if (v === null || v === undefined || v === '' || v === Infinity) return v
+    // 统一兜底：非数字输入一律转为 fallback（默认 0）
+    safeNumber(v, fallback = 0) {
+      if (v === null || v === undefined || v === '' || v === Infinity || v === -Infinity) return fallback
       const n = Number(v)
-      return isNaN(n) ? v : n
+      return isNaN(n) ? fallback : n
     },
 
     emitChange(partial) {
       const next = {
-        min: this.minInput,
-        max: this.maxInput,
-        price: this.priceInput,
+        [this.keyMin]: this.minInput,
+        [this.keyMax]: this.isLast ? null : this.maxInput,
+        [this.keyPrice]: this.priceInput,
         ...partial
       }
       this.$emit('input', next)
@@ -105,31 +142,28 @@ export default {
     },
 
     onMinBlur() {
-      let v = Number(this.minInput)
-      if (isNaN(v) || v < 0) v = 0
+      const v = this.safeNumber(this.minInput, 0)
       this.minInput = v
       this.$emit('min-change', v, this.index)
-      this.emitChange({ min: v })
+      this.emitChange({ [this.keyMin]: v })
     },
 
     onMaxBlur() {
       if (this.isLast) return
-      let v = Number(this.maxInput)
-      // 保证 max 严格大于 min（若等于或小于，则提示为 min + 1）
-      if (isNaN(v) || v <= this.minInput) {
-        v = Number(this.minInput) + 1
-      }
+      const minVal = this.safeNumber(this.minInput, 0)
+      let v = this.safeNumber(this.maxInput, minVal + 1)
+      if (v <= minVal) v = minVal + 1
       this.maxInput = v
       this.$emit('max-change', v, this.index)
-      this.emitChange({ max: v })
+      this.emitChange({ [this.keyMax]: v })
     },
 
     onPriceBlur() {
-      let v = Number(this.priceInput)
-      if (isNaN(v) || v < 0) v = 0
+      let v = this.safeNumber(this.priceInput, 0)
+      if (v < 0) v = 0
       v = Number(v.toFixed(this.precision))
       this.priceInput = v
-      this.emitChange({ price: v })
+      this.emitChange({ [this.keyPrice]: v })
     },
 
     onDelete() {

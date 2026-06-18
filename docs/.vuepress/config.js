@@ -59,24 +59,11 @@ module.exports = {
       { text: '🏠 首页', link: '/' },
       {
         text: '🎨 Xt 组件',
-        items: [
-          { text: '基础组件', link: '/components/base/xt-button' },
-          { text: '工具类', link: '/components/utils/size' }
-        ]
+        link: '/components/base/xt-button'
       },
       {
         text: '✨ Ex 组件',
-        items: [
-          { text: '按钮组件', link: '/components/extend/ex-button' },
-          { text: '卡片组件', link: '/components/extend/ex-card' },
-          { text: '表格组件', link: '/components/extend/ex-table' },
-          { text: '图表组件', link: '/components/extend/ex-chart' },
-          { text: '下拉选择树组件', link: '/components/extend/ex-select-tree' },
-          { text: '上传组件', link: '/components/extend/ex-upload' },
-          { text: '日期选择器组件', link: '/components/extend/ex-date-picker' },
-          { text: '页面组件', link: '/components/extend/ex-page' },
-          { text: '图标组件', link: '/components/extend/ex-icon' }
-        ]
+        link: '/components/extend/ex-button'
       },
       {
         text: '📖 更多',
