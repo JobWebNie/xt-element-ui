@@ -103,8 +103,7 @@ module.exports = {
               ['/components/base/xt-input', 'XtInput 输入框'],
               ['/components/base/xt-config-provider', 'XtConfigProvider 配置提供者'],
               ['/components/base/xt-map', 'XtMap 地图组件'],
-              ['/components/base/xt-map-provider', 'XtMapProvider 地图提供者'],
-              
+              ['/components/base/xt-map-provider', 'XtMapProvider 地图提供者']
             ]
           },
           {
