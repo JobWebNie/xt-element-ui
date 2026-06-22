@@ -4,15 +4,6 @@
   display: flex;
 }
 
-.xt-flex-box.flex.direction-row > .flex,
-.xt-flex-box.flex.direction-row-reverse > .flex {
-  width: 100%;
-}
-
-.xt-flex-box.flex.direction-column > .flex,
-.xt-flex-box.flex.direction-column-reverse > .flex {
-  height: 100%;
-}
 
 .xt-flex-box.is-inline {
   display: inline-flex;

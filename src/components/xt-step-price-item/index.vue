@@ -2,30 +2,32 @@
   <div class="xt-step-price-item">
     <div class="xt-step-price-item__range">
       <span class="xt-step-price-item__bracket">{{ finalLeftBracket }}</span>
-      <el-input
+      <span v-if="itemsLength > 1" class="xt-step-price-item__name">第{{ index + 1 }}档</span>
+      <span class="xt-step-price-item__bracket">{{ finalRightBracket }}</span>
+      <xt-input
         v-model.number="minInput"
         :disabled="disabled || minLocked"
         size="small"
+        placeholder="下限"
         class="xt-step-price-item__input"
         @blur="onMinBlur"
       />
-      <span class="xt-step-price-item__comma">,</span>
-      <el-input
+      <span class="xt-step-price-item__comma">-</span>
+      <xt-input
         v-if="!isLast"
         v-model.number="maxInput"
         :disabled="disabled"
         size="small"
+        placeholder="上限"
         class="xt-step-price-item__input"
         @blur="onMaxBlur"
       />
       <span v-else class="xt-step-price-item__infinity">+∞</span>
-      <span class="xt-step-price-item__bracket">{{ finalRightBracket }}</span>
     </div>
 
-    <span class="xt-step-price-item__arrow">→</span>
 
     <div class="xt-step-price-item__price">
-      <el-input
+      <xt-input
         v-model.number="priceInput"
         :disabled="disabled"
         size="small"
@@ -36,9 +38,9 @@
       <span class="xt-step-price-item__unit">{{ unit }}</span>
     </div>
 
-    <el-button
+    <xt-button
       v-if="!disabled && removable && itemsLength > 1"
-      type="text"
+      text
       icon="el-icon-delete"
       class="xt-step-price-item__delete"
       @click="onDelete"
@@ -65,6 +67,8 @@ export default {
     minLocked: { type: Boolean, default: false },
     unit: { type: String, default: '元' },
     precision: { type: Number, default: 2 },
+    // 阶梯增量：控制新增/校正时的区间跨度，默认 1
+    step: { type: Number, default: 1 },
     // 左括号：默认 '['，传空则不显示
     leftBracket: { type: String, default: '[' },
     // 右括号：默认 null，走内置规则（只有1条为 ']'，多条为 ')'）；传值则强制使用
@@ -82,7 +86,7 @@ export default {
     keyPrice() { return (this.fieldKeys && this.fieldKeys.price) || 'price' },
     finalRightBracket() {
       if (this.rightBracket !== null && this.rightBracket !== undefined && this.rightBracket !== '') return this.rightBracket
-      return this.itemsLength === 1 ? ']' : ')'
+      return this.isLast ? ']' : ')'
     },
     finalLeftBracket() {
       return (this.leftBracket === null || this.leftBracket === undefined) ? '[' : this.leftBracket
@@ -90,10 +94,7 @@ export default {
   },
 
   data() {
-    const v = this.value
-    const minVal = this.safeNumber(v && v[this.keyMin], 0)
-    const maxVal = this.isLast ? null : this.safeNumber(v && v[this.keyMax], minVal + 1)
-    const priceVal = this.safeNumber(v && v[this.keyPrice], 0)
+    const { minVal, maxVal, priceVal } = this.getPriceItem(this.value)
     return {
       minInput: minVal,
       maxInput: maxVal,
@@ -104,11 +105,12 @@ export default {
   watch: {
     value: {
       deep: true,
+      immediate: true,
       handler(val) {
-        const minVal = this.safeNumber(val && val[this.keyMin], 0)
+        const { minVal, maxVal, priceVal } = this.getPriceItem(val)
         this.minInput = minVal
-        this.maxInput = this.isLast ? null : this.safeNumber(val && val[this.keyMax], minVal + 1)
-        this.priceInput = this.safeNumber(val && val[this.keyPrice], 0)
+        this.maxInput = maxVal
+        this.priceInput = priceVal
       }
     },
     isLast(val) {
@@ -123,6 +125,17 @@ export default {
   },
 
   methods: {
+    getPriceItem(value) {
+      const v = value
+      const minVal = this.safeNumber(v && v[this.keyMin], 0)
+      const maxVal = this.isLast ? null : this.safeNumber(v && v[this.keyMax], minVal + 1)
+      const priceVal = this.safeNumber(v && v[this.keyPrice], 0)
+      return {
+        minVal,
+        maxVal,
+        priceVal
+      }
+    },
     // 统一兜底：非数字输入一律转为 fallback（默认 0）
     safeNumber(v, fallback = 0) {
       if (v === null || v === undefined || v === '' || v === Infinity || v === -Infinity) return fallback

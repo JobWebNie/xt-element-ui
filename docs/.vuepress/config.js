@@ -101,7 +101,10 @@ module.exports = {
               ['/components/base/xt-time', 'XtTime 时间'],
               ['/components/base/xt-step-price', 'XtStepPrice 阶梯价格'],
               ['/components/base/xt-input', 'XtInput 输入框'],
-              ['/components/base/xt-config-provider', 'XtConfigProvider 配置提供者']
+              ['/components/base/xt-config-provider', 'XtConfigProvider 配置提供者'],
+              ['/components/base/xt-map', 'XtMap 地图组件'],
+              ['/components/base/xt-map-provider', 'XtMapProvider 地图提供者'],
+              
             ]
           },
           {

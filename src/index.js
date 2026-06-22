@@ -26,6 +26,8 @@ import XtText from './components/xt-text'
 import XtTime from './components/xt-time'
 import XtStepPrice from './components/xt-step-price'
 import XtStepPriceItem from './components/xt-step-price-item'
+import XtMap from './components/xt-map'
+import { XtMapProvider } from './components/xt-map'
 import XtGridBox from './components/xt-grid-box'
 import XtGridItem from './components/xt-grid-item'
 import ExDatePicker from './components/ex-date-picker'
@@ -50,6 +52,8 @@ const components = [
   XtTime,
   XtStepPrice,
   XtStepPriceItem,
+  XtMap,
+  XtMapProvider,
   XtGridBox,
   XtGridItem,
   ExDatePicker,
@@ -140,6 +144,8 @@ export default {
   XtTime,
   XtStepPrice,
   XtStepPriceItem,
+  XtMap,
+  XtMapProvider,
   XtGridBox,
   XtGridItem,
   ExDatePicker,

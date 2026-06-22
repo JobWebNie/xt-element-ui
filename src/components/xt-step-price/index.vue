@@ -3,14 +3,14 @@
     <div v-if="title || $slots.header" class="xt-step-price__header">
       <xt-text v-if="title" bold size="medium">{{ title }}</xt-text>
       <slot name="header" />
-      <el-button
+      <xt-button
         v-if="!disabled && !isLimitReached"
         type="primary"
         size="small"
         icon="el-icon-plus"
         plain
         @click="onAdd"
-      >新增阶梯</el-button>
+      >新增档位</xt-button>
       <xt-text v-if="isLimitReached" size="small" type-color="info">已达上限（{{ localItems.length }}/{{ limit }}）</xt-text>
     </div>
 
@@ -27,6 +27,7 @@
         :min-locked="idx !== 0 ? true : false"
         :unit="unit"
         :precision="precision"
+        :step="step"
         :left-bracket="leftBracket"
         :right-bracket="rightBracket"
         :field-keys="fieldKeys"
@@ -39,7 +40,7 @@
     </div>
 
     <div v-if="localItems.length === 0" class="xt-step-price__empty">
-      <span>暂无数据，点击右上角「新增阶梯」开始配置</span>
+      <span>暂无数据，点击右上角「新增档位」开始配置</span>
     </div>
 
     <div v-if="tip || $slots.tip" class="xt-step-price__tip">
@@ -87,6 +88,8 @@ export default {
     },
     // 阶梯数量上限；<= 0 表示不限制
     limit: { type: Number, default: 0 },
+    // 阶梯增量：新增/校正时，下一条阶梯的 min = 当前 max = 当前 min + step（默认 1）
+    step: { type: Number, default: 10 },
     disabled: { type: Boolean, default: false },
     tip: {
       type: String,
@@ -105,6 +108,7 @@ export default {
   watch: {
     value: {
       deep: true,
+      immediate: true,
       handler(val) {
         this.localItems = this.normalize(val)
       }
@@ -141,14 +145,15 @@ export default {
     ensureContinuity(list) {
       if (!Array.isArray(list) || list.length === 0) return
       list[0][this.keyMin] = 0
+      const stepVal = this.safeNumber(this.step, 1)
 
       for (let i = 0; i < list.length; i++) {
         const cur = list[i]
         const next = list[i + 1]
         const curMin = this.safeNumber(cur[this.keyMin], 0)
         if (next) {
-          let curMax = this.safeNumber(cur[this.keyMax], curMin + 1)
-          if (curMax <= curMin) curMax = curMin + 1
+          let curMax = this.safeNumber(cur[this.keyMax], curMin + stepVal)
+          if (curMax <= curMin) curMax = curMin + stepVal
           cur[this.keyMax] = curMax
           next[this.keyMin] = curMax
         } else {
@@ -196,10 +201,10 @@ export default {
     },
 
     onAdd() {
-      debugger
       const list = this.localItems
       const lim = Number(this.limit)
       if (lim > 0 && list.length >= lim) return
+      const stepVal = this.safeNumber(this.step, 1)
 
       // 场景 1：空数组 —— 直接 push 一条 [0, +∞)
       if (list.length === 0) {
@@ -212,10 +217,10 @@ export default {
         return
       }
 
-      // 场景 2：已有数据 —— 在末条前插入新条
+      // 场景 2：已有数据 —— 在末条前插入新条，新条的 max = 末条 min + step
       const last = list[list.length - 1]
       const newMin = this.safeNumber(last[this.keyMin], 0)
-      const newMax = newMin + 1
+      const newMax = newMin + stepVal
 
       // 新条 price：优先继承「倒数第二条」的 price，其次用末条 price（>0 时），否则默认 10
       const prev = list[list.length - 2]
@@ -227,9 +232,6 @@ export default {
         newPrice = lastPrice > 0 ? lastPrice : 10
       }
 
-      // 关键修复：构造全新数组，避免 splice 导致 Vue 组件复用 & 响应式不同步
-      //   新条 = { newMin, newMax, newPrice }
-      //   新末条 = { min: newMax, max: null, price: newPrice }
       const newArr = [
         ...list.slice(0, -1),
         {

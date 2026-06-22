@@ -1,27 +1,84 @@
 @import '../../../styles/variables.scss';
 
-.xt-input .el-input__inner {
+// 基础变量定义 - 通过组件顶层设置统一的 CSS 变量
+.xt-input {
+  --xt-input-bg-color: var(--xt-fill-color-blank, #ffffff);
+  --xt-input-text-color: var(--xt-text-color-regular, #606266);
+  --xt-input-border-color: var(--xt-border-color, #dcdfe6);
+  --xt-input-border-color-hover: var(--xt-border-color-dark, #c0c4cc);
+  --xt-input-border-color-focus: var(--xt-color-primary, #1890ff);
+  --xt-input-placeholder-color: var(--xt-text-color-placeholder, #c0c4cc);
+  --xt-input-disabled-bg-color: var(--xt-fill-color-light, #f5f7fa);
+  --xt-input-disabled-text-color: var(--xt-text-color-placeholder, #c0c4cc);
+  --xt-input-disabled-border-color: var(--xt-border-color-light, #e4e7ed);
   --xt-input-focus-color: var(--xt-color-primary, #1890ff);
-  
-  background-color: var(--xt-input-bg-color, #ffffff);
-  border-color: var(--xt-input-border-color, #DCDFE6);
-  color: var(--xt-input-text-color, #303133);
-  font-size: var(--xt-font-size-base, 14px);
+  --xt-input-border-radius: var(--xt-border-radius-base, 4px);
+  --xt-input-font-size: var(--xt-font-size-base, 14px);
+  --xt-input-height: 32px;
+  --xt-input-padding-x: 15px;
+}
+
+// 尺寸：small
+.xt-input--small {
+  --xt-input-height: 28px;
+  --xt-input-font-size: var(--xt-font-size-small, 12px);
+  --xt-input-padding-x: 10px;
+}
+
+// 尺寸：medium（默认，无需单独覆盖）
+.xt-input--medium {
+  --xt-input-height: 32px;
+  --xt-input-font-size: var(--xt-font-size-base, 14px);
+  --xt-input-padding-x: 15px;
+}
+
+// 尺寸：large
+.xt-input--large {
+  --xt-input-height: 40px;
+  --xt-input-font-size: var(--xt-font-size-large, 16px);
+  --xt-input-padding-x: 16px;
+}
+
+// 内部结构样式（Element UI 2.x 结构）
+.xt-input .el-input {
+  height: var(--xt-input-height);
+}
+
+.xt-input .el-input__inner {
+  background-color: var(--xt-input-bg-color);
+  border-color: var(--xt-input-border-color);
+  color: var(--xt-input-text-color);
+  font-size: var(--xt-input-font-size);
+  border-radius: var(--xt-input-border-radius);
+  height: var(--xt-input-height);
+  line-height: var(--xt-input-height);
+  padding: 0 var(--xt-input-padding-x);
+  transition: border-color var(--xt-transition-duration-fast, 0.2s) ease;
 }
 
 .xt-input .el-input__inner::placeholder {
-  color: var(--xt-input-placeholder-color, #C0C4CC);
+  color: var(--xt-input-placeholder-color);
 }
 
+// hover 状态
+.xt-input .el-input__inner:hover {
+  border-color: var(--xt-input-border-color-hover);
+}
+
+// focus 状态
 .xt-input .el-input__inner:focus {
-  border-color: var(--xt-input-focus-color);
+  border-color: var(--xt-input-border-color-focus);
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--xt-input-focus-color) 20%, transparent);
 }
 
-.xt-input .el-input {
-  height: var(--xt-input-height, 32px);
+// disabled 状态
+.xt-input.is-disabled .el-input__inner {
+  background-color: var(--xt-input-disabled-bg-color);
+  border-color: var(--xt-input-disabled-border-color);
+  color: var(--xt-input-disabled-text-color);
+  cursor: not-allowed;
 }
 
-.xt-input .el-input .el-input__wrapper {
-  padding: 0 var(--xt-input-padding-x, 15px);
+.xt-input.is-disabled .el-input__inner::placeholder {
+  color: var(--xt-input-disabled-text-color);
 }

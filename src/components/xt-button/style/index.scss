@@ -300,29 +300,19 @@
 
     &.is-disabled {
       background-color: transparent !important;
+      color: var(--xt-button-disabled-text-color);
     }
 
     &:not(.is-disabled) {
       &:hover {
-        background-color: var(--xt-fill-color-light);
+        background-color: transparent;
+        color: var(--xt-button-hover-text-color);
+        border-color: transparent;
       }
       &:active {
-        background-color: var(--xt-fill-color);
-      }
-      &:focus-visible {
-        outline: 2px solid var(--xt-button-outline-color);
-        outline-offset: 1px;
-        transition: outline-offset 0s, outline 0s;
-      }
-
-      &.is-has-bg {
-        background-color: var(--xt-fill-color-light);
-        &:hover {
-          background-color: var(--xt-fill-color);
-        }
-        &:active {
-          background-color: var(--xt-fill-color-dark);
-        }
+        background-color: transparent;
+        color: var(--xt-button-active-text-color);
+        border-color: transparent;
       }
     }
   }
@@ -350,18 +340,14 @@
     }
   }
 
-  // 纯文字按钮变体
+  // 纯文字按钮变体（与 is-text 语义一致，保留兼容）
   &.xt-button--text {
     border-color: transparent;
     background: transparent;
     color: var(--xt-color-primary);
-    padding-left: 0;
-    padding-right: 0;
 
     &.is-disabled {
       color: var(--xt-button-disabled-text-color);
-      background-color: transparent !important;
-      border-color: transparent !important;
     }
     &:not(.is-disabled) {
       &:hover {
@@ -401,9 +387,7 @@
   --xt-button-disabled-bg-color: var(--xt-color-primary-light-5);
   --xt-button-disabled-border-color: var(--xt-color-primary-light-5);
 
-  &.is-plain,
-  &.is-text,
-  &.is-link {
+  &.is-plain {
     --xt-button-text-color: var(--xt-color-primary);
     --xt-button-bg-color: var(--xt-color-primary-light-9);
     --xt-button-border-color: var(--xt-color-primary-light-5);
@@ -411,11 +395,38 @@
     --xt-button-hover-bg-color: var(--xt-color-primary);
     --xt-button-hover-border-color: var(--xt-color-primary);
     --xt-button-active-text-color: var(--xt-color-white);
-
+    --xt-button-active-bg-color: var(--xt-color-primary);
+    --xt-button-active-border-color: var(--xt-color-primary);
+  }
+  &.is-text {
+    --xt-button-text-color: var(--xt-color-primary);
+    --xt-button-hover-text-color: var(--xt-color-primary-light-3);
+    --xt-button-active-text-color: var(--xt-color-primary-dark-2);
+    --xt-button-bg-color: transparent;
+    --xt-button-border-color: transparent;
+    --xt-button-hover-bg-color: transparent;
+    --xt-button-active-bg-color: transparent;
+  }
+  &.is-link {
+    --xt-button-text-color: var(--xt-color-primary);
+    --xt-button-hover-text-color: var(--xt-color-primary-light-3);
+    --xt-button-active-text-color: var(--xt-color-primary-dark-2);
+    --xt-button-bg-color: transparent;
+    --xt-button-border-color: transparent;
+    --xt-button-hover-bg-color: transparent;
+    --xt-button-active-bg-color: transparent;
+  }
+  &.is-plain {
     &.is-disabled {
       color: var(--xt-color-primary-light-5);
       background-color: var(--xt-color-primary-light-9);
       border-color: var(--xt-color-primary-light-8);
+    }
+  }
+  &.is-text,
+  &.is-link {
+    &.is-disabled {
+      color: var(--xt-color-primary-light-5);
     }
   }
 
@@ -455,9 +466,7 @@
   --xt-button-disabled-bg-color: var(--xt-color-success-light-5);
   --xt-button-disabled-border-color: var(--xt-color-success-light-5);
 
-  &.is-plain,
-  &.is-text,
-  &.is-link {
+  &.is-plain {
     --xt-button-text-color: var(--xt-color-success);
     --xt-button-bg-color: var(--xt-color-success-light-9);
     --xt-button-border-color: var(--xt-color-success-light-5);
@@ -465,11 +474,38 @@
     --xt-button-hover-bg-color: var(--xt-color-success);
     --xt-button-hover-border-color: var(--xt-color-success);
     --xt-button-active-text-color: var(--xt-color-white);
-
+    --xt-button-active-bg-color: var(--xt-color-success);
+    --xt-button-active-border-color: var(--xt-color-success);
+  }
+  &.is-text {
+    --xt-button-text-color: var(--xt-color-success);
+    --xt-button-hover-text-color: var(--xt-color-success-light-3);
+    --xt-button-active-text-color: var(--xt-color-success-dark-2);
+    --xt-button-bg-color: transparent;
+    --xt-button-border-color: transparent;
+    --xt-button-hover-bg-color: transparent;
+    --xt-button-active-bg-color: transparent;
+  }
+  &.is-link {
+    --xt-button-text-color: var(--xt-color-success);
+    --xt-button-hover-text-color: var(--xt-color-success-light-3);
+    --xt-button-active-text-color: var(--xt-color-success-dark-2);
+    --xt-button-bg-color: transparent;
+    --xt-button-border-color: transparent;
+    --xt-button-hover-bg-color: transparent;
+    --xt-button-active-bg-color: transparent;
+  }
+  &.is-plain {
     &.is-disabled {
       color: var(--xt-color-success-light-5);
       background-color: var(--xt-color-success-light-9);
       border-color: var(--xt-color-success-light-8);
+    }
+  }
+  &.is-text,
+  &.is-link {
+    &.is-disabled {
+      color: var(--xt-color-success-light-5);
     }
   }
 
@@ -509,9 +545,7 @@
   --xt-button-disabled-bg-color: var(--xt-color-warning-light-5);
   --xt-button-disabled-border-color: var(--xt-color-warning-light-5);
 
-  &.is-plain,
-  &.is-text,
-  &.is-link {
+  &.is-plain {
     --xt-button-text-color: var(--xt-color-warning);
     --xt-button-bg-color: var(--xt-color-warning-light-9);
     --xt-button-border-color: var(--xt-color-warning-light-5);
@@ -519,11 +553,36 @@
     --xt-button-hover-bg-color: var(--xt-color-warning);
     --xt-button-hover-border-color: var(--xt-color-warning);
     --xt-button-active-text-color: var(--xt-color-white);
-
+    --xt-button-active-bg-color: var(--xt-color-warning);
+    --xt-button-active-border-color: var(--xt-color-warning);
     &.is-disabled {
       color: var(--xt-color-warning-light-5);
       background-color: var(--xt-color-warning-light-9);
       border-color: var(--xt-color-warning-light-8);
+    }
+  }
+  &.is-text {
+    --xt-button-text-color: var(--xt-color-warning);
+    --xt-button-hover-text-color: var(--xt-color-warning-light-3);
+    --xt-button-active-text-color: var(--xt-color-warning-dark-2);
+    --xt-button-bg-color: transparent;
+    --xt-button-border-color: transparent;
+    --xt-button-hover-bg-color: transparent;
+    --xt-button-active-bg-color: transparent;
+    &.is-disabled {
+      color: var(--xt-color-warning-light-5);
+    }
+  }
+  &.is-link {
+    --xt-button-text-color: var(--xt-color-warning);
+    --xt-button-hover-text-color: var(--xt-color-warning-light-3);
+    --xt-button-active-text-color: var(--xt-color-warning-dark-2);
+    --xt-button-bg-color: transparent;
+    --xt-button-border-color: transparent;
+    --xt-button-hover-bg-color: transparent;
+    --xt-button-active-bg-color: transparent;
+    &.is-disabled {
+      color: var(--xt-color-warning-light-5);
     }
   }
 
@@ -563,9 +622,7 @@
   --xt-button-disabled-bg-color: var(--xt-color-danger-light-5);
   --xt-button-disabled-border-color: var(--xt-color-danger-light-5);
 
-  &.is-plain,
-  &.is-text,
-  &.is-link {
+  &.is-plain {
     --xt-button-text-color: var(--xt-color-danger);
     --xt-button-bg-color: var(--xt-color-danger-light-9);
     --xt-button-border-color: var(--xt-color-danger-light-5);
@@ -573,11 +630,36 @@
     --xt-button-hover-bg-color: var(--xt-color-danger);
     --xt-button-hover-border-color: var(--xt-color-danger);
     --xt-button-active-text-color: var(--xt-color-white);
-
+    --xt-button-active-bg-color: var(--xt-color-danger);
+    --xt-button-active-border-color: var(--xt-color-danger);
     &.is-disabled {
       color: var(--xt-color-danger-light-5);
       background-color: var(--xt-color-danger-light-9);
       border-color: var(--xt-color-danger-light-8);
+    }
+  }
+  &.is-text {
+    --xt-button-text-color: var(--xt-color-danger);
+    --xt-button-hover-text-color: var(--xt-color-danger-light-3);
+    --xt-button-active-text-color: var(--xt-color-danger-dark-2);
+    --xt-button-bg-color: transparent;
+    --xt-button-border-color: transparent;
+    --xt-button-hover-bg-color: transparent;
+    --xt-button-active-bg-color: transparent;
+    &.is-disabled {
+      color: var(--xt-color-danger-light-5);
+    }
+  }
+  &.is-link {
+    --xt-button-text-color: var(--xt-color-danger);
+    --xt-button-hover-text-color: var(--xt-color-danger-light-3);
+    --xt-button-active-text-color: var(--xt-color-danger-dark-2);
+    --xt-button-bg-color: transparent;
+    --xt-button-border-color: transparent;
+    --xt-button-hover-bg-color: transparent;
+    --xt-button-active-bg-color: transparent;
+    &.is-disabled {
+      color: var(--xt-color-danger-light-5);
     }
   }
 
@@ -617,9 +699,7 @@
   --xt-button-disabled-bg-color: var(--xt-color-info-light-5);
   --xt-button-disabled-border-color: var(--xt-color-info-light-5);
 
-  &.is-plain,
-  &.is-text,
-  &.is-link {
+  &.is-plain {
     --xt-button-text-color: var(--xt-color-info);
     --xt-button-bg-color: var(--xt-color-info-light-9);
     --xt-button-border-color: var(--xt-color-info-light-5);
@@ -627,14 +707,38 @@
     --xt-button-hover-bg-color: var(--xt-color-info);
     --xt-button-hover-border-color: var(--xt-color-info);
     --xt-button-active-text-color: var(--xt-color-white);
-
+    --xt-button-active-bg-color: var(--xt-color-info);
+    --xt-button-active-border-color: var(--xt-color-info);
     &.is-disabled {
       color: var(--xt-color-info-light-5);
       background-color: var(--xt-color-info-light-9);
       border-color: var(--xt-color-info-light-8);
     }
   }
-
+  &.is-text {
+    --xt-button-text-color: var(--xt-color-info);
+    --xt-button-hover-text-color: var(--xt-color-info-light-3);
+    --xt-button-active-text-color: var(--xt-color-info-dark-2);
+    --xt-button-bg-color: transparent;
+    --xt-button-border-color: transparent;
+    --xt-button-hover-bg-color: transparent;
+    --xt-button-active-bg-color: transparent;
+    &.is-disabled {
+      color: var(--xt-color-info-light-5);
+    }
+  }
+  &.is-link {
+    --xt-button-text-color: var(--xt-color-info);
+    --xt-button-hover-text-color: var(--xt-color-info-light-3);
+    --xt-button-active-text-color: var(--xt-color-info-dark-2);
+    --xt-button-bg-color: transparent;
+    --xt-button-border-color: transparent;
+    --xt-button-hover-bg-color: transparent;
+    --xt-button-active-bg-color: transparent;
+    &.is-disabled {
+      color: var(--xt-color-info-light-5);
+    }
+  }
   &.is-dashed {
     --xt-button-text-color: var(--xt-color-info);
     --xt-button-bg-color: var(--xt-color-info-light-9);
