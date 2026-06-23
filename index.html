@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XT-Element-UI</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f7fa; color: #2c3e50; }
+    .hero { background: linear-gradient(135deg, #409EFF, #3a8ee6); color: #fff; padding: 80px 20px; text-align: center; }
+    .hero h1 { font-size: 3rem; margin-bottom: 16px; }
+    .hero p { font-size: 1.25rem; opacity: 0.9; margin-bottom: 32px; }
+    .hero .btn { display: inline-block; padding: 12px 32px; background: #fff; color: #409EFF; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 1.1rem; transition: transform 0.2s; }
+    .hero .btn:hover { transform: translateY(-2px); }
+    .features { max-width: 1100px; margin: 60px auto; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+    .feature { background: #fff; padding: 32px; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+    .feature h3 { font-size: 1.2rem; margin-bottom: 8px; }
+    .feature p { color: #606266; line-height: 1.6; }
+    .install { max-width: 800px; margin: 0 auto 60px; padding: 0 20px; }
+    .install pre { background: #282c34; color: #abb2bf; padding: 20px; border-radius: 8px; overflow-x: auto; font-size: 0.9rem; line-height: 1.6; }
+    .section-title { text-align: center; font-size: 1.8rem; margin: 60px 0 30px; }
+    .comps { max-width: 1100px; margin: 0 auto 60px; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+    .comp-group { background: #fff; padding: 24px; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+    .comp-group h3 { font-size: 1.1rem; margin-bottom: 12px; color: #409EFF; }
+    .comp-group ul { list-style: none; }
+    .comp-group li { padding: 6px 0; color: #606266; font-size: 0.95rem; }
+    .comp-group li::before { content: "◇ "; color: #409EFF; }
+    footer { text-align: center; padding: 30px; color: #909399; font-size: 0.9rem; border-top: 1px solid #e4e7ed; }
+    .links { text-align: center; margin: 40px 0; }
+    .links a { margin: 0 12px; color: #409EFF; text-decoration: none; }
+    .links a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <h1>XT-Element-UI</h1>
+    <p>基于 Vue 2.7 + ElementUI 的企业级组件库</p>
+    <a class="btn" href="https://github.com/JobWebNie/xt-element-ui">GitHub 仓库</a>
+  </div>
+
+  <div class="features">
+    <div class="feature">
+      <h3>丰富的组件</h3>
+      <p>提供 15+ 组件，覆盖布局、表单、数据展示、图表等常见场景</p>
+    </div>
+    <div class="feature">
+      <h3>开箱即用</h3>
+      <p>基于 ElementUI 构建，与现有 ElementUI 项目无缝集成</p>
+    </div>
+    <div class="feature">
+      <h3>按需引入</h3>
+      <p>完整的 npm 包架构，支持按需引入，减小打包体积</p>
+    </div>
+    <div class="feature">
+      <h3>双架构设计</h3>
+      <p>Xt 自定义组件 + Ex 扩展组件，职责清晰、便于维护</p>
+    </div>
+    <div class="feature">
+      <h3>主题系统</h3>
+      <p>支持亮色/暗色主题切换，支持自定义主色调</p>
+    </div>
+    <div class="feature">
+      <h3>图表能力</h3>
+      <p>内置 ECharts 封装，提供柱状图、折线图、饼图、混合图</p>
+    </div>
+  </div>
+
+  <div class="install">
+    <h2 class="section-title">快速开始</h2>
+    <pre><code># 安装
+npm install xt-element-ui --save
+
+# 全局引入
+import Vue from 'vue'
+import XtElementUI from 'xt-element-ui'
+import 'xt-element-ui/lib/index.css'
+
+Vue.use(XtElementUI)</code></pre>
+  </div>
+
+  <h2 class="section-title">组件概览</h2>
+  <div class="comps">
+    <div class="comp-group">
+      <h3>Xt 组件</h3>
+      <ul>
+        <li>XtButton 按钮</li>
+        <li>XtCard 卡片</li>
+        <li>XtCardItem 卡片项</li>
+        <li>XtFlexBox 弹性布局</li>
+        <li>XtGridBox 网格布局</li>
+        <li>XtText 文本</li>
+        <li>XtInput 输入框</li>
+        <li>XtTime 时间</li>
+        <li>XtStepPrice 阶梯价格</li>
+        <li>XtConfigProvider 配置提供者</li>
+        <li>XtMap 地图组件</li>
+        <li>XtMapProvider 地图提供者</li>
+      </ul>
+    </div>
+    <div class="comp-group">
+      <h3>Ex 组件</h3>
+      <ul>
+        <li>ExButton 扩展按钮</li>
+        <li>ExCard 扩展卡片</li>
+        <li>ExTable 扩展表格</li>
+        <li>ExSelectTree 下拉选择树</li>
+        <li>ExUpload 上传组件</li>
+        <li>ExDatePicker 日期选择器</li>
+        <li>ExPage 页面组件</li>
+        <li>ExIcon 图标组件</li>
+        <li>ExChart 图表容器</li>
+        <li>ExBar 柱状图</li>
+        <li>ExLine 折线图</li>
+        <li>ExPie 饼图</li>
+        <li>ExMulti 组合图</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="links">
+    <a href="https://github.com/JobWebNie/xt-element-ui">GitHub</a>
+    <a href="https://www.npmjs.com/package/xt-element-ui">npm</a>
+  </div>
+
+  <footer>MIT Licensed | Copyright &copy; 2026 XT-Element-UI</footer>
+</body>
+</html>
