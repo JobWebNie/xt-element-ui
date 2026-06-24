@@ -52,6 +52,24 @@
   font-weight: bold;
 }
 
+// 单行省略
+.xt-text--ellipsis {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+// 多行省略
+.xt-text--ellipsis-multiline {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
 // 金额样式
 .xt-text--money {
   font-family: 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;

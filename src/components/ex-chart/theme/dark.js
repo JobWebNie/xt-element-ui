@@ -14,6 +14,9 @@ export default {
       color: "#ffffff"
     }
   },
+  axisLabel: {
+    color: "#ffffff"
+  },
   line: {
     itemStyle: {
     },
@@ -24,7 +27,7 @@ export default {
   bar: {
     itemStyle: {
       borderRadius: 4
-    }
+    },
   },
   pie: {
     roseType: "radius",

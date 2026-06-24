@@ -1,0 +1,197 @@
+@import '../../../styles/variables.scss';
+
+.xt-tabs {
+  display: flex;
+  flex-direction: column;
+}
+
+.xt-tabs--left,
+.xt-tabs--right {
+  flex-direction: row;
+}
+
+.xt-tabs__header {
+  position: relative;
+  border-bottom: 1px solid $xt-color-border-light;
+  padding-bottom: 0;
+}
+
+.xt-tabs--card .xt-tabs__header {
+  border-bottom: none;
+  background: $xt-color-bg-secondary;
+  padding: 4px 4px 0;
+  border-radius: 4px 4px 0 0;
+}
+
+.xt-tabs--left .xt-tabs__header {
+  border-right: 1px solid $xt-color-border-light;
+  border-bottom: none;
+  padding-right: 0;
+}
+
+.xt-tabs--right .xt-tabs__header {
+  border-left: 1px solid $xt-color-border-light;
+  border-bottom: none;
+  padding-left: 0;
+}
+
+.xt-tabs__nav {
+  display: flex;
+}
+
+.xt-tabs--left .xt-tabs__nav,
+.xt-tabs--right .xt-tabs__nav {
+  flex-direction: column;
+}
+
+.xt-tabs__nav-item {
+  position: relative;
+  padding: 12px 20px;
+  font-size: 14px;
+  color: $xt-color-text-secondary;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.xt-tabs--card .xt-tabs__nav-item {
+  margin-bottom: -1px;
+  border-radius: 4px 4px 0 0;
+  background: transparent;
+  border: 1px solid transparent;
+}
+
+.xt-tabs--card .xt-tabs__nav-item--active {
+  background: $xt-color-bg-primary;
+  border-color: $xt-color-border-light;
+  border-bottom-color: $xt-color-bg-primary;
+}
+
+.xt-tabs__nav-item:hover {
+  color: $xt-color-primary;
+}
+
+.xt-tabs__nav-item--active {
+  color: $xt-color-primary;
+  font-weight: 500;
+}
+
+.xt-tabs__nav-link {
+  display: inline-block;
+}
+
+.xt-tabs__nav-indicator {
+  position: absolute;
+  bottom: 0;
+  height: 2px;
+  background: $xt-color-primary;
+  transition: left 0.3s ease, width 0.3s ease;
+}
+
+.xt-tabs--left .xt-tabs__nav-indicator {
+  bottom: auto;
+  left: auto;
+  right: 0;
+  width: 2px;
+  height: auto;
+  top: 0;
+}
+
+.xt-tabs--right .xt-tabs__nav-indicator {
+  bottom: auto;
+  right: auto;
+  left: 0;
+  width: 2px;
+  height: auto;
+  top: 0;
+}
+
+.xt-tabs--card .xt-tabs__nav-indicator {
+  display: none;
+}
+
+.xt-tabs__content {
+  flex: 1;
+  padding: 20px 0;
+}
+
+.xt-tabs--card .xt-tabs__content {
+  border: 1px solid $xt-color-border-light;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  padding: 20px;
+}
+
+.xt-tabs--left .xt-tabs__content,
+.xt-tabs--right .xt-tabs__content {
+  padding: 0 20px;
+}
+
+.xt-tabs__pane {
+  animation: xt-tabs-fade-in 0.3s ease;
+}
+
+@keyframes xt-tabs-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.xt-tabs-fade-enter-active,
+.xt-tabs-fade-leave-active {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.xt-tabs-fade-enter {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.xt-tabs-fade-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+[data-theme='dark'], html.dark {
+  .xt-tabs__header {
+    border-color: $xt-dark-color-border;
+  }
+  
+  .xt-tabs--card .xt-tabs__header {
+    background: $xt-dark-color-bg-secondary;
+  }
+  
+  .xt-tabs--card .xt-tabs__nav-item--active {
+    background: $xt-dark-color-bg-primary;
+    border-color: $xt-dark-color-border;
+    border-bottom-color: $xt-dark-color-bg-primary;
+  }
+  
+  .xt-tabs--left .xt-tabs__header {
+    border-color: $xt-dark-color-border;
+  }
+  
+  .xt-tabs--right .xt-tabs__header {
+    border-color: $xt-dark-color-border;
+  }
+  
+  .xt-tabs__nav-item {
+    color: $xt-dark-color-text-secondary;
+  }
+  
+  .xt-tabs__nav-item:hover {
+    color: $xt-dark-color-primary;
+  }
+  
+  .xt-tabs__nav-item--active {
+    color: $xt-dark-color-primary;
+  }
+  
+  .xt-tabs--card .xt-tabs__content {
+    border-color: $xt-dark-color-border;
+  }
+}

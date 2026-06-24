@@ -5,7 +5,9 @@
       type ? 'xt-text--' + type : '',
       'xt-text--' + size,
       { 'xt-text--bold': bold },
-      { 'xt-text--money': format === 'money' }
+      { 'xt-text--money': format === 'money' },
+      { 'xt-text--ellipsis': ellipsis },
+      { 'xt-text--ellipsis-multiline': ellipsis && ellipsisRows > 1 }
     ]"
     :style="customStyle"
   >
@@ -42,6 +44,15 @@ export default {
     letterSpacing: {
       type: [String, Number],
       default: ''
+    },
+    ellipsis: {
+      type: Boolean,
+      default: false
+    },
+    ellipsisRows: {
+      type: Number,
+      default: 1,
+      validator: (val) => val >= 1 && val <= 10
     },
 
     // 格式化模式：normal 普通 | thousand 千分位 | money 金额
@@ -98,6 +109,9 @@ export default {
       if (this.letterSpacing) {
         style.letterSpacing = typeof this.letterSpacing === 'number' ? `${this.letterSpacing}px` : this.letterSpacing
       }
+      if (this.ellipsis && this.ellipsisRows > 1) {
+        style.WebkitLineClamp = this.ellipsisRows
+      }
       return style
     },
 
@@ -151,4 +165,4 @@ export default {
     }
   }
 }
-</script>ss
+</script>

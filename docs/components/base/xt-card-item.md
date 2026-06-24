@@ -7,7 +7,7 @@
 ::: demo 基本用法
 ```vue
 <template>
-  <XtCardItem title="销售额" label="销售额" value="12345" unit="元" style="width: 350px;"></XtCardItem>
+  <XtCardItem title="销售额" :value="12345" unit="元" style="width: 350px;"></XtCardItem>
 </template>
 ```
 :::
@@ -40,7 +40,7 @@
 ::: demo 边框型卡片项
 ```vue
 <template>
-  <XtCardItem label="销售额" value="12345" unit="元" type="primary"></XtCardItem>
+  <XtCardItem title="销售额" value="12345" unit="元" type="primary" style="width: 350px;"></XtCardItem>
 </template>
 ```
 :::
@@ -50,10 +50,10 @@
 ::: demo 不同类型的边框卡片项
 ```vue
 <template>
-  <div style="display: flex; flex-direction: column; gap: 8px;">
-    <XtCardItem label="成功" value="OK" type="success"></XtCardItem>
-    <XtCardItem label="警告" value="Warning" type="warning"></XtCardItem>
-    <XtCardItem label="危险" value="Error" type="danger"></XtCardItem>
+  <div style="display: flex; flex-direction: column; gap: 8px;width: 350px;">
+    <XtCardItem title="成功" value="309894" type="success"></XtCardItem>
+    <XtCardItem title="警告" value="309894" type="warning"></XtCardItem>
+    <XtCardItem title="危险" value="309894" type="danger"></XtCardItem>
   </div>
 </template>
 ```
@@ -63,7 +63,7 @@
 ::: demo 自定义颜色
 ```vue
 <template>
-  <XtCardItem label="自定义颜色" value="100%" color="#722ed1"></XtCardItem>
+  <XtCardItem title="自定义颜色" value="100%" color="#722ed1" style="width: 350px;"></XtCardItem>
 </template>
 ```
 :::
@@ -72,7 +72,7 @@
 ::: demo 自定义插槽
 ```vue
 <template>
-  <XtCardItem>
+  <XtCardItem style="width: 350px;">
     <template #label>
       <span style="color: #1890ff; font-weight: bold;">自定义标签</span>
     </template>
@@ -93,10 +93,10 @@
 ```vue
 <template>
   <XtCard title="统计数据">
-    <div style="display: flex; flex-direction: column; gap: 8px;">
-      <XtCardItem label="总销售额" value="123456" unit="元"></XtCardItem>
-      <XtCardItem label="订单数量" value="520" unit="单" type="success"></XtCardItem>
-      <XtCardItem label="转化率" value="23.5" unit="%" type="warning"></XtCardItem>
+    <div style="display: flex; flex-direction: column; gap: 8px; style="width: 350px;">
+      <XtCardItem title="总销售额" value="123456" unit="元"></XtCardItem>
+      <XtCardItem title="订单数量" value="520" unit="单" type="success"></XtCardItem>
+      <XtCardItem title="转化率" value="23.5" unit="%" type="warning"></XtCardItem>
     </div>
   </XtCard>
 </template>

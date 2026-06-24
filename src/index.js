@@ -30,6 +30,9 @@ import XtMap from './components/xt-map'
 import XtMapProvider from './components/xt-map-provider'
 import XtGridBox from './components/xt-grid-box'
 import XtGridItem from './components/xt-grid-item'
+import XtProgress from './components/xt-progress'
+import XtTabs from './components/xt-tabs'
+import XtBadge from './components/xt-badge'
 import ExDatePicker from './components/ex-date-picker'
 import ExButton from './components/ex-button'
 import ExChart from './components/ex-chart'  // ExChart 组件（基于 ECharts 封装）
@@ -37,10 +40,8 @@ import ExCard from './components/ex-card'
 import ExIcon from './components/ex-icon'    // ExIcon 组件（支持 el-icon / svg / 自定义字体）
 import ExTable from './components/ex-table'  // ExTable 组件（基于 ElementUI Table 封装）
 
-// 导入 Element UI 组件注册配置
-import { registerElementExComponents } from './config/element-registry'
+import { registerElementExComponents, registerElementDirectives } from './config/element-registry'
 
-// 存储组件列表
 const components = [
   XtButton,
   XtInput,
@@ -56,6 +57,9 @@ const components = [
   XtMapProvider,
   XtGridBox,
   XtGridItem,
+  XtProgress,
+  XtTabs,
+  XtBadge,
   ExDatePicker,
   ExButton,
   ExChart,
@@ -64,17 +68,14 @@ const components = [
   ExTable
 ]
 
-// 定义 install 方法，Vue.use() 会自动调用
 const install = function (Vue, options = {}) {
   if (install.installed) return
   install.installed = true
 
-  // 全局注册所有组件
   components.forEach(component => {
     Vue.component(component.name, component)
   })
   
-  // 将工具方法挂载到 Vue.prototype
   Vue.prototype.$xt = {
     setTheme,
     setSize,
@@ -88,39 +89,28 @@ const install = function (Vue, options = {}) {
     onConfigChange
   }
 
-  // 在安装时直接应用配置选项
   if (options) {
-    // 处理主题配置
     if (options.theme !== undefined) {
       setTheme(options.theme)
     }
-    // 处理字体大小配置
     if (options.size !== undefined) {
       setSize(options.size)
     }
-    // 处理主色调配置
     if (options.primaryColor !== undefined) {
       setPrimaryColor(options.primaryColor)
     }
-    // 处理完整配置对象
     if (options.config !== undefined) {
       setConfig(options.config)
     }
   }
 
-if (process.env.NODE_ENV === 'development') {
-  // 导入内部 element-ui 依赖（作为内部依赖，不与外部冲突）
-  const ElementUI = require('element-ui')
-  
-  // 注册 ElementUI 的基础组件（用于 ExTable 等封装组件内部使用）
-  // 不调用 Vue.use(ElementUI)，避免全局污染
-  // ex-table 等组件内部会直接使用 element-ui 的组件
-  
-  // 在开发环境下注册 ElementUI 组件为 Ex 开头（方便文档和示例使用）
+  try {
+    const ElementUI = require('element-ui')
     registerElementExComponents(Vue, ElementUI)
+    registerElementDirectives(Vue, ElementUI)
+  } catch (e) {
+    console.warn('[XtElementUI] ElementUI 未安装，Ex 系列组件可能无法正常使用')
   }
-
-  // 调用统一的注册函数
 }
 
 // 支持全局 script 标签引入
@@ -131,9 +121,7 @@ if (typeof window !== 'undefined' && window.Vue) {
 // 导出
 export default {
   install,
-  // 导出组件列表
   components,
-  // 按需导出组件
   XtButton,
   XtInput,
   XtFlexBox,
@@ -148,6 +136,9 @@ export default {
   XtMapProvider,
   XtGridBox,
   XtGridItem,
+  XtProgress,
+  XtTabs,
+  XtBadge,
   ExDatePicker,
   ExButton,
   ExCard,

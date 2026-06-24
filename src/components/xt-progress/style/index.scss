@@ -1,0 +1,119 @@
+@import '../../../styles/variables.scss';
+
+.xt-progress {
+  display: inline-flex;
+  align-items: center;
+}
+
+.xt-progress__bar {
+  flex: 1;
+  height: 6px;
+  background: $xt-color-border-light;
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+}
+
+.xt-progress--small .xt-progress__bar {
+  height: 4px;
+}
+
+.xt-progress--large .xt-progress__bar {
+  height: 8px;
+}
+
+.xt-progress__bar-inner {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.3s ease;
+  position: relative;
+}
+
+.xt-progress__bar-text {
+  position: absolute;
+  right: -30px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  color: $xt-color-text-secondary;
+}
+
+.xt-progress__text {
+  margin-left: 10px;
+  font-size: 14px;
+  color: $xt-color-text-secondary;
+}
+
+.xt-progress--small .xt-progress__text {
+  font-size: 12px;
+}
+
+.xt-progress--large .xt-progress__text {
+  font-size: 16px;
+}
+
+.xt-progress__circle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.xt-progress__circle-svg {
+  transform: rotate(-90deg);
+}
+
+.xt-progress__circle-bg {
+  transition: stroke 0.3s ease;
+}
+
+.xt-progress__circle-bar {
+  transition: stroke-dashoffset 0.6s ease;
+}
+
+.xt-progress__circle-text {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.xt-progress__circle-percent {
+  font-size: 16px;
+  font-weight: 500;
+  color: $xt-color-text-primary;
+}
+
+.xt-progress--small .xt-progress__circle-percent {
+  font-size: 12px;
+}
+
+.xt-progress--large .xt-progress__circle-percent {
+  font-size: 20px;
+}
+
+.xt-progress-fade-enter-active,
+.xt-progress-fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.xt-progress-fade-enter,
+.xt-progress-fade-leave-to {
+  opacity: 0;
+}
+
+[data-theme='dark'], html.dark {
+  .xt-progress__bar {
+    background: $xt-dark-color-border;
+  }
+  
+  .xt-progress__bar-text,
+  .xt-progress__text {
+    color: $xt-dark-color-text-secondary;
+  }
+  
+  .xt-progress__circle-percent {
+    color: $xt-dark-color-text-primary;
+  }
+}

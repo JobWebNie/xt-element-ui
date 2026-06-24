@@ -1,17 +1,17 @@
 <template>
     <ex-card class="xt-card-item" :bordered="false" :class="{ [`is-${type}`]: type ? true : false}">
-        <xt-text bold size="medium">{{ title }}</xt-text>
-        <xt-flex-box>
-          <div style="width: 50%;margin-bottom: 5px;">
+        <xt-flex-box content="between">
+          <div >
+            <div><xt-text bold size="extra-large">{{ title }}</xt-text></div>
             <xt-text bold size="large" v-model="value" format="thousand" :type="type" :decimals="0"></xt-text>
             <div style="margin: 5px 0;">
               <xt-text size="small">较昨日</xt-text>
               <xt-text v-model="change" format="normal" :type="diff > 0 ? 'success' : 'danger'" :suffix="diff > 0 ? '↑' : '↓'"></xt-text> 
             </div>
           </div>
-          <div style="flex: 1; height: 100%;">
+          <div style="height: 100%;">
             <slot name="icon">
-              <xt-text size="extra-large" :type="type"><i class="el-icon-user"></i></xt-text>
+              <xt-text size="extra-large" :type="type"><ex-icon name="el-icon-user" :size="48" ></ex-icon></xt-text>
             </slot>
           </div>
         </xt-flex-box>
