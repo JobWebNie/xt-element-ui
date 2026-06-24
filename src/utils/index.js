@@ -1,4 +1,4 @@
-import EchartsUtil from '../components/ex-chart/utils'
+import EchartsUtil from '../components/xt-chart/utils'
 
 const defaultConfig = {
     theme: 'white',

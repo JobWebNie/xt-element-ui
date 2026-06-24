@@ -23,7 +23,6 @@
 - **🎯 丰富的组件**：提供 15+ 组件，覆盖布局、表单、数据展示、图表等常见场景
 - **📦 开箱即用**：基于 ElementUI 构建，与现有 ElementUI 项目无缝集成
 - **🪶 按需引入**：完整的 npm 包架构，支持按需引入，减小打包体积
-- **🎨 双架构设计**：`Xt` 自定义组件 + `Ex` 扩展组件，职责清晰、便于维护
 - **🌓 主题系统**：支持亮色/暗色主题切换，支持自定义主色调
 - **📐 响应式设计**：组件支持多种尺寸配置，适配不同屏幕
 - **📊 图表能力**：内置 ECharts 封装，提供柱状图、折线图、饼图、混合图
@@ -69,20 +68,20 @@ Vue.use(XtElementUI, {
 ### 按需引入
 
 ```javascript
-import { XtButton, XtFlexBox, ExTable, ExBar } from 'xt-element-ui'
+import { XtButton, XtFlexBox, XtTable, XtBar } from 'xt-element-ui'
 import 'xt-element-ui/lib/index.css'
 
 Vue.component('XtButton', XtButton)
 Vue.component('XtFlexBox', XtFlexBox)
-Vue.component('ExTable', ExTable)
-Vue.component('ExBar', ExBar)
+Vue.component('XtTable', XtTable)
+Vue.component('XtBar', XtBar)
 ```
 
 ---
 
 ## 📦 组件列表
 
-### Xt 组件（自定义组件）
+所有组件统一以 `Xt` 开头命名，不再区分双架构：
 
 | 组件 | 说明 |
 |------|------|
@@ -95,24 +94,22 @@ Vue.component('ExBar', ExBar)
 | **XtText** | 文本组件 |
 | **XtInput** | 输入框组件 |
 | **XtConfigProvider** | 全局配置提供器 |
+| **XtTime** | 时间组件（当前时间/倒计时/日期格式化） |
+| **XtStepPrice** | 阶梯价格组件 |
+| **XtStepPriceItem** | 阶梯价格子项组件 |
+| **XtMap** | 统一地图组件（支持高德/天地图/百度） |
+| **XtMapProvider** | 地图全局配置提供器 |
+| **XtDatePicker** | 日期选择器（支持季度选择） |
+| **XtIcon** | 图标组件（支持 el-icon/SVG/自定义字体） |
+| **XtTable** | 扩展表格（含虚拟滚动） |
+| **XtChart** | 图表容器（含 XtBar/XtLine/XtPie/XtMulti） |
+| **XtSelectTree** | 下拉选择树组件 |
+| **XtUpload** | 上传组件（支持图片预览） |
+| **XtPage** | 页面组件 |
+| **XtProgress** | 进度条组件 |
+| **XtTabs** | 标签页组件 |
+| **XtBadge** | 徽标组件 |
 
-### Ex 组件（扩展组件）
-
-| 组件 | 说明 |
-|------|------|
-| **ExButton** | 基于 ElementUI Button 的扩展按钮 |
-| **ExCard** | 基于 ElementUI Card 的扩展卡片 |
-| **ExTable** | 基于 ElementUI Table 的扩展表格（支持虚拟滚动） |
-| **ExBar** | 基于 ECharts 的柱状图 |
-| **ExLine** | 基于 ECharts 的折线图 |
-| **ExPie** | 基于 ECharts 的饼图 |
-| **ExMulti** | 基于 ECharts 的混合图表（支持多 Y 轴） |
-| **ExChart** | 图表容器组件 |
-| **ExSelectTree** | 下拉选择树组件 |
-| **ExUpload** | 上传组件（支持图片预览） |
-| **ExPage** | 页面组件 |
-| **ExDatePicker** | 日期选择组件 |
-| **ExIcon** | 图标组件（支持 SVG / 字体图标） |
 
 ---
 
@@ -146,29 +143,36 @@ xt-element-ui/
 │   │   ├── config.js         # 主题、导航、侧边栏配置
 │   │   └── enhanceApp.js     # 应用增强
 │   └── components/            # 各组件文档
-│       ├── base/             # Xt 系列组件文档
-│       ├── extend/           # Ex 系列组件文档
+│       ├── base/             # 组件文档
 │       └── utils/            # 工具类文档
 │
 ├── src/                       # 组件源码
-│   ├── components/           # 组件目录
+│   ├── components/           # 组件目录（统一 Xt 前缀命名）
 │   │   ├── xt-button/        # 按钮组件
 │   │   ├── xt-card/          # 卡片组件
+│   │   ├── xt-card-item/     # 卡片项组件
 │   │   ├── xt-flex-box/      # 弹性布局组件
 │   │   ├── xt-grid-box/      # 网格布局组件
+│   │   ├── xt-grid-item/     # 网格子项组件
 │   │   ├── xt-text/          # 文本组件
+│   │   ├── xt-time/          # 时间组件
 │   │   ├── xt-input/         # 输入框组件
 │   │   ├── xt-config-provider/ # 配置提供者
-│   │   ├── xt-date-picker/   # 日期选择
-│   │   │
-│   │   ├── ex-button/        # 扩展按钮
-│   │   ├── ex-card/          # 扩展卡片
-│   │   ├── ex-table/         # 扩展表格（含虚拟滚动）
-│   │   ├── ex-chart/         # 图表组件（ExBar/ExLine/ExPie/ExMulti）
-│   │   ├── ex-icon/          # 图标组件
-│   │   ├── ex-select-tree/   # 下拉选择树
-│   │   ├── ex-upload/        # 上传组件
-│   │   └── ex-page/          # 页面组件
+│   │   ├── xt-date-picker/   # 日期选择器
+│   │   ├── xt-icon/          # 图标组件
+│   │   ├── xt-table/         # 扩展表格（含虚拟滚动）
+│   │   ├── xt-chart/         # 图表组件（XtBar/XtLine/XtPie/XtMulti）
+│   │   ├── xt-select-tree/   # 下拉选择树
+│   │   ├── xt-upload/        # 上传组件
+│   │   ├── xt-page/          # 页面组件
+│   │   ├── xt-step-price/    # 阶梯价格组件
+│   │   ├── xt-step-price-item/ # 阶梯价格子项组件
+│   │   ├── xt-map/           # 统一地图组件
+│   │   ├── xt-map-provider/  # 地图配置提供者
+│   │   ├── xt-progress/      # 进度条组件
+│   │   ├── xt-tabs/          # 标签页组件
+│   │   ├── xt-badge/         # 徽标组件
+│   │   └── xt-layout/        # 布局组件
 │   │
 │   ├── config/               # 配置模块
 │   ├── styles/               # 全局样式与变量

@@ -33,14 +33,11 @@ import XtGridItem from './components/xt-grid-item'
 import XtProgress from './components/xt-progress'
 import XtTabs from './components/xt-tabs'
 import XtBadge from './components/xt-badge'
-import ExDatePicker from './components/ex-date-picker'
-import ExButton from './components/ex-button'
-import ExChart from './components/ex-chart'  // ExChart 组件（基于 ECharts 封装）
-import ExCard from './components/ex-card'
-import ExIcon from './components/ex-icon'    // ExIcon 组件（支持 el-icon / svg / 自定义字体）
-import ExTable from './components/ex-table'  // ExTable 组件（基于 ElementUI Table 封装）
+import XtDatePicker from './components/xt-date-picker'
+import XtChart from './components/xt-chart'  // XtChart 组件（基于 ECharts 封装）
+import XtIcon from './components/xt-icon'    // XtIcon 组件（支持 el-icon / svg / 自定义字体）
+import XtTable from './components/xt-table'  // XtTable 组件（基于 ElementUI Table 封装）
 
-import { registerElementExComponents, registerElementDirectives } from './config/element-registry'
 
 const components = [
   XtButton,
@@ -60,12 +57,10 @@ const components = [
   XtProgress,
   XtTabs,
   XtBadge,
-  ExDatePicker,
-  ExButton,
-  ExChart,
-  ExCard,
-  ExIcon,
-  ExTable
+  XtDatePicker,
+  XtChart,
+  XtIcon,
+  XtTable
 ]
 
 const install = function (Vue, options = {}) {
@@ -104,13 +99,6 @@ const install = function (Vue, options = {}) {
     }
   }
 
-  try {
-    const ElementUI = require('element-ui')
-    registerElementExComponents(Vue, ElementUI)
-    registerElementDirectives(Vue, ElementUI)
-  } catch (e) {
-    console.warn('[XtElementUI] ElementUI 未安装，Ex 系列组件可能无法正常使用')
-  }
 }
 
 // 支持全局 script 标签引入
@@ -139,18 +127,16 @@ export default {
   XtProgress,
   XtTabs,
   XtBadge,
-  ExDatePicker,
-  ExButton,
-  ExCard,
-  ExIcon,
-  ExTable
+  XtDatePicker,
+  XtIcon,
+  XtTable
 }
 
-// ExChart 组件按需导出（使用时需自行安装 echarts 依赖）
-export { default as ExChart } from './components/ex-chart'
+// XtChart 组件按需导出（使用时需自行安装 echarts 依赖）
+export { default as XtChart } from './components/xt-chart'
 
-// ExTable 虚拟滚动演示数据工具
-export { createVirtualScrollData, virtualScrollColumns } from './components/ex-table/virtualScrollData'
+// XtTable 虚拟滚动演示数据工具
+export { createVirtualScrollData, virtualScrollColumns } from './components/xt-table/virtualScrollData'
 
 // 导出工具函数和变量
 export {

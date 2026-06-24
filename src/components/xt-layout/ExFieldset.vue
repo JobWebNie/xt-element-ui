@@ -19,7 +19,7 @@
 </template>
 <script>
 export default {
-  name: "ExFieldset",
+  name: "XtFieldset",
   props: {
     legend: {},
     type: {

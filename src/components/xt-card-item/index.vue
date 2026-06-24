@@ -1,5 +1,5 @@
 <template>
-    <ex-card class="xt-card-item" :bordered="false" :class="{ [`is-${type}`]: type ? true : false}">
+    <xt-card class="xt-card-item" :bordered="false" :class="{ [`is-${type}`]: type ? true : false}">
         <xt-flex-box content="between">
           <div >
             <div><xt-text bold size="extra-large">{{ title }}</xt-text></div>
@@ -11,11 +11,11 @@
           </div>
           <div style="height: 100%;">
             <slot name="icon">
-              <xt-text size="extra-large" :type="type"><ex-icon name="el-icon-user" :size="48" ></ex-icon></xt-text>
+              <xt-text size="extra-large" :type="type"><xt-icon name="el-icon-user" :size="48" ></xt-icon></xt-text>
             </slot>
           </div>
         </xt-flex-box>
-      </ex-card>
+      </xt-card>
 </template>
 <script>
 export default {

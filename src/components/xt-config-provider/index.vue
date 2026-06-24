@@ -1,5 +1,5 @@
 <script>
-import EchartsUtil from '../ex-chart/utils.js'
+import EchartsUtil from '../xt-chart/utils.js'
 export default {
   name: 'XtConfigProvider',
   inheritAttrs: false,

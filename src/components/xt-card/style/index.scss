@@ -1,49 +1,73 @@
+// XtCard 组件样式
+@import '../../../styles/element-theme.scss';
 @import '../../../styles/variables.scss';
 
-.xt-card {
-  --xt-card-bg-color: var(--xt-card-bg-color, #ffffff);
-  --xt-card-border-color: var(--xt-card-border-color, #EBEEF5);
-  --xt-card-text-color: var(--xt-color-text-primary, #303133);
+.ex-card {
+  border-radius: 8px;
+  transition: all 0.3s;
+  font-size: var(--ex-card-font-size, 14px);
+  background-color: var(--el-bg-color-block, #ffffff);
+  color: var(--el-text-color-primary, #303133);
+  border-color: var(--el-border-color, #303133);
   
-  border-radius: var(--xt-card-border-radius, 4px);
-  box-shadow: var(--xt-card-shadow, 0 2px 12px 0 rgba(0, 0, 0, 0.1));
-  background-color: var(--xt-card-bg-color);
-  overflow: hidden;
-  color: var(--xt-card-text-color);
-  transition: var(--xt-transition-duration, 0.3s);
+  .el-card__header {
+    padding: var(--ex-card-header-padding, 16px 20px);
+    border-bottom: 1px solid var(--el-border-color, #ebeef5);
+    background-color: var(--el-bg-color-block-head, #ffffff);
+    font-weight: 600;
+  }
+  
+  .el-card__body {
+    padding: var(--ex-card-body-padding, 20px);
+  }
 }
 
-.xt-card .card__header {
-  padding: var(--xt-card-header-padding, 18px 20px);
-  box-sizing: border-box;
-  font-weight: 600;
-  font-size: var(--xt-font-size-medium, 16px);
+.ex-card-small {
+  font-size: 12px;
+  
+  .el-card__header {
+    font-size: 12px;
+  }
 }
 
-.xt-card .card__body {
-  padding: var(--xt-card-padding, 20px);
+.ex-card-medium {
+  font-size: 14px;
+  
+  .el-card__header {
+    font-size: 14px;
+  }
 }
 
-.xt-card .card__body .value {
-  font-size: var(--xt-font-size-large, 18px);
-  font-weight: 600;
-  color: var(--xt-color-primary, #1890ff);
+.ex-card-large {
+  font-size: 16px;
+  
+  .el-card__header {
+    font-size: 16px;
+  }
 }
 
-.xt-card .card__body .unit {
-  font-size: var(--xt-font-size-base, 14px);
-  color: var(--xt-color-text-secondary, #909399);
-  margin-left: 4px;
+.ex-card-always {
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 }
 
-.xt-card .value {
-  font-weight: 600;
+.ex-card-hover {
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  
+  &:hover {
+    box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.15);
+  }
 }
 
-.xt-card .card__header + .card__body {
-  padding-top: 0;
+.ex-card-never {
+  box-shadow: none;
+  border: 1px solid var(--el-border-color, #ebeef5);
 }
 
-.xt-card.noPadding .card__body {
-  padding: 0;
+.ex-card-no-border {
+  border: none;
+  
+  .el-card__header {
+    border-bottom: none;
+  }
 }
+

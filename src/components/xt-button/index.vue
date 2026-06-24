@@ -1,96 +1,66 @@
 <template>
-  <button
-    class="xt-button"
-    :class="[
-      type ? 'xt-button--' + type : '',
-      size ? 'xt-button--' + size : '',
-      {
-        'is-plain': plain,
-        'is-disabled': disabled,
-        'is-round': round,
-        'is-circle': circle,
-        'is-dashed': dashed,
-        'is-text': text,
-        'is-link': link,
-        'is-loading': loading
-      }
-    ]"
-    :disabled="disabled || loading"
+  <el-button 
+    class="ex-button" 
+    :class="buttonClasses"
+    v-bind="$attrs" 
     @click="handleClick"
   >
-    <i v-if="loading" class="el-icon-loading"></i>
-    <i v-else-if="icon" :class="iconClass"></i>
-    <span v-if="$slots.default" class="xt-button__inner">
-      <slot></slot>
-    </span>
-  </button>
+    <slot></slot>
+  </el-button>
 </template>
-
 <script>
 export default {
   name: 'XtButton',
+  inheritAttrs: false,
+  inject: {
+    xtConfig: {
+      default: () => ({
+        theme: 'light',
+        size: 'medium',
+        primaryColor: '#1890ff'
+      })
+    }
+  },
   props: {
     type: {
       type: String,
-      default: '',
-      validator: (val) => ['', 'primary', 'success', 'warning', 'danger'].includes(val)
+      default: 'default',
+      validator: (val) => ['default', 'primary', 'success', 'warning', 'danger'].includes(val)
+    },
+    throttle: {
+      type: Number,
+      default: 0
     },
     size: {
       type: String,
-      default: '',
-      validator: (val) => ['', 'large', 'medium', 'small'].includes(val)
-    },
-    plain: {
-      type: Boolean,
-      default: false
-    },
-    disabled: {
-      type: Boolean,
-      default: false
-    },
-    round: {
-      type: Boolean,
-      default: false
-    },
-    circle: {
-      type: Boolean,
-      default: false
-    },
-    dashed: {
-      type: Boolean,
-      default: false
-    },
-    text: {
-      type: Boolean,
-      default: false
-    },
-    link: {
-      type: Boolean,
-      default: false
-    },
-    icon: {
-      type: String,
-      default: ''
-    },
-    loading: {
-      type: Boolean,
-      default: false
+      default: null,
+      validator: (val) => !val || ['mini', 'small', 'medium', 'large'].includes(val)
+    }
+  },
+  data() {
+    return {
+      lastClickTime: 0
     }
   },
   computed: {
-    iconClass() {
-      if (!this.icon) return ''
-      if (this.icon.indexOf('el-icon') === 0) {
-        return this.icon
-      }
-      return 'el-icon-' + this.icon
+    finalSize() {
+      // 优先使用组件自身的 size，其次继承 XtConfigProvider 的 size，最后使用默认值
+      return this.size || this.xtConfig.size || 'medium'
+    },
+    buttonClasses() {
+      return [
+        `ex-button-${this.finalSize}`,
+        `ex-button-${this.type}`
+      ]
     }
   },
   methods: {
     handleClick() {
-      if (!this.disabled && !this.loading) {
-        this.$emit('click')
+      if (this.throttle > 0 && Date.now() - this.lastClickTime < this.throttle) {
+        return
       }
+      this.lastClickTime = Date.now()
+      this.$emit('click')
     }
   }
 }

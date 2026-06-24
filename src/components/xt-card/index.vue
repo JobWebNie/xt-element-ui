@@ -1,28 +1,68 @@
 <template>
-  <div class="xt-card" :class="{'no-padding': noPadding }">
-    <div class="card__header" v-if="title">
-      <slot name="icon">{{ icon }}</slot>
-      <slot name="title">{{ title }}</slot>
-    </div>
-    <div class="card__body">
-      <slot>
-        <span class="value"><slot name="value">{{ value }}</slot></span>
-        <span class="unit">{{ unit }}</span>
-      </slot>
-    </div>
-  </div>
+  <el-card 
+    class="ex-card" 
+    :class="cardClasses"
+    v-bind="$attrs"
+  >
+    <template #header v-if="$slots.header || title">
+      <slot name="header">{{ title }}</slot>
+    </template>
+    <slot></slot>
+  </el-card>
 </template>
+
 <script>
 export default {
-  name: "XtCard",
+  name: 'XtCard',
+  inheritAttrs: false,
+  inject: {
+    xtConfig: {
+      default: () => ({
+        theme: 'light',
+        size: 'medium',
+        primaryColor: '#1890ff'
+      })
+    }
+  },
   props: {
-    type: {},
-    title: {},
-    value: {},
-    unit: {},
-    icon: {},
-    iconIn: { default: "right" },
-    noPadding: { type: Boolean, default: false }
+    title: {
+      type: String,
+      default: ''
+    },
+    shadow: {
+      type: String,
+      default: 'always',
+      validator: (val) => ['always', 'hover', 'never'].includes(val)
+    },
+    bordered: {
+      type: Boolean,
+      default: true
+    },
+    bodyClass: {
+      type: String,
+      default: ''
+    },
+    size: {
+      type: String,
+      default: null,
+      validator: (val) => !val || ['small', 'medium', 'large'].includes(val)
+    }
+  },
+  computed: {
+    finalSize() {
+      // 优先使用组件自身的 size，其次继承 XtConfigProvider 的 size，最后使用默认值
+      return this.size || this.xtConfig.size || 'medium'
+    },
+    cardClasses() {
+      return [
+        `ex-card-${this.shadow}`,
+        `ex-card-${this.finalSize}`,
+        {
+          'ex-card-no-border': !this.bordered,
+          [this.bodyClass]: this.bodyClass
+        }
+      ]
+    }
   }
 }
 </script>

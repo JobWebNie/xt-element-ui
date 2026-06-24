@@ -73,10 +73,11 @@ npm run docs:build
 
 ### 命名规范
 
+所有组件统一使用 `Xt` 前缀命名，不再区分双架构：
+
 | 前缀 | 含义 | 说明 |
 |------|------|------|
-| `Xt` | 自定义组件 | 全新开发、不依赖 ElementUI 原有组件 |
-| `Ex` | 扩展组件 | 基于 ElementUI / ECharts 二次封装的增强组件 |
+| `Xt` | 自定义或扩展组件 | 所有组件统一使用此前缀 |
 
 ### 文件结构
 
@@ -246,8 +247,7 @@ docs/
 │   ├── config.js            # VuePress 配置（导航、侧边栏等）
 │   └── enhanceApp.js        # 文档应用增强
 └── components/
-    ├── base/               # Xt 组件文档
-    ├── extend/               # Ex 组件文档
+    ├── base/               # 组件文档
     └── utils/               # 工具类文档
 ```
 
@@ -259,7 +259,7 @@ docs/
 
 ### 新增组件文档
 
-1. 在 `docs/components/{base|extend}/xxx.md` 创建新文档
+1. 在 `docs/components/base/xxx.md` 创建新文档
 2. 在 `docs/.vuepress/config.js` 的 `sidebar` 和 `nav` 中注册导航和侧边栏
 
 ---

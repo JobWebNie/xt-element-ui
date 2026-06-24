@@ -5,4 +5,3 @@ XtCard.install = function (Vue) {
 }
 
 export default XtCard
-export { XtCard }

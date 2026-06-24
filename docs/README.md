@@ -12,8 +12,6 @@ features:
     details: 基于 ElementUI 构建，与现有 ElementUI 项目无缝集成
   - title: 🪶 按需引入
     details: 完整的 npm 包架构，支持按需引入，减小打包体积
-  - title: 🎨 双架构设计
-    details: Xt 自定义组件 + Ex 扩展组件，职责清晰、便于维护
   - title: 🌓 主题系统
     details: 支持亮色/暗色主题切换，支持自定义主色调
   - title: 📊 图表能力
@@ -41,9 +39,9 @@ Vue.use(XtElementUI)
 
 ## 📦 组件概览
 
-### 🎨 Xt 组件（自定义组件）
+所有组件统一以 `Xt` 开头命名，不再区分双架构：
 
-全新开发、不依赖 ElementUI 原有组件：
+### 🎨 基础组件
 
 | 组件 | 说明 |
 |------|------|
@@ -53,24 +51,36 @@ Vue.use(XtElementUI)
 | **XtFlexBox** | 弹性布局组件 |
 | **XtGridBox** | 网格布局组件 |
 | **XtText** | 文本组件 |
+| **XtTime** | 时间组件（当前时间/倒计时/日期格式化） |
 | **XtInput** | 输入框组件 |
 | **XtConfigProvider** | 全局配置提供器 |
+| **XtMap** | 统一地图组件（支持高德/天地图/百度） |
+| **XtStepPrice** | 阶梯价格组件 |
 
-### ✨ Ex 组件（扩展组件）
-
-基于 ElementUI / ECharts 二次封装的增强组件：
+### 🔧 扩展组件
 
 | 组件 | 说明 |
 |------|------|
-| **ExButton** | 基于 ElementUI Button 的扩展按钮 |
-| **ExCard** | 基于 ElementUI Card 的扩展卡片 |
-| **ExTable** | 基于 ElementUI Table 的扩展表格（支持虚拟滚动） |
-| **ExBar / ExLine / ExPie / ExMulti** | 基于 ECharts 的图表组件 |
-| **ExSelectTree** | 下拉选择树组件 |
-| **ExUpload** | 上传组件（支持图片预览） |
-| **ExPage** | 页面组件 |
-| **ExDatePicker** | 日期选择组件 |
-| **ExIcon** | 图标组件（支持 SVG / 字体图标） |
+| **XtDatePicker** | 日期选择器（支持季度选择） |
+| **XtIcon** | 图标组件（支持 el-icon/SVG/自定义字体） |
+| **XtTable** | 扩展表格（含虚拟滚动） |
+| **XtSelectTree** | 下拉选择树组件 |
+| **XtUpload** | 上传组件（支持图片预览） |
+| **XtPage** | 页面组件 |
+| **XtProgress** | 进度条组件 |
+| **XtTabs** | 标签页组件 |
+| **XtBadge** | 徽标组件 |
+
+### 📊 图表组件
+
+| 组件 | 说明 |
+|------|------|
+| **XtChart** | 图表容器 |
+| **XtBar** | 柱状图 |
+| **XtLine** | 折线图 |
+| **XtPie** | 饼图 |
+| **XtMulti** | 组合图 |
+
 
 ---
 
