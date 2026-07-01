@@ -110,7 +110,8 @@ module.exports = {
           ['/components/base/xt-page', 'XtPage 页面组件'],
           ['/components/base/xt-progress', 'XtProgress 进度条'],
           ['/components/base/xt-tabs', 'XtTabs 标签页'],
-          ['/components/base/xt-badge', 'XtBadge 徽标']
+          ['/components/base/xt-badge', 'XtBadge 徽标'],
+          ['/components/base/xt-scroll-arrow', 'XtScrollArrow 滚动箭头']
         ]
       },
       {

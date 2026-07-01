@@ -10,7 +10,7 @@
         icon="el-icon-plus"
         plain
         @click="onAdd"
-      >新增档位</xt-button>
+      >新增{{stepName}}</xt-button>
       <xt-text v-if="isLimitReached" size="small" type-color="info">已达上限（{{ localItems.length }}/{{ limit }}）</xt-text>
     </div>
 
@@ -27,6 +27,7 @@
         :min-locked="idx !== 0 ? true : false"
         :unit="unit"
         :precision="precision"
+        :step-name="stepName"
         :step="step"
         :left-bracket="leftBracket"
         :right-bracket="rightBracket"
@@ -36,11 +37,12 @@
         @max-change="onMaxChange"
         @min-change="onMinChange"
         @delete="onDelete"
+        @blur="onFieldBlur"
       />
     </div>
 
     <div v-if="localItems.length === 0" class="xt-step-price__empty">
-      <span>暂无数据，点击右上角「新增档位」开始配置</span>
+      <span>暂无数据，点击右上角「新增{{stepName}}」开始配置</span>
     </div>
 
     <div v-if="tip || $slots.tip" class="xt-step-price__tip">
@@ -59,6 +61,12 @@ export default {
 
   components: { XtStepPriceItem },
 
+  inject: {
+    elFormItem: {
+      default: ''
+    }
+  },
+
   computed: {
     keyMin() { return (this.fieldKeys && this.fieldKeys.min) || 'min' },
     keyMax() { return (this.fieldKeys && this.fieldKeys.max) || 'max' },
@@ -76,6 +84,7 @@ export default {
     },
     title: { type: String, default: '' },
     unit: { type: String, default: '元' },
+    stepName: { type: String, default: '阶梯' },
     precision: { type: Number, default: 2 },
     // 左括号：默认 '['，传空字符串则不显示
     leftBracket: { type: String, default: '[' },
@@ -125,11 +134,14 @@ export default {
 
     cloneItems(items) {
       if (!Array.isArray(items)) return []
-      return items.map((it) => ({
-        [this.keyMin]: this.safeNumber(it && it[this.keyMin], 0),
-        [this.keyMax]: (it && it[this.keyMax] == null) || (it && it[this.keyMax] === '') ? null : this.safeNumber(it[this.keyMax], null),
-        [this.keyPrice]: this.safeNumber(it && it[this.keyPrice], 0)
-      }))
+      return items.map((it) => {
+        const price = (it && it[this.keyPrice])
+        return {
+          [this.keyMin]: this.safeNumber(it && it[this.keyMin], 0),
+          [this.keyMax]: (it && it[this.keyMax] == null) || (it && it[this.keyMax] === '') ? null : this.safeNumber(it[this.keyMax], null),
+          [this.keyPrice]: (price === null || price === undefined || price === '') ? '' : this.safeNumber(price, 0)
+        }
+      })
     },
 
     normalize(items) {
@@ -154,12 +166,14 @@ export default {
         if (next) {
           let curMax = this.safeNumber(cur[this.keyMax], curMin + stepVal)
           if (curMax <= curMin) curMax = curMin + stepVal
+          curMax = Number(curMax.toFixed(this.precision))
           cur[this.keyMax] = curMax
           next[this.keyMin] = curMax
         } else {
           cur[this.keyMax] = null
         }
-        cur[this.keyPrice] = this.safeNumber(cur[this.keyPrice], 0)
+        const price = cur[this.keyPrice]
+        cur[this.keyPrice] = (price === null || price === undefined || price === '') ? '' : this.safeNumber(price, 0)
       }
     },
 
@@ -168,18 +182,127 @@ export default {
       const cloned = this.cloneItems(this.localItems)
       this.$emit('input', cloned)
       this.$emit('change', cloned)
+      this.dispatchFormEvent('el.form.change', cloned)
+    },
+
+    dispatchFormEvent(eventName, value) {
+      if (this.elFormItem) {
+        this.elFormItem.$emit(eventName, value)
+      }
+    },
+
+    onFieldBlur() {
+      this.dispatchFormEvent('el.form.blur', this.localItems)
+    },
+
+    validate(callback) {
+      const list = this.localItems
+      if (!Array.isArray(list) || list.length === 0) {
+        callback && callback(false, [{ field: 'stepPrice', message: `请配置${this.stepName}`, type: 'error' }])
+        return false
+      }
+
+      const errors = []
+      for (let i = 0; i < list.length; i++) {
+        const item = list[i]
+        const rawPrice = item[this.keyPrice]
+        const rawMin = item[this.keyMin]
+        const rawMax = item[this.keyMax]
+        const price = this.safeNumber(rawPrice, 0)
+        const min = this.safeNumber(rawMin, 0)
+
+        if (rawPrice === null || rawPrice === undefined || rawPrice === '') {
+          errors.push({
+            field: `stepPrice[${i}].price`,
+            message: `第${i + 1}${this.stepName}价格不能为空`,
+            type: 'error'
+          })
+        } else if (price < 0) {
+          errors.push({
+            field: `stepPrice[${i}].price`,
+            message: `第${i + 1}${this.stepName}价格不能为负数`,
+            type: 'error'
+          })
+        }
+
+        if (rawMin === null || rawMin === undefined || rawMin === '') {
+          errors.push({
+            field: `stepPrice[${i}].min`,
+            message: `第${i + 1}${this.stepName}下限不能为空`,
+            type: 'error'
+          })
+        } else if (min < 0) {
+          errors.push({
+            field: `stepPrice[${i}].min`,
+            message: `第${i + 1}${this.stepName}下限不能为负数`,
+            type: 'error'
+          })
+        }
+
+        if (!this.isLast(i)) {
+          if (rawMax === null || rawMax === undefined || rawMax === '') {
+            errors.push({
+              field: `stepPrice[${i}].max`,
+              message: `第${i + 1}${this.stepName}上限不能为空`,
+              type: 'error'
+            })
+          } else if (this.safeNumber(rawMax, 0) <= min) {
+            errors.push({
+              field: `stepPrice[${i}].max`,
+              message: `第${i + 1}${this.stepName}上限必须大于下限`,
+              type: 'error'
+            })
+          }
+        }
+
+        if (i > 0) {
+          const prev = list[i - 1]
+          const prevMax = prev[this.keyMax]
+          if (prevMax !== null && this.safeNumber(prevMax, 0) !== min) {
+            errors.push({
+              field: `stepPrice[${i}].min`,
+              message: `第${i + 1}${this.stepName}下限必须等于上一${this.stepName}上限`,
+              type: 'error'
+            })
+          }
+        }
+      }
+
+      if (errors.length > 0) {
+        callback && callback(false, errors)
+        return false
+      }
+
+      callback && callback(true)
+      return true
+    },
+
+    isLast(idx) {
+      return idx === this.localItems.length - 1
     },
 
     onItemInput(val, idx) {
       const cur = this.localItems[idx]
       if (!cur) return
-      if (val && val[this.keyPrice] !== undefined) cur[this.keyPrice] = this.safeNumber(val[this.keyPrice], 0)
+      if (val && val[this.keyPrice] !== undefined) {
+        const p = val[this.keyPrice]
+        if (p === null || p === undefined || p === '') {
+          cur[this.keyPrice] = ''
+        } else {
+          let num = this.safeNumber(p, 0)
+          num = Number(num.toFixed(this.precision))
+          cur[this.keyPrice] = num
+        }
+        this.emit()
+      }
     },
 
     onMaxChange(val, idx) {
       const cur = this.localItems[idx]
       if (!cur) return
-      const n = this.safeNumber(val, this.safeNumber(cur[this.keyMin], 0) + 1)
+      const stepVal = this.safeNumber(this.step, 1)
+      let n = this.safeNumber(val, this.safeNumber(cur[this.keyMin], 0) + stepVal)
+      n = Number(n.toFixed(this.precision))
       cur[this.keyMax] = n
       const next = this.localItems[idx + 1]
       if (next) next[this.keyMin] = n
@@ -192,7 +315,10 @@ export default {
       if (idx === 0) {
         cur[this.keyMin] = 0
       } else {
-        const n = this.safeNumber(val, this.safeNumber(cur[this.keyMin], 0))
+        let n = this.safeNumber(val, this.safeNumber(cur[this.keyMin], 0))
+        if (n !== 0) {
+          n = Number(n.toFixed(this.precision))
+        }
         cur[this.keyMin] = n
         const prev = this.localItems[idx - 1]
         if (prev) prev[this.keyMax] = n
@@ -222,15 +348,8 @@ export default {
       const newMin = this.safeNumber(last[this.keyMin], 0)
       const newMax = newMin + stepVal
 
-      // 新条 price：优先继承「倒数第二条」的 price，其次用末条 price（>0 时），否则默认 10
-      const prev = list[list.length - 2]
-      let newPrice = 10
-      if (prev) {
-        newPrice = this.safeNumber(prev[this.keyPrice], 10)
-      } else {
-        const lastPrice = this.safeNumber(last[this.keyPrice], 0)
-        newPrice = lastPrice > 0 ? lastPrice : 10
-      }
+      // 新条 price：使用默认值，由用户自行填写
+      let newPrice = 0
 
       const newArr = [
         ...list.slice(0, -1),

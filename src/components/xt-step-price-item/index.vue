@@ -2,7 +2,7 @@
   <div class="xt-step-price-item">
     <div class="xt-step-price-item__range">
       <span class="xt-step-price-item__bracket">{{ finalLeftBracket }}</span>
-      <span v-if="itemsLength > 1" class="xt-step-price-item__name">第{{ index + 1 }}档</span>
+      <span v-if="itemsLength > 1" class="xt-step-price-item__name">第{{ index + 1 }}{{stepName}}</span>
       <span class="xt-step-price-item__bracket">{{ finalRightBracket }}</span>
       <xt-input
         v-model.number="minInput"
@@ -10,17 +10,18 @@
         size="small"
         placeholder="下限"
         class="xt-step-price-item__input"
-        @blur="onMinBlur"
+        @blur="(e) => { onMinBlur(); onBlur(e) }"
       />
       <span class="xt-step-price-item__comma">-</span>
       <xt-input
         v-if="!isLast"
         v-model.number="maxInput"
+        type="number"
         :disabled="disabled"
         size="small"
         placeholder="上限"
         class="xt-step-price-item__input"
-        @blur="onMaxBlur"
+        @blur="(e) => { onMaxBlur(); onBlur(e) }"
       />
       <span v-else class="xt-step-price-item__infinity">+∞</span>
     </div>
@@ -29,11 +30,12 @@
     <div class="xt-step-price-item__price">
       <xt-input
         v-model.number="priceInput"
+        type="number"
         :disabled="disabled"
         size="small"
         placeholder="价格"
         class="xt-step-price-item__input xt-step-price-item__input--price"
-        @blur="onPriceBlur"
+        @blur="(e) => { onPriceBlur(); onBlur(e) }"
       />
       <span class="xt-step-price-item__unit">{{ unit }}</span>
     </div>
@@ -58,6 +60,7 @@ export default {
       required: true,
       default: () => ({ min: 0, max: null, price: 0 })
     },
+    stepName: { type: String, default: '阶梯' },
     index: { type: Number, default: 0 },
     isFirst: { type: Boolean, default: false },
     isLast: { type: Boolean, default: false },
@@ -155,7 +158,10 @@ export default {
     },
 
     onMinBlur() {
-      const v = this.safeNumber(this.minInput, 0)
+      let v = this.safeNumber(this.minInput, 0)
+      if (v !== 0) {
+        v = Number(v.toFixed(this.precision))
+      }
       this.minInput = v
       this.$emit('min-change', v, this.index)
       this.emitChange({ [this.keyMin]: v })
@@ -164,19 +170,31 @@ export default {
     onMaxBlur() {
       if (this.isLast) return
       const minVal = this.safeNumber(this.minInput, 0)
-      let v = this.safeNumber(this.maxInput, minVal + 1)
-      if (v <= minVal) v = minVal + 1
+      const stepVal = this.safeNumber(this.step, 1)
+      let v = this.safeNumber(this.maxInput, minVal + stepVal)
+      if (v <= minVal) v = minVal + stepVal
+      v = Number(v.toFixed(this.precision))
       this.maxInput = v
       this.$emit('max-change', v, this.index)
       this.emitChange({ [this.keyMax]: v })
     },
 
     onPriceBlur() {
-      let v = this.safeNumber(this.priceInput, 0)
+      const rawVal = this.priceInput
+      if (rawVal === null || rawVal === undefined || rawVal === '' || isNaN(rawVal)) {
+        this.priceInput = ''
+        this.emitChange({ [this.keyPrice]: '' })
+        return
+      }
+      let v = this.safeNumber(rawVal, 0)
       if (v < 0) v = 0
       v = Number(v.toFixed(this.precision))
       this.priceInput = v
       this.emitChange({ [this.keyPrice]: v })
+    },
+
+    onBlur(e) {
+      this.$emit('blur', e)
     },
 
     onDelete() {

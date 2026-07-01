@@ -37,6 +37,7 @@ import XtDatePicker from './components/xt-date-picker'
 import XtChart from './components/xt-chart'  // XtChart 组件（基于 ECharts 封装）
 import XtIcon from './components/xt-icon'    // XtIcon 组件（支持 el-icon / svg / 自定义字体）
 import XtTable from './components/xt-table'  // XtTable 组件（基于 ElementUI Table 封装）
+import XtScrollArrow from './components/xt-scroll-arrow'
 
 
 const components = [
@@ -60,7 +61,8 @@ const components = [
   XtDatePicker,
   XtChart,
   XtIcon,
-  XtTable
+  XtTable,
+  XtScrollArrow
 ]
 
 const install = function (Vue, options = {}) {
@@ -129,7 +131,8 @@ export default {
   XtBadge,
   XtDatePicker,
   XtIcon,
-  XtTable
+  XtTable,
+  XtScrollArrow
 }
 
 // XtChart 组件按需导出（使用时需自行安装 echarts 依赖）

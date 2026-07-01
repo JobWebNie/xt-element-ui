@@ -1,6 +1,6 @@
 {
   "name": "xt-element-ui",
-  "version": "2.0.0",
+  "version": "2.0.2",
   "description": "基于 Vue 2.7 + ElementUI 的企业级组件库，提供丰富的自定义组件和扩展组件",
   "main": "lib/index.common.js",
   "module": "lib/index.esm.js",
@@ -36,7 +36,8 @@
     "echarts": "^6.1.0",
     "element-ui": "^2.15.14",
     "sass": "^1.32.13",
-    "vue-server-renderer": "^2.7.14"
+    "vue-server-renderer": "^2.7.14",
+    "xt-element-ui": "^2.0.2"
   },
   "keywords": [
     "vue",

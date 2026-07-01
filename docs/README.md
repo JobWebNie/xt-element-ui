@@ -7,7 +7,7 @@ actionText: 🚀 快速上手
 actionLink: /components/base/xt-button
 features:
   - title: 🎯 丰富的组件
-    details: 提供 15+ 组件，覆盖布局、表单、数据展示、图表等常见场景
+    details: 提供 20+ 组件，覆盖布局、表单、数据展示、图表等常见场景
   - title: 📦 开箱即用
     details: 基于 ElementUI 构建，与现有 ElementUI 项目无缝集成
   - title: 🪶 按需引入
@@ -70,6 +70,7 @@ Vue.use(XtElementUI)
 | **XtProgress** | 进度条组件 |
 | **XtTabs** | 标签页组件 |
 | **XtBadge** | 徽标组件 |
+| **XtScrollArrow** | 滚动箭头组件 |
 
 ### 📊 图表组件
 

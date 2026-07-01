@@ -1,5 +1,35 @@
 <template>
+  <el-tooltip
+    v-if="showTooltip && ellipsis"
+    :content="displayTooltipContent"
+    :placement="tooltipPlacement"
+    :disabled="!isOverflow"
+    effect="dark"
+  >
+    <span 
+      ref="textRef"
+      class="xt-text" 
+      :class="[
+        type ? 'xt-text--' + type : '',
+        'xt-text--' + size,
+        { 'xt-text--bold': bold },
+        { 'xt-text--money': format === 'money' },
+        { 'xt-text--ellipsis': ellipsis },
+        { 'xt-text--ellipsis-multiline': ellipsis && ellipsisRows > 1 }
+      ]"
+      :style="customStyle"
+      @mouseenter="handleMouseEnter"
+    >
+      <slot name="prefix">{{ prefix }}</slot>
+      <slot>
+        <template v-if="formattedValue !== undefined">{{ formattedValue }}</template>
+      </slot>
+      <slot name="suffix">{{ suffix }}</slot> 
+    </span>
+  </el-tooltip>
   <span 
+    v-else
+    ref="textRef"
     class="xt-text" 
     :class="[
       type ? 'xt-text--' + type : '',
@@ -54,6 +84,19 @@ export default {
       default: 1,
       validator: (val) => val >= 1 && val <= 10
     },
+    showTooltip: {
+      type: Boolean,
+      default: true
+    },
+    tooltipPlacement: {
+      type: String,
+      default: 'top',
+      validator: (val) => ['top', 'bottom', 'left', 'right', 'top-start', 'top-end', 'bottom-start', 'bottom-end', 'left-start', 'left-end', 'right-start', 'right-end'].includes(val)
+    },
+    tooltipContent: {
+      type: String,
+      default: ''
+    },
 
     // 格式化模式：normal 普通 | thousand 千分位 | money 金额
     format: {
@@ -98,6 +141,11 @@ export default {
       default: ''
     }
   },
+  data() {
+    return {
+      isOverflow: false
+    }
+  },
   computed: {
     // 兼容旧 money 属性：如果传了 money=true，自动切为金额模式
     realFormat() {
@@ -113,6 +161,19 @@ export default {
         style.WebkitLineClamp = this.ellipsisRows
       }
       return style
+    },
+
+    displayTooltipContent() {
+      if (this.tooltipContent) {
+        return this.tooltipContent
+      }
+      if (this.formattedValue !== undefined) {
+        return this.formattedValue
+      }
+      if (this.$slots.default && this.$slots.default.length > 0) {
+        return this.extractSlotText(this.$slots.default)
+      }
+      return this.value
     },
 
     formattedValue() {
@@ -161,6 +222,75 @@ export default {
         return result
       } catch (e) {
         return value
+      }
+    }
+  },
+  methods: {
+    handleMouseEnter() {
+      this.checkOverflow()
+    },
+    checkOverflow() {
+      const el = this.$refs.textRef
+      if (!el) {
+        this.isOverflow = false
+        return
+      }
+
+      if (this.ellipsisRows > 1) {
+        this.isOverflow = el.scrollHeight > el.clientHeight
+      } else {
+        this.isOverflow = el.scrollWidth > el.clientWidth
+      }
+    },
+    extractSlotText(nodes) {
+      let text = ''
+      nodes.forEach(node => {
+        if (typeof node.children === 'string') {
+          text += node.children
+        } else if (typeof node.text === 'string') {
+          text += node.text
+        } else if (node.children && Array.isArray(node.children)) {
+          text += this.extractSlotText(node.children)
+        }
+      })
+      return text.trim()
+    }
+  },
+  mounted() {
+    if (this.ellipsis && this.showTooltip) {
+      this.$nextTick(() => {
+        this.checkOverflow()
+      })
+    }
+    this._resizeObserver = new ResizeObserver(() => {
+      if (this.ellipsis && this.showTooltip) {
+        this.checkOverflow()
+      }
+    })
+    this.$nextTick(() => {
+      if (this.$refs.textRef) {
+        this._resizeObserver.observe(this.$refs.textRef)
+      }
+    })
+  },
+  beforeDestroy() {
+    if (this._resizeObserver) {
+      this._resizeObserver.disconnect()
+    }
+  },
+  watch: {
+    value() {
+      if (this.ellipsis && this.showTooltip) {
+        this.$nextTick(() => {
+          this.checkOverflow()
+        })
+      }
+    },
+    ellipsis(newVal) {
+      if (newVal && this.showTooltip) {
+        this.$nextTick(() => {
+          this.checkOverflow()
+        })
       }
     }
   }

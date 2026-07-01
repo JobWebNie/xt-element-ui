@@ -42,7 +42,7 @@
     <XtBadge :value="5" type="warning">
       <XtButton size="small">通知</XtButton>
     </XtBadge>
-    <XtBadge :value="99+" type="danger">
+    <XtBadge value="99+" type="danger">
       <XtButton size="small">消息</XtButton>
     </XtBadge>
   </div>
@@ -126,7 +126,7 @@
 <template>
   <div style="display: flex; gap: 16px;">
     <XtBadge :value="12" />
-    <XtBadge :value="99+" type="danger" />
+    <XtBadge value="99+" type="danger" />
     <XtBadge is-dot type="success" />
   </div>
 </template>
