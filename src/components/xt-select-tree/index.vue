@@ -331,9 +331,6 @@ export default {
   }
   .el-input{
     &:hover:not(.is-disabled) {
-      .el-input__inner{
-        @include border_color("borderColor");
-      }
       &.is-selected.isclearable{
         .el-input__icon{
           &.close{
@@ -348,9 +345,6 @@ export default {
     &.is-active{
       .el-input__icon-arrow-down{
         transition: rotate(-180deg);
-      }
-      .el-input__inner{
-        @include border_color("$subMenuActiveText");
       }
     }
   }
@@ -380,7 +374,6 @@ export default {
 }
 .el-tree--highlight-current .el-tree-node.is-current > .el-tree-node__content{
   color: #409EFF;
-  @include font_color("primaryColor");
   font-weight: bold;
 }
 </style>

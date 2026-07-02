@@ -7,7 +7,7 @@
 ::: demo 基本用法
 ```vue
 <template>
-  <XtBar :chart-data="chartData" />
+  <XtBar :chart-data="chartData" width="600px" height="400px"  />
 </template>
 
 <script>

@@ -33,6 +33,7 @@
         :right-bracket="rightBracket"
         :field-keys="fieldKeys"
         :disabled="disabled"
+        :allow-negative="allowNegative"
         @input="(val) => onItemInput(val, idx)"
         @max-change="onMaxChange"
         @min-change="onMinChange"
@@ -100,6 +101,7 @@ export default {
     // 阶梯增量：新增/校正时，下一条阶梯的 min = 当前 max = 当前 min + step（默认 1）
     step: { type: Number, default: 10 },
     disabled: { type: Boolean, default: false },
+    allowNegative: { type: Boolean, default: false },
     tip: {
       type: String,
       default: '区间左闭右闭 [min, max]，最后一级为 [min, +∞)，保证连续且不重叠。'
@@ -217,7 +219,7 @@ export default {
             message: `第${i + 1}${this.stepName}价格不能为空`,
             type: 'error'
           })
-        } else if (price < 0) {
+        } else if (price < 0 && !this.allowNegative) {
           errors.push({
             field: `stepPrice[${i}].price`,
             message: `第${i + 1}${this.stepName}价格不能为负数`,
@@ -231,7 +233,7 @@ export default {
             message: `第${i + 1}${this.stepName}下限不能为空`,
             type: 'error'
           })
-        } else if (min < 0) {
+        } else if (min < 0 && !this.allowNegative) {
           errors.push({
             field: `stepPrice[${i}].min`,
             message: `第${i + 1}${this.stepName}下限不能为负数`,

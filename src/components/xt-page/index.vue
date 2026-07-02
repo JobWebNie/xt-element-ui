@@ -26,7 +26,7 @@ export default {
     showAside: { type: Boolean, default: true },
     diffHeight: {
       type: Number,
-      default: 60
+      default: 0
     },
     minHeight: {
       type: Number,

@@ -1,6 +1,38 @@
 /* 覆盖 vuepress-theme-reco 主题的 table 样式 */
 
-/* 重置 demo-block 内的 table 样式 */
-.demo-block table {
+table:not(.el-date-table),
+table:not(.el-year-table),
+table:not(.el-month-table) {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1rem 0;
+}
+table:not(.el-date-table) th,
+table:not(.el-date-table) td {
+  border: 1px solid #e4e7ed;
+  padding: 8px 12px;
+}
+
+.el-date-table,
+.el-year-table,
+.el-month-table {
+  all: revert !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  width: auto !important;
   margin: 0 !important;
+}
+.el-date-table th,
+.el-date-table td,
+.el-year-table th,
+.el-year-table td,
+.el-month-table th,
+.el-month-table td {
+  all: revert !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+.el-picker-panel {
+  z-index: 9999 !important;
 }

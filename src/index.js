@@ -38,6 +38,13 @@ import XtChart from './components/xt-chart'  // XtChart 组件（基于 ECharts 
 import XtIcon from './components/xt-icon'    // XtIcon 组件（支持 el-icon / svg / 自定义字体）
 import XtTable from './components/xt-table'  // XtTable 组件（基于 ElementUI Table 封装）
 import XtScrollArrow from './components/xt-scroll-arrow'
+import XtBar from './components/xt-chart/XtBar.vue'
+import XtLine from './components/xt-chart/XtLine.vue'
+import XtPie from './components/xt-chart/XtPie.vue'
+import XtMulti from './components/xt-chart/XtMulti.vue'
+import XtPage from './components/xt-page'
+import XtSelectTree from './components/xt-select-tree'
+import XtUpload from './components/xt-upload'
 
 
 const components = [
@@ -62,7 +69,14 @@ const components = [
   XtChart,
   XtIcon,
   XtTable,
-  XtScrollArrow
+  XtScrollArrow,
+  XtBar,
+  XtLine,
+  XtPie,
+  XtMulti,
+  XtPage,
+  XtSelectTree,
+  XtUpload
 ]
 
 const install = function (Vue, options = {}) {
@@ -132,7 +146,14 @@ export default {
   XtDatePicker,
   XtIcon,
   XtTable,
-  XtScrollArrow
+  XtScrollArrow,
+  XtBar,
+  XtLine,
+  XtPie,
+  XtMulti,
+  XtPage,
+  XtSelectTree,
+  XtUpload
 }
 
 // XtChart 组件按需导出（使用时需自行安装 echarts 依赖）

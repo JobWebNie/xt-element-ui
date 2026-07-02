@@ -1,5 +1,5 @@
 <template>
-  <div ref="linechart" class="line-box"></div>
+  <div ref="linechart" class="line-box" :style="chartStyle"></div>
 </template>
 <script>
 import EchartsUtil from "./utils";
@@ -10,6 +10,18 @@ export default {
     size: {
       type: String,
       default: "medium"
+    },
+    width: {
+      type: String,
+      default: "100%"
+    },
+    height: {
+      type: String,
+      default: "100%"
+    },
+    ratio: {
+      type: Number,
+      default: null
     },
     chartData: {
       type: Array,
@@ -47,6 +59,18 @@ export default {
       myChart: null
     };
   },
+  computed: {
+    chartStyle() {
+      const style = {};
+      if (this.width) style.width = this.width;
+      if (this.ratio) {
+        style.aspectRatio = this.ratio;
+      } else if (this.height) {
+        style.height = this.height;
+      }
+      return style;
+    }
+  },
   watch: {
     chartData: {
       deep: true,
@@ -68,6 +92,13 @@ export default {
   },
   mounted() {
     this.initChart();
+    EchartsUtil.bindResizeObserver(this.$refs.linechart, this.myChart);
+  },
+  beforeUnmount() {
+    EchartsUtil.unbindResizeObserver(this.$refs.linechart);
+    if (this.myChart) {
+      this.myChart.dispose();
+    }
   },
   methods: {
     initChart() {
@@ -154,5 +185,6 @@ export default {
   position: relative;
   height: 100%;
   width: 100%;
+  min-height: 100px;
 }
 </style>

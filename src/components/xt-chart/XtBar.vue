@@ -1,5 +1,5 @@
 <template>
-  <div ref="barchart" class="bar-box"></div>
+  <div ref="barchart" class="bar-box" :style="chartStyle"></div>
 </template>
 <script>
 import EchartsUtil from "./utils";
@@ -27,6 +27,18 @@ export default {
     size: {
       type: String,
       default: "medium"
+    },
+    width: {
+      type: String,
+      default: "100%"
+    },
+    height: {
+      type: String,
+      default: "100%"
+    },
+    ratio: {
+      type: Number,
+      default: null
     },
     fieldKeys: {
       type: Object,
@@ -75,6 +87,18 @@ export default {
       name: "数量"
     };
   },
+  computed: {
+    chartStyle() {
+      const style = {};
+      if (this.width) style.width = this.width;
+      if (this.ratio) {
+        style.aspectRatio = this.ratio;
+      } else if (this.height) {
+        style.height = this.height;
+      }
+      return style;
+    }
+  },
   watch: {
     chartData: {
       deep: true,
@@ -96,6 +120,13 @@ export default {
   },
   mounted() {
     this.initChart();
+    EchartsUtil.bindResizeObserver(this.$refs.barchart, this.myChart);
+  },
+  beforeUnmount() {
+    EchartsUtil.unbindResizeObserver(this.$refs.barchart);
+    if (this.myChart) {
+      this.myChart.dispose();
+    }
   },
   methods: {
     initChart() {
@@ -171,12 +202,6 @@ export default {
         series: {
           name: _self.unit,
           type: "bar",
-          markPoint: {
-            data: [
-              { type: "min", name: "Min" },
-              { type: "max", name: "Max" }
-            ]
-          },
           avoidLabelOverlap: true,
           data: _self.chartData.map((item, ind) => {
             const label = item[keys.label];
@@ -192,9 +217,6 @@ export default {
         },
         dataZoom: _self.showZoom ? [{ height: 20, bottom: 0 }] : [],
       };
-      if (!this.markPoint) {
-        this.$delete(option.series[0], "markPoint");
-      }
       if (this.simpleMode) {
         EchartsUtil.applySimpleMode(option, "bar");
       }
@@ -208,5 +230,6 @@ export default {
   position: relative;
   height: 100%;
   width: 100%;
+  min-height: 100px;
 }
 </style>

@@ -32,7 +32,7 @@ module.exports = {
       loaderOptions: {
         scss: {
           // 使用相对路径避免别名问题
-          additionalData: `@use "./src/styles/variables.scss" as *;`
+          additionalData: `@import "./src/styles/variables.scss" as *;`
         }
       }
     },

@@ -53,13 +53,14 @@ export default {
 
 使用 `XtMapProvider` 统一配置项目中所有地图，无需在每个 `<XtMap>` 上重复写密钥：
 
+::: demo 基本用法
 ```vue
 <template>
   <XtMapProvider
     provider="amap"
-    api-key="你的高德密钥"
-    security-js-code="你的安全密钥"
-    theme="light"
+    api-key="AMAP_KEY"
+    security-js-code="AMAP_SECURITY_CODE"
+    theme="dark"
   >
     <div style="width: 100%; height: 500px;">
       <XtMap :center="[116.397428, 39.90923]" :zoom="11" />
@@ -70,6 +71,7 @@ export default {
   </XtMapProvider>
 </template>
 ```
+:::
 
 或通过 `Vue.prototype.$xt` 方式配置（入口文件）：
 
@@ -92,18 +94,20 @@ setMapTheme('dark')
 
 #### 高德地图（推荐）
 
+::: demo
 ```vue
 <XtMap
   provider="amap"
-  api-key="AMAP_KEY"
-  security-js-code="AMAP_SECURITY_CODE"
+  api-key="4a32fafb17f9e5236c4bb5f2e538d43b"
+  security-js-code="50f302bf821cda57f798308236e7f8e2"
   :center="[116.397428, 39.90923]"
   :zoom="11"
 />
 ```
+:::
 
 #### 天地图
-
+::: demo 天地图
 ```vue
 <XtMap
   provider="tianditu"
@@ -112,9 +116,10 @@ setMapTheme('dark')
   :zoom="11"
 />
 ```
+:::
 
 #### 百度地图
-
+::: demo 百度地图
 ```vue
 <XtMap
   provider="baidu"
@@ -123,9 +128,10 @@ setMapTheme('dark')
   :zoom="11"
 />
 ```
+:::
 
 ### 暗黑主题
-
+::: demo 暗黑主题
 ```vue
 <template>
   <div style="width: 100%; height: 500px;">
@@ -139,11 +145,12 @@ setMapTheme('dark')
   </div>
 </template>
 ```
+:::
 
 高德地图原生支持 dark 主题样式；天地图、百度地图通过 CSS 滤镜实现近似效果。
 
 ### 地图类型切换
-
+::: demo 地图类型切换
 ```vue
 <template>
   <div>
@@ -176,9 +183,10 @@ export default {
 }
 </script>
 ```
+:::
 
 ### 通过 ref 调用实例方法
-
+::: demo 通过 ref 调用实例方法
 ```vue
 <template>
   <div>
@@ -228,11 +236,13 @@ export default {
 }
 </script>
 ```
+:::
 
 ### 自定义 API URL
 
 如需使用自建代理或反向代理（例如解决密钥暴露问题），可通过 `api-url` 覆盖：
 
+::: demo 自定义 API URL
 ```vue
 <XtMap
   provider="amap"
@@ -241,6 +251,7 @@ export default {
   :zoom="11"
 />
 ```
+:::
 
 ---
 

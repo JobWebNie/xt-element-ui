@@ -4,6 +4,7 @@
 
 使用 `XtMapProvider` 统一配置项目中所有地图，无需在每个 `<XtMap>` 上重复写密钥：
 
+::: demo 全局配置（推荐）
 ```vue
 <template>
   <XtMapProvider
@@ -21,3 +22,4 @@
   </XtMapProvider>
 </template>
 ```
+:::

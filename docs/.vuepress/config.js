@@ -7,7 +7,9 @@ module.exports = {
   description: '基于 Vue 2.7 + ElementUI 的企业级组件库',
   // 使用 vuepress-theme-reco 主题
   theme: 'reco',
-
+  head: [
+    ['link', { rel: 'stylesheet', href: '/styles/override.scss' }]
+  ],
   plugins: [
     ['demo-container', {
       locales: [

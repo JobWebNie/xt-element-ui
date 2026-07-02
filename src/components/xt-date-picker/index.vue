@@ -1,15 +1,15 @@
 <template>
   <div style="display:inline-block">
-    <FlexBox v-if="dateType=='quarter'" type="inline-flex" class="xt-date-picker" :class="{focus: isfocus}" :style="width?{width: `${width}px`}:{}">
+    <XtFlexBox v-if="dateType=='quarter'" type="inline-flex" class="xt-date-picker" :class="{focus: isfocus}" :style="width?{width: `${width}`}:{}">
       <Quarter v-model="timeStart" :format="format" placeholder="开始时间" quarter-type="quarter-start" clearable></Quarter>
       <span class="separator">{{ separator }}</span>
       <Quarter v-model="timeEnd" :format="format" placeholder="结束时间" quarter-type="quarter-end" clearable></Quarter>
-    </FlexBox>
-    <FlexBox v-else type="inline-flex" class="xt-date" :class="{focus: isfocus}" :style="width?{width: `${width}px`}:{}">
+    </XtFlexBox>
+    <XtFlexBox v-else type="inline-flex" class="xt-date" :class="{focus: isfocus}" :style="width?{width: `${width}px`}:{}">
       <el-date-picker ref="timeStart" key="startSelect" v-model="timeStart" size="small" :disabled="disabled" append-to-body :picker-options="startTimeRange" :format="format" :type="dateType" placeholder="开始时间" clearable @blur="$emit('blur')" @focus="$emit('focus')"></el-date-picker>
       <span class="separator">{{ separator }}</span>
       <el-date-picker ref="timeEnd" key="endSelect" v-model="timeEnd" size="small" :disabled="disabled" append-to-body :picker-options="endTimeRange" :format="format" :type="dateType" placeholder="结束时间" clearable @blur="$emit('blur')" @focus="$emit('focus')"></el-date-picker>
-    </FlexBox>
+    </XtFlexBox>
   </div>
 </template>
 <script>
@@ -17,12 +17,12 @@ const typeFormatEnum = {
   datetime: "yyyy-MM-dd HH:mm", month: "yyyy-MM", year: "yyyy", date: "yyyy-MM-dd", quarter: "yyyy-Qq", week: "yyyy-WW"
 };
 
-import FlexBox from '../xt-flex-box/index.vue'
+import XtFlexBox from '../xt-flex-box/index.vue'
 import Quarter from "./quarter.vue";
 export default {
   name: "XtDatePicker",
   components: {
-    FlexBox,
+    XtFlexBox,
     Quarter
   },
   model: {
@@ -49,8 +49,8 @@ export default {
     },
     placeholder: {},
     width: {
-      type: Number,
-      default: 280
+      type: [String],
+      default: '100%'
     }
   },
   data() {

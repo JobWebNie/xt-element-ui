@@ -67,6 +67,7 @@ export default {
     itemsLength: { type: Number, default: 1 },
     removable: { type: Boolean, default: true },
     disabled: { type: Boolean, default: false },
+    allowNegative: { type: Boolean, default: false },
     minLocked: { type: Boolean, default: false },
     unit: { type: String, default: '元' },
     precision: { type: Number, default: 2 },
@@ -187,7 +188,7 @@ export default {
         return
       }
       let v = this.safeNumber(rawVal, 0)
-      if (v < 0) v = 0
+      if (v < 0 && !this.allowNegative) v = 0
       v = Number(v.toFixed(this.precision))
       this.priceInput = v
       this.emitChange({ [this.keyPrice]: v })

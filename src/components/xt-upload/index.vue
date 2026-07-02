@@ -37,8 +37,8 @@
 </template>
 <script>
 import ImageViewer from "./preview.vue";
-import { getToken } from "@/utils/auth";
 export default {
+  name: "XtUpload",
   components: {
     ImageViewer
   },
@@ -57,6 +57,10 @@ export default {
       type: String,
       default: "",
       required: true
+    },
+    accessToken: {
+      type: String,
+      default: ""
     },
     autoUpload: {
       type: Boolean,
@@ -111,14 +115,7 @@ export default {
   },
   data() {
     return {
-      accessToken: getToken(),
       YSSQP: this.baseUrl,
-      // upload: {
-      //   data: { accessToken: getToken() },
-      //   limit: 5,
-      //   accept: ".jpg,.png,.pdf",
-      //   multiple: false
-      // },
       previewVisible: false,
       uploading: false,
       imageUrl: "",

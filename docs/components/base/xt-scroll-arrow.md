@@ -103,9 +103,9 @@
 <template>
   <div>
     <el-button @click="addItem" style="margin-bottom: 12px;">添加项目</el-button>
-    <XtScrollArrow :width="300">
+    <XtScrollArrow ref="arrow" :width="300" :appendMode="true">
       <div style="display: flex; gap: 12px; padding: 8px;">
-        <div v-for="item in items" :key="item.id" style="width: 80px; height: 60px; background: #f5f7fa; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+        <div v-for="item in items" :key="item.id" style="width: 80px; height: 60px; background: #f5f7fa; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
           {{ item.name }}
         </div>
       </div>
@@ -131,6 +131,9 @@ export default {
     addItem() {
       this.count++
       this.items.push({ id: this.count, name: `项目 ${this.count}` })
+      // this.$nextTick(() => {
+      //   this.$refs.arrow.scrollToEnd()
+      // })
     }
   }
 }

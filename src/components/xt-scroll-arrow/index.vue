@@ -8,7 +8,7 @@
       <i class="el-icon-arrow-left"></i>
     </div>
 
-    <div ref="scrollContainer" class="xt-scroll-arrow__content" @scroll="handleScroll">
+    <div ref="scrollContainer" class="xt-scroll-arrow__content" @scroll="handleScroll" @click="handleClick">
       <slot></slot>
     </div>
 
@@ -62,6 +62,14 @@ export default {
     width: {
       type: [String, Number],
       default: ''
+    },
+    appendMode: {
+      type: Boolean,
+      default: false
+    },
+    clickMode: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -96,9 +104,11 @@ export default {
       this.checkScroll()
     })
     this.addResizeObserver()
+    this.addMutationObserver()
   },
   beforeDestroy() {
     this.removeResizeObserver()
+    this.removeMutationObserver()
   },
   methods: {
     addResizeObserver() {
@@ -117,6 +127,30 @@ export default {
     removeResizeObserver() {
       if (this.resizeObserver) {
         this.resizeObserver.disconnect()
+      }
+    },
+    addMutationObserver() {
+      if (typeof MutationObserver !== 'undefined') {
+        this.mutationObserver = new MutationObserver(() => {
+          this.$nextTick(() => {
+            this.checkScroll()
+            if (this.appendMode) {
+              this.scrollToEnd()
+            }
+          })
+        })
+        const container = this.$refs.scrollContainer
+        if (container) {
+          this.mutationObserver.observe(container, {
+            childList: true,
+            subtree: true
+          })
+        }
+      }
+    },
+    removeMutationObserver() {
+      if (this.mutationObserver) {
+        this.mutationObserver.disconnect()
       }
     },
     checkScroll() {
@@ -161,6 +195,34 @@ export default {
       this.checkScroll()
       this.$emit('scroll', this.$refs.scrollContainer)
     },
+    handleClick(e) {
+      if (!this.clickMode) return
+      const container = this.$refs.scrollContainer
+      if (!container) return
+      
+      const target = e.target
+      if (!target || target === container) return
+      
+      const containerRect = container.getBoundingClientRect()
+      const targetRect = target.getBoundingClientRect()
+      
+      const isVisible = (
+        targetRect.left >= containerRect.left &&
+        targetRect.right <= containerRect.right &&
+        targetRect.top >= containerRect.top &&
+        targetRect.bottom <= containerRect.bottom
+      )
+      
+      if (!isVisible) {
+        if (this.direction === 'horizontal') {
+          const scrollLeft = target.offsetLeft - (container.clientWidth - targetRect.width) / 2
+          container.scrollTo({ left: scrollLeft, behavior: 'smooth' })
+        } else {
+          const scrollTop = target.offsetTop - (container.clientHeight - targetRect.height) / 2
+          container.scrollTo({ top: scrollTop, behavior: 'smooth' })
+        }
+      }
+    },
     scrollLeft() {
       const container = this.$refs.scrollContainer
       if (container) {
@@ -183,6 +245,15 @@ export default {
       const container = this.$refs.scrollContainer
       if (container) {
         container.scrollBy({ top: this.scrollStep, behavior: 'smooth' })
+      }
+    },
+    scrollToEnd() {
+      const container = this.$refs.scrollContainer
+      if (!container) return
+      if (this.direction === 'horizontal') {
+        container.scrollTo({ left: container.scrollWidth, behavior: 'smooth' })
+      } else {
+        container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' })
       }
     }
   }

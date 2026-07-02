@@ -16,8 +16,6 @@ import '../../src/styles/variables.scss'
 import '../../src/components/index.scss'
 
 
-// 导入覆盖主题样式的 CSS
-import './styles/override.css'
 
 
 
@@ -28,6 +26,11 @@ export default ({ Vue, options, router, siteData }) => {
   // 使用 xt-element-ui 模块包注册所有组件
   Vue.use(XtElementUI)
   Vue.prototype.createVirtualScrollData = createVirtualScrollData
+
+  // 手动注册 DemoBlock 组件（修复 demo-container 插件注册问题）
+  const DemoBlock = require('../../node_modules/vuepress-plugin-demo-container/src/DemoBlock.vue').default
+  Vue.component('DemoBlock', DemoBlock)
+  Vue.component('demo-block', DemoBlock)
 
 
   const htmlEl = document.documentElement;

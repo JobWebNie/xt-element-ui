@@ -114,6 +114,7 @@ EchartsUtil.EchartsUtil = {
 };
 
 EchartsUtil.chartInstanceList = [];
+EchartsUtil.resizeObserverList = [];
 
 // === 极简模式（simpleMode）预设配置 ===
 // 极简模式：隐藏图例、隐藏坐标轴/网格线、缩小内边距、简化 tooltip、去除动画装饰
@@ -417,6 +418,30 @@ EchartsUtil.bindResize = function(chartIns) {
   chartIns._resizeLocked = true;
 };
 
+EchartsUtil.bindResizeObserver = function(dom, chartIns) {
+  if (!dom || !chartIns || typeof ResizeObserver === 'undefined') return;
+  
+  const observer = new ResizeObserver(() => {
+    chartIns.resize();
+  });
+  
+  observer.observe(dom);
+  
+  EchartsUtil.resizeObserverList.push({
+    dom,
+    observer,
+    chartIns
+  });
+};
+
+EchartsUtil.unbindResizeObserver = function(dom) {
+  const index = EchartsUtil.resizeObserverList.findIndex(item => item.dom === dom);
+  if (index !== -1) {
+    EchartsUtil.resizeObserverList[index].observer.disconnect();
+    EchartsUtil.resizeObserverList.splice(index, 1);
+  }
+};
+
 EchartsUtil.destroy = function(chartIns) {
   if (chartIns) {
     chartIns.dispose();
@@ -435,6 +460,12 @@ EchartsUtil.destroyAll = function() {
   });
   
   this.chartInstanceList = [];
+  
+  this.resizeObserverList.forEach(function(item) {
+    item.observer.disconnect();
+  });
+  
+  this.resizeObserverList = [];
 };
 
 export default EchartsUtil;

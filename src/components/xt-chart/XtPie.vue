@@ -1,5 +1,5 @@
 <template>
-  <div ref="piechart" class="pie-box"></div>
+  <div ref="piechart" class="pie-box" :style="chartStyle"></div>
 </template>
 <script>
 import EchartsUtil from "./utils";
@@ -10,6 +10,18 @@ export default {
     size: {
       type: String,
       default: "medium"
+    },
+    width: {
+      type: String,
+      default: "100%"
+    },
+    height: {
+      type: String,
+      default: "100%"
+    },
+    ratio: {
+      type: Number,
+      default: null
     },
     chartData: {
       type: Array,
@@ -61,6 +73,16 @@ export default {
     };
   },
   computed: {
+    chartStyle() {
+      const style = {};
+      if (this.width) style.width = this.width;
+      if (this.ratio) {
+        style.aspectRatio = this.ratio;
+      } else if (this.height) {
+        style.height = this.height;
+      }
+      return style;
+    },
     totalNum() {
       const keys = Object.assign(
         { label: "label", value: "value", data: "data" },
@@ -84,7 +106,14 @@ export default {
   mounted() {
     this.$nextTick(() => {
       this.initChart();
+      EchartsUtil.bindResizeObserver(this.$refs.piechart, this.myChart);
     });
+  },
+  beforeUnmount() {
+    EchartsUtil.unbindResizeObserver(this.$refs.piechart);
+    if (this.myChart) {
+      this.myChart.dispose();
+    }
   },
   methods: {
     initChart() {
@@ -163,5 +192,6 @@ export default {
   position: relative;
   height: 100%;
   width: 100%;
+  min-height: 100px;
 }
 </style>

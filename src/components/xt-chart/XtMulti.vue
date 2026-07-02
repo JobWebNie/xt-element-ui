@@ -1,5 +1,5 @@
 <template>
-  <div ref="multilinechart" class="multiline-box"></div>
+  <div ref="multilinechart" class="multiline-box" :style="chartStyle"></div>
 </template>
 <script>
 import EchartsUtil from "./utils";
@@ -10,6 +10,18 @@ export default {
     size: {
       type: String,
       default: "medium"
+    },
+    width: {
+      type: String,
+      default: "100%"
+    },
+    height: {
+      type: String,
+      default: "100%"
+    },
+    ratio: {
+      type: Number,
+      default: null
     },
     fieldKeys: {
       type: Object,
@@ -102,6 +114,18 @@ export default {
       myChart: null
     };
   },
+  computed: {
+    chartStyle() {
+      const style = {};
+      if (this.width) style.width = this.width;
+      if (this.ratio) {
+        style.aspectRatio = this.ratio;
+      } else if (this.height) {
+        style.height = this.height;
+      }
+      return style;
+    }
+  },
   watch: {
     chartData: {
       deep: true,
@@ -110,16 +134,25 @@ export default {
         this.myChart && this.myChart.dispose();
         this.myChart = null;
         _self.initChart();
+        EchartsUtil.bindResizeObserver(this.$refs.multilinechart, this.myChart);
       }
     },
     theme(newVal) {
       this.myChart && this.myChart.dispose();
       this.myChart = null;
       this.initChart();
+      EchartsUtil.bindResizeObserver(this.$refs.multilinechart, this.myChart);
     }
   },
   mounted() {
     this.initChart();
+    EchartsUtil.bindResizeObserver(this.$refs.multilinechart, this.myChart);
+  },
+  beforeUnmount() {
+    EchartsUtil.unbindResizeObserver(this.$refs.multilinechart);
+    if (this.myChart) {
+      this.myChart.dispose();
+    }
   },
   methods: {
     initChart() {
@@ -248,5 +281,6 @@ export default {
 .multiline-box{
   height: 100%;
   width: 100%;
+  min-height: 100px;
 }
 </style>

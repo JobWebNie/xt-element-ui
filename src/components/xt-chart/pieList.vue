@@ -63,7 +63,6 @@ export default {
   height: 100%;
   width: 100%;
   position: relative;
-  @include font_color("fontColor");
 }
 .left{
   flex: 1;

@@ -71,8 +71,10 @@ export default {
 ::: demo 仅主内容
 ```vue
 <template>
-  <XtPage :show-header="false" :show-footer="false">
-    <template #default>仅主内容区域</template>
+  <XtPage :show-header="false" :show-footer="false" style="height: 600px;">
+    <template #default="{ tableHeight }">
+      <div class="multiline-box" :style="{ height: tableHeight+'px' }">自适应容器</div> 
+    </template>
   </XtPage>
 </template>
 ```

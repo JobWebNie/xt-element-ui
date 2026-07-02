@@ -122,6 +122,7 @@ export default {
 | `limit` | Number | `0` | 阶梯数量上限，<=0 表示不限制 |
 | `step` | Number | `10` | 阶梯增量，新增时自动填充下一级的 min 值 |
 | `disabled` | Boolean | `false` | 是否禁用所有操作 |
+| `allowNegative` | Boolean | `false` | 是否允许输入负数价格和下限 |
 | `tip` | String | `'区间左闭右闭 [min, max]，最后一级为 [min, +∞)，保证连续且不重叠。'` | 底部提示文本 |
 | `defaultFirst` | Boolean | `true` | 空数组时是否自动生成默认阶梯 |
 
