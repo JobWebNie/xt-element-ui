@@ -14,9 +14,6 @@ export default {
       color: "#ffffff"
     }
   },
-  axisLabel: {
-    color: "#ffffff"
-  },
   line: {
     itemStyle: {
     },
@@ -60,14 +57,34 @@ export default {
       borderColor: "#ffffff"
     }
   },
-  axisLine: {
-    lineStyle: {
-      color: "#DCDFE6"
+  xAxis: {
+    axisLine: {
+      lineStyle: {
+        color: "#DCDFE6"
+      }
+    },
+    axisTick: {
+      lineStyle: {
+        color: "#DCDFE6"
+      }
+    },
+    axisLabel: {
+      color: "#ffffff"
     }
   },
-  axisTick: {
-    lineStyle: {
-      color: "#DCDFE6"
+  yAxis: {
+    axisLine: {
+      lineStyle: {
+        color: "#DCDFE6"
+      }
+    },
+    axisTick: {
+      lineStyle: {
+        color: "#DCDFE6"
+      }
+    },
+    axisLabel: {
+      color: "#ffffff"
     }
   },
   splitLine: {

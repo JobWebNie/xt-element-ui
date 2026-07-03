@@ -1,5 +1,9 @@
 <script>
 import EchartsUtil from '../xt-chart/utils.js'
+
+// SSR 兼容：Node.js 环境中 HTMLElement 不存在
+const HTMLElementType = typeof HTMLElement !== 'undefined' ? HTMLElement : Object
+
 export default {
   name: 'XtConfigProvider',
   inheritAttrs: false,
@@ -107,7 +111,7 @@ export default {
       default: false
     },
     proxyElement: {
-      type: [HTMLElement, String, Object],
+      type: [HTMLElementType, String, Object],
       default: null,
       description: '代理元素，将样式应用到该元素上。支持 HTMLElement、CSS选择器字符串或 ref 对象'
     },

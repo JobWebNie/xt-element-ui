@@ -37,6 +37,10 @@ module.exports = {
       require('path').resolve(__dirname, '../../src/index.js')
     );
 
+    // 修复 Node 18+ hashFunction 兼容性问题
+    // Node 17+ 移除了 md4，而 webpack 4 默认使用 md4
+    config.output.set('hashFunction', 'sha256');
+
     if (!isServer) {
       // 仅在客户端构建时注入 global polyfill（兼容 ECharts 等依赖）
       config.plugin('define-global').use(require('webpack').DefinePlugin, [{

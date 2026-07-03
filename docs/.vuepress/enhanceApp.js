@@ -1,7 +1,7 @@
 import Vue from 'vue'
 
 // 为浏览器环境添加 global 对象 polyfill（解决 ECharts 依赖问题）
-if (typeof global === 'undefined') {
+if (typeof window !== 'undefined' && typeof global === 'undefined') {
   window.global = window
 }
 
@@ -32,6 +32,8 @@ export default ({ Vue, options, router, siteData }) => {
   Vue.component('DemoBlock', DemoBlock)
   Vue.component('demo-block', DemoBlock)
 
+  // SSR 兼容：仅在浏览器环境中执行 DOM 操作
+  if (typeof window === 'undefined') return
 
   const htmlEl = document.documentElement;
   // 页面初始化先获取一次当前主题

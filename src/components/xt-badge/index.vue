@@ -1,10 +1,5 @@
 <template>
-  <span class="xt-badge" :class="[
-    `xt-badge--${type}`,
-    { 'xt-badge--dot': isDot },
-    { 'xt-badge--hidden': hidden },
-    { 'xt-badge--fixed': fixed }
-  ]">
+  <span :class="rootClasses">
     <span class="xt-badge__content">
       <slot></slot>
     </span>
@@ -13,9 +8,9 @@
       class="xt-badge__badge"
       :style="badgeStyle"
     >
-      <template v-if="isDot"></template>
-      <template v-else-if="showOverflow && value > max">{{ max }}+</template>
-      <template v-else>{{ value }}</template>
+      <span v-if="isDot"></span>
+      <span v-else-if="isOverflow">{{ overflowText }}</span>
+      <span v-else>{{ value }}</span>
     </span>
   </span>
 </template>
@@ -59,12 +54,27 @@ export default {
     }
   },
   computed: {
+    rootClasses() {
+      return [
+        'xt-badge',
+        `xt-badge--${this.type}`,
+        { 'xt-badge--dot': this.isDot },
+        { 'xt-badge--hidden': this.hidden },
+        { 'xt-badge--fixed': this.fixed }
+      ]
+    },
     badgeStyle() {
       const style = {}
       if (this.color) {
         style.backgroundColor = this.color
       }
       return style
+    },
+    overflowText() {
+      return this.max + '+'
+    },
+    isOverflow() {
+      return this.showOverflow && this.value > this.max
     }
   }
 }

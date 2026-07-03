@@ -1,4 +1,7 @@
 export default ({ Vue }) => {
+  // SSR 兼容：仅在浏览器环境中执行
+  if (typeof window === 'undefined') return
+
   const defaultOptions = {
     defaultSize: 'medium',
     sizes: ['small', 'medium', 'large'],

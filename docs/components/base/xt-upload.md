@@ -70,7 +70,7 @@ export default {
 export default {
   data() {
     return {
-      imageSrc: 'path/to/image.jpg'
+      imageSrc: ''
     }
   }
 }

@@ -45,6 +45,9 @@ export default {
       borderColor: "#fff"
     }
   },
+  axisLabel: {
+    color: "#666666"
+  },
   gauge: {
     axisLine: {
       lineStyle: {
@@ -68,6 +71,9 @@ export default {
         color: "#DFE9EE"
       },
       show: false
+    },
+    axisLabel: {
+      color: "#666666"
     }
   },
   yAxis: {
@@ -87,6 +93,9 @@ export default {
         type: "dashed",
         color: "#DFE9EE"
       }
+    },
+    axisLabel: {
+      color: "#666666"
     }
   },
   splitArea: {

@@ -312,6 +312,34 @@ EchartsUtil.applyFontSize = function(themeOption, size) {
     }
   }
   
+  // 调整坐标轴标签字体大小和颜色
+  const applyAxisLabel = function(axis) {
+    if (!axis) return;
+    if (!axis.axisLabel) {
+      axis.axisLabel = {};
+    }
+    if (result.axisLabel && result.axisLabel.color) {
+      axis.axisLabel.color = result.axisLabel.color;
+    }
+    axis.axisLabel.fontSize = fontSizeConfig.axisLabel;
+  };
+  
+  if (result.xAxis) {
+    if (Array.isArray(result.xAxis)) {
+      result.xAxis.forEach(applyAxisLabel);
+    } else {
+      applyAxisLabel(result.xAxis);
+    }
+  }
+  
+  if (result.yAxis) {
+    if (Array.isArray(result.yAxis)) {
+      result.yAxis.forEach(applyAxisLabel);
+    } else {
+      applyAxisLabel(result.yAxis);
+    }
+  }
+  
   return result;
 };
 
