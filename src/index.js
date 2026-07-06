@@ -37,6 +37,7 @@ import XtDatePicker from './components/xt-date-picker'
 import XtChart from './components/xt-chart'  // XtChart 组件（基于 ECharts 封装）
 import XtIcon from './components/xt-icon'    // XtIcon 组件（支持 el-icon / svg / 自定义字体）
 import XtTable from './components/xt-table'  // XtTable 组件（基于 ElementUI Table 封装）
+import XtList from './components/xt-list'  // XtList 组件（卡片列表）
 import XtScrollArrow from './components/xt-scroll-arrow'
 import XtBar from './components/xt-chart/XtBar.vue'
 import XtLine from './components/xt-chart/XtLine.vue'
@@ -69,6 +70,7 @@ const components = [
   XtChart,
   XtIcon,
   XtTable,
+  XtList,
   XtScrollArrow,
   XtBar,
   XtLine,
@@ -146,6 +148,7 @@ export default {
   XtDatePicker,
   XtIcon,
   XtTable,
+  XtList,
   XtScrollArrow,
   XtBar,
   XtLine,

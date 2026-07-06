@@ -76,6 +76,13 @@ export default {
 | `pagination` | Object | `null` | 分页配置 |
 | `total` | Number | `0` | 数据总数 |
 
+### 排序
+
+| 属性 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `sortGroup` | Boolean | `false` | 是否启用分组内排序 |
+| `defaultSort` | Object | `null` | 默认排序配置 `{ prop, order }` |
+
 ## 列配置说明
 
 ```javascript
@@ -215,6 +222,119 @@ export default {
           count: 'sum'
         }
       }
+    }
+  }
+}
+</script>
+```
+:::
+
+### 排序
+
+列配置中设置 `sortable: true` 即可启用排序。支持普通排序和分组内排序。
+
+::: demo 普通排序
+```vue
+<template>
+  <XtTable
+    :table-data="tableData"
+    :columns="columns"
+    title="支持排序的表格"
+  />
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      tableData: [
+        { name: '张三', age: 25, score: 88 },
+        { name: '李四', age: 30, score: 95 },
+        { name: '王五', age: 28, score: 76 },
+        { name: '赵六', age: 22, score: 82 }
+      ],
+      columns: [
+        { prop: 'name', label: '姓名' },
+        { prop: 'age', label: '年龄', sortable: true },
+        { prop: 'score', label: '分数', sortable: true }
+      ]
+    }
+  }
+}
+</script>
+```
+:::
+
+::: demo 分组内排序
+```vue
+<template>
+  <XtTable
+    :table-data="tableData"
+    :columns="columns"
+    :group-columns="['city']"
+    :sort-group="true"
+    title="分组后组内排序"
+  />
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      tableData: [
+        { city: '北京', name: '张三', age: 25 },
+        { city: '北京', name: '李四', age: 30 },
+        { city: '北京', name: '王五', age: 28 },
+        { city: '上海', name: '赵六', age: 22 },
+        { city: '上海', name: '孙七', age: 35 },
+        { city: '广州', name: '周八', age: 27 }
+      ],
+      columns: [
+        { prop: 'city', label: '城市' },
+        { prop: 'name', label: '姓名' },
+        { prop: 'age', label: '年龄', sortable: true }
+      ]
+    }
+  }
+}
+</script>
+```
+:::
+
+::: demo 默认排序和自定义排序
+```vue
+<template>
+  <XtTable
+    :table-data="tableData"
+    :columns="columns"
+    :default-sort="{ prop: 'score', order: 'descending' }"
+    title="默认按分数降序排列"
+  />
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      tableData: [
+        { name: '张三', score: 88, level: 'B' },
+        { name: '李四', score: 95, level: 'A' },
+        { name: '王五', score: 76, level: 'C' },
+        { name: '赵六', score: 82, level: 'B' }
+      ],
+      columns: [
+        { prop: 'name', label: '姓名' },
+        { prop: 'score', label: '分数', sortable: true },
+        {
+          prop: 'level',
+          label: '等级',
+          sortable: true,
+          sortMethod: (a, b) => {
+            const order = { 'A': 3, 'B': 2, 'C': 1 }
+            return (order[a.level] || 0) - (order[b.level] || 0)
+          }
+        }
+      ]
     }
   }
 }

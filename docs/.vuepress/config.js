@@ -111,6 +111,7 @@ module.exports = {
           ['/components/base/xt-date-picker', 'XtDatePicker 日期选择器'],
           ['/components/base/xt-icon', 'XtIcon 图标'],
           ['/components/base/xt-table', 'XtTable 扩展表格'],
+          ['/components/base/xt-list', 'XtList 卡片列表'],
           ['/components/base/xt-select-tree', 'XtSelectTree 下拉选择树'],
           ['/components/base/xt-upload', 'XtUpload 上传组件'],
           ['/components/base/xt-page', 'XtPage 页面组件'],

@@ -93,7 +93,7 @@
 ```vue
 <template>
   <XtCard title="统计数据">
-    <div style="display: flex; flex-direction: column; gap: 8px; style="width: 350px;">
+    <div style="display: flex; flex-direction: column; gap: 8px;width: 350px;">
       <XtCardItem title="总销售额" value="123456" unit="元"></XtCardItem>
       <XtCardItem title="订单数量" value="520" unit="单" type="success"></XtCardItem>
       <XtCardItem title="转化率" value="23.5" unit="%" type="warning"></XtCardItem>

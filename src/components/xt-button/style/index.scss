@@ -1,6 +1,6 @@
 @import '../../../styles/variables.scss';
 
-.ex-button {
+.xt-button {
   padding: 8px 16px;
   border-radius: var(--xt-border-radius-base);
   font-size: var(--xt-font-size-base);
@@ -43,25 +43,25 @@
 }
 
 /* small size - 字体大小 12px */
-.ex-button-mini {
+.xt-button-mini {
   padding: 2px 4px;
   font-size: calc(var(--xt-font-size-base) + $xt-font-size-increment-extra-small);
 }
 
 /* small size - 字体大小 14px */
-.ex-button-small {
+.xt-button-small {
   padding: 5px 10px;
   font-size: calc(var(--xt-font-size-base) + $xt-font-size-increment-base);
 }
 
 /* medium size - 字体大小 16px */
-.ex-button-medium {
+.xt-button-medium {
   padding: 8px 16px;
   font-size: calc(var(--xt-font-size-base) + $xt-font-size-increment-medium);
 }
 
 /* large size - 字体大小 18px */
-.ex-button-large {
+.xt-button-large {
   padding: 11px 22px;
   font-size: calc(var(--xt-font-size-base) + $xt-font-size-increment-large);
 }

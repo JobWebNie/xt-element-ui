@@ -1,6 +1,6 @@
 <template>
   <el-card 
-    class="ex-card" 
+    class="xt-card" 
     :class="cardClasses"
     v-bind="$attrs"
   >
@@ -55,10 +55,10 @@ export default {
     },
     cardClasses() {
       return [
-        `ex-card-${this.shadow}`,
-        `ex-card-${this.finalSize}`,
+        `xt-card-${this.shadow}`,
+        `xt-card-${this.finalSize}`,
         {
-          'ex-card-no-border': !this.bordered,
+          'xt-card-no-border': !this.bordered,
           [this.bodyClass]: this.bodyClass
         }
       ]

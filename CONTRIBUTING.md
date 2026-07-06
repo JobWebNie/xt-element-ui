@@ -185,7 +185,7 @@ props: {
 ### 示例
 
 ```
-feat(ex-table): 新增虚拟滚动支持
+feat(xt-table): 新增虚拟滚动支持
 
 - 实现基于 requestAnimationFrame 的滚动节流
 - 优化可见范围计算逻辑

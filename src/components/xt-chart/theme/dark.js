@@ -1,17 +1,19 @@
 
 import variables from '../../../styles/variables-export.scss'
 export default {
-  color: ["#0de7ff", "#a782ff", "#fcdd60", "#0de7ff", "#ffc5a1", "#6291ae", "#13ce66"],
+  color: ["#1060ff", "#6648fe", "#26ddff", "#1bae94", "#ff8041", "#3a5dca", "#c7dd4b"],
   backgroundColor: "#000",
   textStyle: {
     fontFamily: "Microsoft YaHei, sans-serif"
   },
   title: {
     textStyle: {
-      color: "#ffffff"
+      color: "#ffffff",
+      fontSize: 16
     },
     subtextStyle: {
-      color: "#ffffff"
+      color: "#ffffff",
+      fontSize: 12
     }
   },
   line: {
@@ -45,6 +47,16 @@ export default {
       borderColor: "#dcdfe6"
     }
   },
+  valueAxis: {
+    axisLabel: {
+      color: "#ffffff"
+    }
+  },
+  categoryAxis: {
+    axisLabel: {
+      color: "#ffffff"
+    }
+  },
   gauge: {
     axisLine: {
       lineStyle: {
@@ -67,9 +79,6 @@ export default {
       lineStyle: {
         color: "#DCDFE6"
       }
-    },
-    axisLabel: {
-      color: "#ffffff"
     }
   },
   yAxis: {
@@ -82,9 +91,6 @@ export default {
       lineStyle: {
         color: "#DCDFE6"
       }
-    },
-    axisLabel: {
-      color: "#ffffff"
     }
   },
   splitLine: {

@@ -115,14 +115,8 @@ export default {
           right: "30",
           bottom: "20"
         },
-        xAxis: [{
+        xAxis: {
           type: "category",
-          splitLine: {
-            show: true,
-            lineStyle: {
-              type: "dashed"
-            }
-          },
           axisLabel: {
             interval: this.intervalvalue
           },
@@ -130,7 +124,7 @@ export default {
           data: _self.chartData.map((item) => {
             return item[keys.label];
           })
-        }],
+        },
         yAxis: {
           type: "value",
           axisLine: {

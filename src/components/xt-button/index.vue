@@ -1,6 +1,6 @@
 <template>
   <el-button 
-    class="ex-button" 
+    class="xt-button" 
     :class="buttonClasses"
     v-bind="$attrs" 
     @click="handleClick"
@@ -49,8 +49,8 @@ export default {
     },
     buttonClasses() {
       return [
-        `ex-button-${this.finalSize}`,
-        `ex-button-${this.type}`
+        `xt-button-${this.finalSize}`,
+        `xt-button-${this.type}`
       ]
     }
   },
