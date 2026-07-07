@@ -7,27 +7,27 @@
 
 // 字体大小 - 使用增量方式
 .xt-text--extra-large {
-  font-size: calc(var(--xt-font-size-base) + $xt-font-size-increment-extra-large);
+  font-size: var(--xt-font-size-extra-large);
 }
 
 .xt-text--large {
-  font-size: calc(var(--xt-font-size-base) + $xt-font-size-increment-large);
+  font-size: var(--xt-font-size-large);
 }
 
 .xt-text--medium {
-  font-size: calc(var(--xt-font-size-base) + $xt-font-size-increment-medium);
-}
-
-.xt-text--base {
-  font-size: calc(var(--xt-font-size-base) + $xt-font-size-increment-base);
+  font-size: var(--xt-font-size-medium);
 }
 
 .xt-text--small {
-  font-size: calc(var(--xt-font-size-base) + $xt-font-size-increment-small);
+  font-size: var(--xt-font-size-small);
+}
+
+.xt-text--mini {
+  font-size: calc(var(--xt-font-size-mini));
 }
 
 .xt-text--extra-small {
-  font-size: calc(var(--xt-font-size-base) + $xt-font-size-increment-extra-small);
+  font-size: calc(var(--xt-font-size-extra-small));
 }
 
 // 不同类型文字颜色

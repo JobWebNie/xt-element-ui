@@ -2,7 +2,7 @@ const path = require('path')
 
 module.exports = (options, context) => {
   const defaultOptions = {
-    defaultSize: 'medium',
+    defaultSize: 'small',
     sizes: ['small', 'medium', 'large'],
     sizeLabels: {
       small: '小号',

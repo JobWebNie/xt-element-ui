@@ -52,9 +52,19 @@ module.exports = {
         
         // 只在生产环境配置 externals
         config.externals({
-          vue: "Vue",
-          "element-ui": "ElementUI",
-        });
+          vue: {
+            commonjs: 'vue',
+            commonjs2: 'vue',
+            amd: 'vue',
+            root: 'Vue' // 仅全局CDN用大写Vue
+          },
+          "element-ui": {
+            commonjs: 'element-ui',
+            commonjs2: 'element-ui',
+            amd: 'element-ui',
+            root: 'ElementUI'
+          }
+        })
       }
     },
   };

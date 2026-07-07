@@ -33,7 +33,7 @@
 
 <script>
 const opts = FONT_SIZE_OPTIONS || {
-  defaultSize: 'medium',
+  defaultSize: 'small',
   sizes: ['small', 'medium', 'large'],
   sizeLabels: {
     small: '小号',
@@ -90,7 +90,7 @@ export default {
         medium: '14px',
         large: '16px'
       }
-      document.documentElement.style.setProperty('--xt-font-size-base', sizeMap[size] || sizeMap.medium)
+      document.documentElement.style.setProperty('--xt-font-size-base', sizeMap[size] || sizeMap.small)
       
       window.dispatchEvent(new CustomEvent('xt-font-size-change', { detail: size }))
     },

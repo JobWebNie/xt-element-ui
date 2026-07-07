@@ -3,7 +3,7 @@ export default ({ Vue }) => {
   if (typeof window === 'undefined') return
 
   const defaultOptions = {
-    defaultSize: 'medium',
+    defaultSize: 'small',
     sizes: ['small', 'medium', 'large'],
     sizeLabels: {
       small: '小号',

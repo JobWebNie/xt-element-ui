@@ -1,23 +1,15 @@
 @import './theme/index.scss';
 
 :root {
-  // ============================
-  // 基础变量（参考 Element Plus）
-  // ============================
-  color-scheme: light;
-  
-  // 基础颜色
   --xt-color-white: #ffffff;
   --xt-color-black: #000000;
-  
-  // RGB 值
+
   --xt-color-primary-rgb: 24, 144, 255;
   --xt-color-success-rgb: 103, 194, 58;
   --xt-color-warning-rgb: 230, 162, 60;
   --xt-color-danger-rgb: 245, 108, 108;
   --xt-color-info-rgb: 144, 147, 153;
-  
-  // 主色调系列 (#1890ff)
+
   --xt-color-primary: #1890ff;
   --xt-color-success: #67c23a;
   --xt-color-warning: #e6a23c;
@@ -25,7 +17,6 @@
   --xt-color-error: #f56c6c;
   --xt-color-info: #909399;
 
-  // Primary 渐变色系 (#1890ff)
   --xt-color-primary-light-3: rgb(93, 177, 255);
   --xt-color-primary-light-5: rgb(140, 200, 255);
   --xt-color-primary-light-7: rgb(186, 222, 255);
@@ -33,7 +24,6 @@
   --xt-color-primary-light-9: rgb(232, 244, 255);
   --xt-color-primary-dark-2: rgb(19, 115, 204);
 
-  // Success 渐变色系
   --xt-color-success-light-3: rgb(149, 212, 117);
   --xt-color-success-light-5: rgb(179, 225, 157);
   --xt-color-success-light-7: rgb(209, 237, 196);
@@ -41,7 +31,6 @@
   --xt-color-success-light-9: rgb(240, 249, 235);
   --xt-color-success-dark-2: rgb(82, 155, 46);
 
-  // Warning 渐变色系
   --xt-color-warning-light-3: rgb(238, 190, 119);
   --xt-color-warning-light-5: rgb(243, 209, 158);
   --xt-color-warning-light-7: rgb(248, 227, 197);
@@ -49,7 +38,6 @@
   --xt-color-warning-light-9: rgb(253, 246, 236);
   --xt-color-warning-dark-2: rgb(184, 130, 48);
 
-  // Danger 渐变色系
   --xt-color-danger-light-3: rgb(248, 152, 152);
   --xt-color-danger-light-5: rgb(250, 182, 182);
   --xt-color-danger-light-7: rgb(252, 211, 211);
@@ -57,7 +45,6 @@
   --xt-color-danger-light-9: rgb(254, 240, 240);
   --xt-color-danger-dark-2: rgb(196, 86, 86);
 
-  // Error 渐变色系
   --xt-color-error-light-3: rgb(248, 152, 152);
   --xt-color-error-light-5: rgb(250, 182, 182);
   --xt-color-error-light-7: rgb(252, 211, 211);
@@ -65,7 +52,6 @@
   --xt-color-error-light-9: rgb(254, 240, 240);
   --xt-color-error-dark-2: rgb(196, 86, 86);
 
-  // Info 渐变色系
   --xt-color-info-light-3: rgb(177, 179, 184);
   --xt-color-info-light-5: rgb(200, 201, 204);
   --xt-color-info-light-7: rgb(222, 223, 224);
@@ -73,19 +59,18 @@
   --xt-color-info-light-9: rgb(244, 244, 245);
   --xt-color-info-dark-2: rgb(115, 118, 122);
 
-  // 背景颜色
   --xt-bg-color: #ffffff;
   --xt-bg-color-page: #f2f3f5;
   --xt-bg-color-overlay: #ffffff;
+  --xt-bg-color-block: #ffffff;
+  --xt-bg-color-block-head: #ffffff;
 
-  // 文字颜色
   --xt-text-color-primary: #303133;
   --xt-text-color-regular: #606266;
   --xt-text-color-secondary: #909399;
   --xt-text-color-placeholder: #a8abb2;
   --xt-text-color-disabled: #c0c4cc;
 
-  // 边框颜色
   --xt-border-color: #dcdfe6;
   --xt-border-color-light: #e4e7ed;
   --xt-border-color-lighter: #ebeef5;
@@ -93,7 +78,6 @@
   --xt-border-color-dark: #d4d7de;
   --xt-border-color-darker: #cdd0d6;
 
-  // 填充颜色
   --xt-fill-color: #f0f2f5;
   --xt-fill-color-light: #f5f7fa;
   --xt-fill-color-lighter: #fafafa;
@@ -102,58 +86,50 @@
   --xt-fill-color-darker: #e6e8eb;
   --xt-fill-color-blank: #ffffff;
 
-  // 阴影
   --xt-box-shadow: 0px 12px 32px 4px rgba(0, 0, 0, .04), 0px 8px 20px rgba(0, 0, 0, .08);
   --xt-box-shadow-light: 0px 0px 12px rgba(0, 0, 0, .12);
   --xt-box-shadow-lighter: 0px 0px 6px rgba(0, 0, 0, .12);
   --xt-box-shadow-dark: 0px 16px 48px 16px rgba(0, 0, 0, .08), 0px 12px 32px rgba(0, 0, 0, .12), 0px 8px 16px -8px rgba(0, 0, 0, .16);
 
-  // 禁用状态颜色
   --xt-disabled-bg-color: var(--xt-fill-color-light);
   --xt-disabled-text-color: var(--xt-text-color-placeholder);
   --xt-disabled-border-color: var(--xt-border-color-light);
 
-  // 遮罩颜色
   --xt-overlay-color: rgba(0, 0, 0, .8);
   --xt-overlay-color-light: rgba(0, 0, 0, .7);
   --xt-overlay-color-lighter: rgba(0, 0, 0, .5);
   --xt-mask-color: rgba(255, 255, 255, .9);
   --xt-mask-color-extra-light: rgba(255, 255, 255, .3);
 
-  // 边框
   --xt-border-width: 1px;
   --xt-border-style: solid;
   --xt-border-color-hover: var(--xt-text-color-disabled);
   --xt-border: var(--xt-border-width) var(--xt-border-style) var(--xt-border-color);
 
-  // SVG 灰度
   --xt-svg-monochrome-grey: var(--xt-border-color);
 
-  // 字体大小
-  --xt-font-size-extra-large: 20px;
-  --xt-font-size-large: 18px;
-  --xt-font-size-medium: 16px;
-  --xt-font-size-base: 14px;
-  --xt-font-size-small: 13px;
-  --xt-font-size-extra-small: 12px;
+  --xt-font-size-increment: 0px;
 
-  // 字体
+  --xt-font-size-extra-large: calc(24px + var(--xt-font-size-increment));
+  --xt-font-size-large: calc(18px + var(--xt-font-size-increment));
+  --xt-font-size-medium: calc(16px + var(--xt-font-size-increment));
+  --xt-font-size-small: calc(14px + var(--xt-font-size-increment));
+  --xt-font-size-mini: calc(12px + var(--xt-font-size-increment));
+  --xt-font-size-extra-small: calc(10px + var(--xt-font-size-increment));
+
   --xt-font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
   --xt-font-weight-primary: 500;
   --xt-font-line-height-primary: 24px;
 
-  // 层级
   --xt-index-normal: 1;
   --xt-index-top: 1000;
   --xt-index-popper: 2000;
 
-  // 圆角
-  --xt-border-radius-base: 4px;
-  --xt-border-radius-small: 2px;
+  --xt-border-radius-small: 4px;
+  --xt-border-radius-mini: 2px;
   --xt-border-radius-round: 20px;
   --xt-border-radius-circle: 100%;
 
-  // 过渡动画
   --xt-transition-duration: .3s;
   --xt-transition-duration-fast: .2s;
   --xt-transition-function-ease-in-out-bezier: cubic-bezier(.645, .045, .355, 1);
@@ -166,12 +142,10 @@
   --xt-transition-box-shadow: box-shadow var(--xt-transition-duration-fast) var(--xt-transition-function-ease-in-out-bezier);
   --xt-transition-color: color var(--xt-transition-duration-fast) var(--xt-transition-function-ease-in-out-bezier);
 
-  // 组件尺寸
   --xt-component-size-large: 40px;
   --xt-component-size: 32px;
   --xt-component-size-small: 24px;
 
-  // 间距
   --xt-spacing-xs: 8px;
   --xt-spacing-sm: 12px;
   --xt-spacing-md: 16px;
@@ -179,9 +153,6 @@
   --xt-spacing-xl: 32px;
 }
 
-// ============================
-// 暗色主题（参考 Element Plus）
-// ============================
 :root[data-theme="dark"],
 [data-theme="dark"], html.dark {
     color-scheme: dark;
@@ -234,6 +205,8 @@
     --xt-bg-color-page: #0a0a0a;
     --xt-bg-color: #141414;
     --xt-bg-color-overlay: #1d1e1f;
+    --xt-bg-color-block: #141414;
+    --xt-bg-color-block-head: #1d1e1f;
     --xt-text-color-primary: #E5EAF3;
     --xt-text-color-regular: #CFD3DC;
     --xt-text-color-secondary: #A3A6AD;
@@ -254,4 +227,16 @@
     --xt-fill-color-blank: #141414;
     --xt-mask-color: rgba(0, 0, 0, .8);
     --xt-mask-color-extra-light: rgba(0, 0, 0, .3)
+}
+
+[data-size="large"] {
+  --xt-font-size-increment: 4px;
+}
+
+[data-size="medium"] {
+  --xt-font-size-increment: 2px;
+}
+
+[data-size="small"] {
+  --xt-font-size-increment: 0px;
 }

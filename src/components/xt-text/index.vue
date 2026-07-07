@@ -64,8 +64,8 @@ export default {
     },
     size: {
       type: String,
-      default: 'base',
-      validator: (val) => ['extra-large', 'large', 'medium', 'base', 'small', 'extra-small'].includes(val)
+      default: 'small',
+      validator: (val) => ['extra-large', 'large', 'medium', 'small', 'mini', 'extra-small'].includes(val)
     },
     bold: {
       type: Boolean,

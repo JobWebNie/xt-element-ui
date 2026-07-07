@@ -2,39 +2,39 @@
 
 .xt-button {
   padding: 8px 16px;
-  border-radius: var(--xt-border-radius-base);
-  font-size: var(--xt-font-size-base);
+  border-radius: var(--xt-border-radius-small);
+  font-size: var(--xt-font-size-small);
   border: 1px solid var(--xt-border-color, #dcdfe6);
   transition: all 0.3s;
   &-default{
-    background-color: var(--el-bg-color-page, #ffffff);
+    background-color: var(--xt-bg-color-page, #ffffff);
     border: 1px solid var(--xt-border-color, #303133);
-    color: var(--el-text-color-primary, #303133);
+    color: var(--xt-text-color-primary, #303133);
   }
   &-primary{
-    background-color: var(--el-color-primary, #ffffff);
-    border-color: var(--el-color-primary, #ffffff);
-    color: var(--el-text-color-white, #ffffff);
+    background-color: var(--xt-color-primary, #ffffff);
+    border-color: var(--xt-color-primary, #ffffff);
+    color: var(--xt-color-white, #ffffff);
   }
   &-success{
-    background-color: var(--el-color-success, #ffffff);
-    border-color: var(--el-color-success, #ffffff);
-    color: var(--el-text-color-white, #ffffff);
+    background-color: var(--xt-color-primary, #ffffff);
+    border-color: var(--xt-color-primary, #ffffff);
+    color: var(--xt-color-white, #ffffff);
   }
   &-warning{
-    background-color: var(--el-color-warning, #ffffff);
-    border-color: var(--el-color-warning, #ffffff);
-    color: var(--el-text-color-white, #ffffff);
+    background-color: var(--xt-color-warning, #ffffff);
+    border-color: var(--xt-color-warning, #ffffff);
+    color: var(--xt-color-white, #ffffff);
   }
   &-danger{
-    background-color: var(--el-color-danger, #ffffff);
-    border-color: var(--el-color-danger, #ffffff);
-    color: var(--el-text-color-white, #ffffff);
+    background-color: var(--xt-color-danger, #ffffff);
+    border-color: var(--xt-color-danger, #ffffff);
+    color: var(--xt-color-white, #ffffff);
   }
   &-info{
-    background-color: var(--el-color-info, #ffffff);
-    border-color: var(--el-color-info, #ffffff);
-    color: var(--el-text-color-white, #ffffff);
+    background-color: var(--xt-color-info, #ffffff);
+    border-color: var(--xt-color-info, #ffffff);
+    color: var(--xt-color-white, #ffffff);
   }
 
   &:hover {
@@ -42,26 +42,27 @@
   }
 }
 
-/* small size - 字体大小 12px */
+
+/* mini size - 字体大小 12px */
 .xt-button-mini {
   padding: 2px 4px;
-  font-size: calc(var(--xt-font-size-base) + $xt-font-size-increment-extra-small);
+  font-size: var(--xt-font-size-mini);
 }
 
 /* small size - 字体大小 14px */
 .xt-button-small {
   padding: 5px 10px;
-  font-size: calc(var(--xt-font-size-base) + $xt-font-size-increment-base);
+  font-size:var(--xt-font-size-small);
 }
 
 /* medium size - 字体大小 16px */
 .xt-button-medium {
   padding: 8px 16px;
-  font-size: calc(var(--xt-font-size-base) + $xt-font-size-increment-medium);
+  font-size: var(--xt-font-size-medium);
 }
 
 /* large size - 字体大小 18px */
 .xt-button-large {
   padding: 11px 22px;
-  font-size: calc(var(--xt-font-size-base) + $xt-font-size-increment-large);
+  font-size: var(--xt-font-size-large);
 }

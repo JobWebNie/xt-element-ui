@@ -52,8 +52,8 @@
     <XtText size="extra-large">特大号文本</XtText>
     <XtText size="large">大号文本</XtText>
     <XtText size="medium">中号文本</XtText>
-    <XtText size="base">基准文本</XtText>
-    <XtText size="small">小号文本</XtText>
+    <XtText size="small">基准文本</XtText>
+    <XtText size="mini">小号文本</XtText>
     <XtText size="extra-small">特小号文本</XtText>
   </div>
 </template>
