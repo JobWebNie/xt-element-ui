@@ -42,7 +42,7 @@ Vue.component(XtStepPriceItem.name, XtStepPriceItem)
 ```
 
 ### 基本用法
-
+::: demo
 ```vue
 <template>
   <div style="width: 600px;">
@@ -72,6 +72,7 @@ export default {
 }
 </script>
 ```
+:::
 
 ### 自定义字段名
 

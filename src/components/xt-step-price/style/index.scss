@@ -2,10 +2,6 @@
 
 .xt-step-price {
   padding: 12px 16px;
-  background-color: var(--xt-fill-color-blank, #ffffff);
-  border: 1px solid var(--xt-border-color-lighter, #ebeef5);
-  border-radius: var(--xt-border-radius-small, 4px);
-
   &__header {
     display: flex;
     align-items: center;

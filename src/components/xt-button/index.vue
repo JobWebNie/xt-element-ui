@@ -2,7 +2,8 @@
   <el-button 
     class="xt-button" 
     :class="buttonClasses"
-    v-bind="$attrs" 
+    v-bind="$attrs"
+    :type="type"
     @click="handleClick"
   >
     <slot></slot>

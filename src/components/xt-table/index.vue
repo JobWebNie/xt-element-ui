@@ -125,6 +125,8 @@ export default {
     // 排序配置
     sortGroup: { type: Boolean, default: false },
     defaultSort: { type: Object, default: null },
+    // 过滤配置
+    filterMethod: { type: Function, default: null },
     title: { type: String, default: '' },
     height: { type: [Number, String], default: null },
     maxHeight: { type: [Number, String], default: null },
@@ -168,15 +170,22 @@ export default {
     // 排序后的数据
     sortedTableData() {
       if (!this.tableData.length) return []
-      if (!this.sortProp || !this.sortOrder) return [...this.tableData]
+
+      let data = [...this.tableData]
+
+      if (typeof this.filterMethod === 'function') {
+        data = data.filter(this.filterMethod)
+      }
+
+      if (!this.sortProp || !this.sortOrder) return data
 
       const order = this.sortOrder === 'ascending' ? 1 : -1
       const sortFn = this.resolveSortMethod(this.sortProp)
 
       if (this.sortGroup && this.groupColumns.length) {
-        return this.groupSort([...this.tableData], sortFn, order)
+        return this.groupSort(data, sortFn, order)
       }
-      return [...this.tableData].sort((a, b) => sortFn(a, b) * order)
+      return data.sort((a, b) => sortFn(a, b) * order)
     },
 
     // 处理小计、总计后的最终数据

@@ -42,7 +42,7 @@
 
     <xt-button
       v-if="!disabled && removable && itemsLength > 1"
-      text
+      type="text"
       icon="el-icon-delete"
       class="xt-step-price-item__delete"
       @click="onDelete"
