@@ -20,11 +20,17 @@
       :style="customStyle"
       @mouseenter="handleMouseEnter"
     >
-      <slot name="prefix">{{ prefix }}</slot>
+      <template v-if="$slots.prefix">
+        <slot name="prefix"></slot>
+      </template>
+      <template v-else-if="prefix">{{ prefix }}</template>
       <slot>
         <template v-if="formattedValue !== undefined">{{ formattedValue }}</template>
       </slot>
-      <slot name="suffix">{{ suffix }}</slot> 
+      <template v-if="$slots.suffix">
+        <slot name="suffix"></slot>
+      </template>
+      <template v-else-if="suffix">{{ suffix }}</template>
     </span>
   </el-tooltip>
   <span 
@@ -41,11 +47,17 @@
     ]"
     :style="customStyle"
   >
-    <slot name="prefix">{{ prefix }}</slot>
+    <template v-if="$slots.prefix">
+      <slot name="prefix"></slot>
+    </template>
+    <template v-else-if="prefix">{{ prefix }}</template>
     <slot>
       <template v-if="formattedValue !== undefined">{{ formattedValue }}</template>
     </slot>
-    <slot name="suffix">{{ suffix }}</slot> 
+    <template v-if="$slots.suffix">
+      <slot name="suffix"></slot>
+    </template>
+    <template v-else-if="suffix">{{ suffix }}</template>
   </span>
 </template>
 

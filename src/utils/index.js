@@ -177,6 +177,272 @@ export const onConfigChange = function(listener) {
     }
 }
 
+// ==================== 数字格式化 ====================
+
+export const formatNumber = function(value, options) {
+  if (value === null || value === undefined || value === '') {
+    return ''
+  }
+
+  const num = typeof value === 'string' ? parseFloat(value) : value
+  if (isNaN(num)) {
+    return String(value)
+  }
+
+  const opts = Object.assign({
+    decimals: 2,
+    thousand: true,
+    prefix: '',
+    suffix: '',
+    showSign: false
+  }, options || {})
+
+  let result = num.toFixed(opts.decimals)
+
+  if (opts.thousand) {
+    const parts = result.split('.')
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    result = parts.join('.')
+  }
+
+  if (opts.showSign && num > 0) {
+    result = '+' + result
+  }
+
+  return opts.prefix + result + opts.suffix
+}
+
+export const formatThousand = function(value, decimals) {
+  return formatNumber(value, {
+    decimals: decimals != null ? decimals : 2,
+    thousand: true
+  })
+}
+
+export const formatPercent = function(value, decimals) {
+  if (value === null || value === undefined || value === '') {
+    return ''
+  }
+  const num = typeof value === 'string' ? parseFloat(value) : value
+  if (isNaN(num)) {
+    return String(value)
+  }
+  return formatNumber(num * 100, {
+    decimals: decimals != null ? decimals : 2,
+    thousand: true,
+    suffix: '%'
+  })
+}
+
+// ==================== 日期格式化 ====================
+
+function padZero(num, len) {
+  len = len || 2
+  return String(num).padStart(len, '0')
+}
+
+export const formatDate = function(date, format) {
+  if (!date) {
+    return ''
+  }
+
+  let d
+  if (date instanceof Date) {
+    d = date
+  } else if (typeof date === 'number') {
+    d = new Date(date.toString().length === 10 ? date * 1000 : date)
+  } else if (typeof date === 'string') {
+    date = date.trim()
+    if (/^\d+$/.test(date)) {
+      d = new Date(date.length === 10 ? parseInt(date) * 1000 : parseInt(date))
+    } else {
+      d = new Date(date.replace(/-/g, '/'))
+    }
+  } else {
+    return ''
+  }
+
+  if (isNaN(d.getTime())) {
+    return ''
+  }
+
+  const fmt = format || 'yyyy-MM-dd'
+  const year = d.getFullYear()
+  const month = d.getMonth() + 1
+  const day = d.getDate()
+  const hour = d.getHours()
+  const minute = d.getMinutes()
+  const second = d.getSeconds()
+  const week = d.getDay()
+
+  const weekMap = ['日', '一', '二', '三', '四', '五', '六']
+
+  return fmt
+    .replace('yyyy', year)
+    .replace('MM', padZero(month))
+    .replace('M', month)
+    .replace('dd', padZero(day))
+    .replace('d', day)
+    .replace('HH', padZero(hour))
+    .replace('H', hour)
+    .replace('hh', padZero(hour % 12 || 12))
+    .replace('h', hour % 12 || 12)
+    .replace('mm', padZero(minute))
+    .replace('m', minute)
+    .replace('ss', padZero(second))
+    .replace('s', second)
+    .replace('w', weekMap[week])
+    .replace('W', '星期' + weekMap[week])
+}
+
+export const formatDateTime = function(date, format) {
+  return formatDate(date, format || 'yyyy-MM-dd HH:mm:ss')
+}
+
+export const formatTime = function(date, format) {
+  return formatDate(date, format || 'HH:mm:ss')
+}
+
+export const formatRelativeTime = function(date) {
+  if (!date) {
+    return ''
+  }
+
+  let d
+  if (date instanceof Date) {
+    d = date
+  } else if (typeof date === 'number') {
+    d = new Date(date.toString().length === 10 ? date * 1000 : date)
+  } else if (typeof date === 'string') {
+    date = date.trim()
+    if (/^\d+$/.test(date)) {
+      d = new Date(date.length === 10 ? parseInt(date) * 1000 : parseInt(date))
+    } else {
+      d = new Date(date.replace(/-/g, '/'))
+    }
+  } else {
+    return ''
+  }
+
+  if (isNaN(d.getTime())) {
+    return ''
+  }
+
+  const now = new Date()
+  const diff = now.getTime() - d.getTime()
+  const minute = 60 * 1000
+  const hour = 60 * minute
+  const day = 24 * hour
+  const week = 7 * day
+  const month = 30 * day
+  const year = 365 * day
+
+  if (diff < minute) {
+    return '刚刚'
+  } else if (diff < hour) {
+    return Math.floor(diff / minute) + '分钟前'
+  } else if (diff < day) {
+    return Math.floor(diff / hour) + '小时前'
+  } else if (diff < week) {
+    return Math.floor(diff / day) + '天前'
+  } else if (diff < month) {
+    return Math.floor(diff / week) + '周前'
+  } else if (diff < year) {
+    return Math.floor(diff / month) + '个月前'
+  } else {
+    return Math.floor(diff / year) + '年前'
+  }
+}
+
+// ==================== 金额格式化 ====================
+
+export const formatMoney = function(value, options) {
+  if (value === null || value === undefined || value === '') {
+    return ''
+  }
+
+  const num = typeof value === 'string' ? parseFloat(value) : value
+  if (isNaN(num)) {
+    return String(value)
+  }
+
+  const opts = Object.assign({
+    currency: 'CNY',
+    decimals: 2,
+    prefix: '',
+    suffix: '',
+    showSign: false
+  }, options || {})
+
+  const currencySymbols = {
+    CNY: '¥',
+    USD: '$',
+    EUR: '€',
+    JPY: '¥',
+    GBP: '£',
+    AUD: 'A$',
+    CAD: 'C$'
+  }
+
+  let symbol = currencySymbols[opts.currency] || ''
+  let formatted = num.toFixed(opts.decimals)
+
+  const parts = formatted.split('.')
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  formatted = parts.join('.')
+
+  if (opts.showSign && num > 0) {
+    formatted = '+' + formatted
+  }
+
+  if (opts.prefix) {
+    formatted = opts.prefix + formatted
+  }
+
+  if (opts.suffix) {
+    formatted = formatted + opts.suffix
+  }
+
+  return symbol + formatted
+}
+
+export const formatCNY = function(value, decimals) {
+  return formatMoney(value, {
+    currency: 'CNY',
+    decimals: decimals != null ? decimals : 2
+  })
+}
+
+export const formatUSD = function(value, decimals) {
+  return formatMoney(value, {
+    currency: 'USD',
+    decimals: decimals != null ? decimals : 2
+  })
+}
+
+// ==================== 文件大小格式化 ====================
+
+export const formatFileSize = function(bytes) {
+  if (bytes === null || bytes === undefined || bytes === '') {
+    return ''
+  }
+
+  const num = typeof bytes === 'string' ? parseFloat(bytes) : bytes
+  if (isNaN(num)) {
+    return String(bytes)
+  }
+
+  if (num === 0) {
+    return '0 B'
+  }
+
+  const k = 1024
+  const sizes = ['B', 'KB', 'MB', 'GB', 'TB']
+  const i = Math.floor(Math.log(num) / Math.log(k))
+
+  return parseFloat((num / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
+}
+
 export default {
     setTheme,
     setSize,
@@ -187,5 +453,16 @@ export default {
     getSize,
     getPrimaryColor,
     resetConfig,
-    onConfigChange
+    onConfigChange,
+    formatNumber,
+    formatThousand,
+    formatPercent,
+    formatDate,
+    formatDateTime,
+    formatTime,
+    formatRelativeTime,
+    formatMoney,
+    formatCNY,
+    formatUSD,
+    formatFileSize
 }

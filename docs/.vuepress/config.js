@@ -113,6 +113,7 @@ module.exports = {
           ['/components/base/xt-table', 'XtTable 扩展表格'],
           ['/components/base/xt-list', 'XtList 卡片列表'],
           ['/components/base/xt-select-tree', 'XtSelectTree 下拉选择树'],
+          ['/components/base/xt-transfer-tree', 'XtTransferTree 树形穿梭框'],
           ['/components/base/xt-upload', 'XtUpload 上传组件'],
           ['/components/base/xt-page', 'XtPage 页面组件'],
           ['/components/base/xt-progress', 'XtProgress 进度条'],
@@ -137,7 +138,9 @@ module.exports = {
         path: '/components/utils/size',
         children: [
           ['/components/utils/size', '字体大小'],
-          ['/components/utils/theme', '主题颜色']
+          ['/components/utils/theme', '主题颜色'],
+          ['/components/utils/config', '全局配置'],
+          ['/components/utils/format', '格式化工具']
         ]
       }
     ]

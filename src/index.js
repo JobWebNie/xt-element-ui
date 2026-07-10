@@ -46,6 +46,7 @@ import XtMulti from './components/xt-chart/XtMulti.vue'
 import XtPage from './components/xt-page'
 import XtSelectTree from './components/xt-select-tree'
 import XtUpload from './components/xt-upload'
+import XtTransferTree from './components/xt-transfer-tree'  // XtTransferTree 组件（树形穿梭框）
 
 
 const components = [
@@ -78,7 +79,8 @@ const components = [
   XtMulti,
   XtPage,
   XtSelectTree,
-  XtUpload
+  XtUpload,
+  XtTransferTree
 ]
 
 const install = function (Vue, options = {}) {
@@ -156,7 +158,8 @@ export default {
   XtMulti,
   XtPage,
   XtSelectTree,
-  XtUpload
+  XtUpload,
+  XtTransferTree
 }
 
 // XtChart 组件按需导出（使用时需自行安装 echarts 依赖）
