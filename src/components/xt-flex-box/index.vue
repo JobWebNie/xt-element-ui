@@ -25,7 +25,7 @@ export default {
             if (this.gap) {
                 result.gap = this.gap
             } else {
-                result.gap = 'var(--xt-flex-box-gap, 8px)'
+                result.gap = ''
             }
             return result
         }

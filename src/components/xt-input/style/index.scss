@@ -82,3 +82,13 @@
 .xt-input.is-disabled .el-input__inner::placeholder {
   color: var(--xt-input-disabled-text-color);
 }
+
+// error 状态
+.xt-input.is-error .el-input__inner {
+  border-color: var(--xt-color-danger, #f56c6c);
+}
+
+.xt-input.is-error .el-input__inner:focus {
+  border-color: var(--xt-color-danger, #f56c6c);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--xt-color-danger, #f56c6c) 20%, transparent);
+}

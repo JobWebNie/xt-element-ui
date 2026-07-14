@@ -47,6 +47,7 @@ import XtPage from './components/xt-page'
 import XtSelectTree from './components/xt-select-tree'
 import XtUpload from './components/xt-upload'
 import XtTransferTree from './components/xt-transfer-tree'  // XtTransferTree 组件（树形穿梭框）
+import XtFormSchema from './components/xt-form-schema'  // XtFormSchema 组件（表单配置化搜索）
 
 
 const components = [
@@ -80,7 +81,8 @@ const components = [
   XtPage,
   XtSelectTree,
   XtUpload,
-  XtTransferTree
+  XtTransferTree,
+  XtFormSchema
 ]
 
 const install = function (Vue, options = {}) {
@@ -159,7 +161,8 @@ export default {
   XtPage,
   XtSelectTree,
   XtUpload,
-  XtTransferTree
+  XtTransferTree,
+  XtFormSchema
 }
 
 // XtChart 组件按需导出（使用时需自行安装 echarts 依赖）

@@ -33,7 +33,7 @@ export default {
 | `width` | String | `100%` | - | 组件宽度 |
 | `rangeMode` | Boolean | `true` | - | 是否为范围选择模式，false 时为单选 |
 | `showDimension` | Boolean | `false` | - | 是否显示时间维度选择器 |
-| `dimension` | String | `day` | `day`、`month`、`year`、`custom` | 当前时间维度 |
+| `dimension` | String | `date` | `date`、`month`、`year`、`daterange` | 当前时间维度 |
 
 ## 事件
 
@@ -112,8 +112,8 @@ export default {
 export default {
   data() {
     return {
-      dateRange: [],
-      currentDimension: 'day'
+      dateRange: "",
+      currentDimension: 'date'
     }
   },
   methods: {
@@ -172,9 +172,9 @@ export default {
 
 | 维度 | 日期类型 | 选择模式 | 范围限制 |
 |------|----------|----------|----------|
-| `day` | date | 范围选择 | 无限制 |
+| `date` | date | 范围选择 | 无限制 |
 | `month` | month | 范围选择 | 结束日期必须与开始日期同月份 |
 | `year` | year | 范围选择 | 结束日期必须与开始日期同年份 |
-| `custom` | 保持原值 | 单选 | 用户自定义 |
+| `daterange` | 保持原值 | 单选 | 用户自定义 |
 
 选择"月"维度后，结束日期会限制在开始日期所在月份内，方便统计分析时快速选择同一月内的日期范围。

@@ -5,24 +5,23 @@
         <el-radio-button label="date">日</el-radio-button>
         <el-radio-button label="month">月</el-radio-button>
         <el-radio-button label="year">年</el-radio-button>
-        <el-radio-button label="custom">自定义</el-radio-button>
+        <el-radio-button label="daterange">自定义</el-radio-button>
       </el-radio-group>
     </div>
-
     <div class="xt-date-picker-wrapper">
-      <XtFlexBox v-if="dateType=='quarter'" type="inline-flex" class="xt-date-picker" :class="{focus: isfocus}" :style="width?{width: `${width}`}:{}">
-        <Quarter v-model="timeStart" :format="format" placeholder="开始时间" quarter-type="quarter-start" clearable></Quarter>
-        <span class="separator">{{ separator }}</span>
-        <Quarter v-model="timeEnd" :format="format" placeholder="结束时间" quarter-type="quarter-end" clearable></Quarter>
+      <XtFlexBox v-show="dateType=='quarter'" type="inline-flex" class='xt-date' :class="{focus: isfocus}" :style="width?{width: `${width}`}:{}">
+        <Quarter v-model="timeStart" :format="format"  placeholder="开始时间" style="float: left;width: 220px;"  quarter-type="quarter-start" clearable></Quarter>
+        <span class="separator" style="float: left;">{{ separator }}</span>
+        <Quarter v-model="timeEnd" :format="format" placeholder="结束时间" style="float: left;width: 220px;" quarter-type="quarter-end" clearable></Quarter>
       </XtFlexBox>
 
-      <XtFlexBox v-else-if="useRangeMode" type="inline-flex" class="xt-date" :class="{focus: isfocus}" :style="width?{width: `${width}px`}:{}">
+      <XtFlexBox v-show="dateType!=='quarter' && useRangeMode" type="inline-flex" class="xt-date" :class="{focus: isfocus}" :style="width?{width: `${width}px`}:{}">
         <el-date-picker ref="timeStart" key="startSelect" v-model="timeStart" size="small" :disabled="disabled" append-to-body :picker-options="startTimeRange" :format="format" :type="rangeDateType" placeholder="开始时间" clearable @blur="$emit('blur')" @focus="$emit('focus')"></el-date-picker>
         <span class="separator">{{ separator }}</span>
         <el-date-picker ref="timeEnd" key="endSelect" v-model="timeEnd" size="small" :disabled="disabled" append-to-body :picker-options="endTimeRange" :format="format" :type="rangeDateType" placeholder="结束时间" clearable @blur="$emit('blur')" @focus="$emit('focus')"></el-date-picker>
       </XtFlexBox>
 
-      <el-date-picker v-else ref="singlePicker" v-model="singleValue" size="small" :disabled="disabled" append-to-body :format="format" :type="dateType" :placeholder="placeholder" clearable @blur="$emit('blur')" @focus="$emit('focus')"></el-date-picker>
+      <el-date-picker v-show="dateType!=='quarter' && !useRangeMode" ref="singlePicker" v-model="singleValue" size="small" :disabled="disabled" append-to-body :format="format" :type="dateType" :placeholder="placeholder" clearable @blur="$emit('blur')" @focus="$emit('focus')"></el-date-picker>
     </div>
   </div>
 </template>
@@ -32,10 +31,10 @@ const typeFormatEnum = {
 };
 
 const rangeTypeMap = {
-  date: 'daterange',
-  month: 'monthrange',
-  year: 'yearrange',
-  custom: 'daterange'
+  date: 'date',
+  month: 'month',
+  year: 'year',
+  daterange: 'date'
 };
 
 import XtFlexBox from '../xt-flex-box/index.vue'
@@ -98,7 +97,7 @@ export default {
           date: 'yyyy-MM-dd',
           month: 'yyyy-MM',
           year: 'yyyy',
-          custom: 'yyyy-MM-dd'
+          daterange: 'yyyy-MM-dd'
         };
         return formatMap[this.dimension] || typeFormatEnum[this.dateType];
       }
@@ -106,22 +105,25 @@ export default {
     },
     rangeDateType() {
       if (this.showDimension) {
-        return rangeTypeMap[this.dimension] || 'daterange';
+        return rangeTypeMap[this.dimension] || 'date';
       }
       const rangeMap = {
-        date: 'daterange',
-        month: 'monthrange',
-        year: 'yearrange',
+        date: 'date',
+        month: 'month',
+        year: 'year',
         quarter: 'quarter',
-        week: 'weekrange'
+        week: 'week'
       };
-      return rangeMap[this.dateType] || 'daterange';
+      if (this.useRangeMode) {
+        return rangeMap[this.dateType] || 'date';
+      }
+      return this.dateType;
     },
     useRangeMode() {
-      if (this.showDimension) {
+      if (this.dimension === 'daterange') {
         return true;
       }
-      return this.rangeMode;
+      return false;
     },
     timeStart: {
       get() {
@@ -214,30 +216,6 @@ export default {
   width: 100%;
 }
 
-.xt-date-picker{
-  width: 100%;
-  border-radius: 4px;
-  border: 1px solid #DCDFE6;
-  
-  &.focus{
-    border-color: #1890FF;
-  }
-  
-  ::v-deep .el-picker-panel{
-    position: absolute;
-    z-index: 401;
-  }
-  
-  ::v-deep .el-input__inner{
-    border: none;
-    padding: 0;
-    text-align: center;
-  }
-  
-  ::v-deep .el-input__prefix{
-    display: none;
-  }
-}
 
 .xt-date {
   width: 100%;

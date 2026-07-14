@@ -149,6 +149,30 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 
+.quarter-wrapper{
+  display: inline-block;
+  width: 100%;
+  border-radius: 4px;
+  
+  &.focus{
+    border-color: #1890FF;
+  }
+  
+  ::v-deep .el-picker-panel{
+    position: absolute;
+    z-index: 401;
+  }
+  
+  ::v-deep .el-input__inner{
+    border: none;
+    padding: 0;
+    text-align: center;
+  }
+  
+  ::v-deep .el-input__prefix{
+    display: none;
+  }
+}
 </style>

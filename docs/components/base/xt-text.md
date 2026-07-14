@@ -8,6 +8,7 @@
 ```vue
 <template>
   <XtText type="primary">主要文本</XtText>
+  <div style="width: 80px;"><XtText ellipsis>溢出隐藏文本溢出隐藏文本</XtText></div>
 </template>
 ```
 :::
