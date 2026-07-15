@@ -51,12 +51,11 @@
           >
             <template v-for="child in col.children">
               <el-table-column :key="child._key" v-bind="getColumnProps(child)">
-                <template v-if="child.render" v-slot="scope">{{ child.render(scope) }}</template>
-                <template v-else-if="child.formatter" v-slot="scope">
+                <template v-if="child.render" v-slot="scope">
                   <XtTableCell
                     :row="scope.row"
                     :index="scope.$index"
-                    :formatter="child.formatter"
+                    :render="child.render"
                     :column="child"
                   />
                 </template>
@@ -72,12 +71,11 @@
             </template>
           </el-table-column>
           <el-table-column v-else :key="col._key" v-bind="getColumnProps(col)">
-            <template v-if="col.render" v-slot="scope">{{ col.render(scope) }}</template>
-            <template v-else-if="col.formatter" v-slot="scope">
+            <template v-if="col.render" v-slot="scope">
               <XtTableCell
                 :row="scope.row"
                 :index="scope.$index"
-                :formatter="col.formatter"
+                :render="col.render"
                 :column="col"
               />
             </template>
@@ -427,7 +425,7 @@ export default {
 
     // ========== 列处理 ==========
     getColumnProps(col) {
-      const { _key, children, render, formatter, slot, sortMethod, ...props } = col
+      const { _key, children, render, slot, sortMethod, ...props } = col
       return props
     },
 

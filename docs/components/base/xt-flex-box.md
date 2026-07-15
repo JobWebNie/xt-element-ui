@@ -8,23 +8,13 @@
 ```vue
 <template>
   <XtFlexBox gap="16px">
-    <div style="width: 80px; height: 40px; background: #f0f0f0; display: flex; align-items: center; justify-content: center;">子元素1</div>
-    <div style="width: 80px; height: 40px; background: #f0f0f0; display: flex; align-items: center; justify-content: center;">子元素2</div>
-    <div style="width: 80px; height: 40px; background: #f0f0f0; display: flex; align-items: center; justify-content: center;">子元素3</div>
+    <div style="background: #1890ff; color: white; padding: 8px;">元素1</div>
+    <div style="background: #52c41a; color: white; padding: 8px;">元素2</div>
+    <div style="background: #faad14; color: white; padding: 8px;">元素3</div>
   </XtFlexBox>
 </template>
 ```
 :::
-
-## 属性说明
-| 属性 | 类型 | 默认值 | 可选值 | 说明 |
-|------|------|--------|--------|------|
-| `type` | String | flex | - | 布局类型 |
-| `align` | String | center | `start`、`center`、`end`、`stretch`、`baseline` | 交叉轴对齐方式 |
-| `content` | String | start | `start`、`center`、`end`、`between`、`around`、`evenly` | 主轴对齐方式 |
-| `direction` | String | row | `row`、`row-reverse`、`column`、`column-reverse` | 排列方向 |
-| `wrap` | String | unset | `wrap`、`nowrap`、`wrap-reverse` | 是否换行 |
-| `gap` | String | - | - | 子元素间距 |
 
 ## 示例
 
@@ -32,7 +22,7 @@
 ::: demo 水平居中且两端对齐
 ```vue
 <template>
-  <XtFlexBox content="space-between" align="center">
+  <XtFlexBox content="between" align="center">
     <span>左侧内容</span>
     <span>右侧内容</span>
   </XtFlexBox>
@@ -59,11 +49,11 @@
 ::: demo 均匀分布
 ```vue
 <template>
-  <XtFlexBox content="space-around">
-    <div style="width: 60px; height: 60px; background: #e6f7ff; border-radius: 8px; display: flex; align-items: center; justify-content: center;">1</div>
-    <div style="width: 60px; height: 60px; background: #e6f7ff; border-radius: 8px; display: flex; align-items: center; justify-content: center;">2</div>
-    <div style="width: 60px; height: 60px; background: #e6f7ff; border-radius: 8px; display: flex; align-items: center; justify-content: center;">3</div>
-    <div style="width: 60px; height: 60px; background: #e6f7ff; border-radius: 8px; display: flex; align-items: center; justify-content: center;">4</div>
+  <XtFlexBox content="around">
+    <div style="background: #1890ff; color: white; padding: 8px;">元素1</div>
+    <div style="background: #52c41a; color: white; padding: 8px;">元素2</div>
+    <div style="background: #faad14; color: white; padding: 8px;">元素3</div>
+    <div style="background: #ea1d34; color: white; padding: 8px;">元素4</div>
   </XtFlexBox>
 </template>
 ```
@@ -75,7 +65,7 @@
 ```vue
 <template>
   <XtFlexBox wrap="wrap" gap="8px">
-    <div v-for="i in 10" :key="i" style="width: 80px; height: 80px; background: #f0f0f0; border-radius: 8px; display: flex; align-items: center; justify-content: center;">{{ i }}</div>
+    <div v-for="i in 10" :key="i" style="padding: 8px; background: #1890ff; color: white; width: 80px;">{{ i }}</div>
   </XtFlexBox>
 </template>
 ```
@@ -86,10 +76,10 @@
 ::: demo 反向排列
 ```vue
 <template>
-  <XtFlexBox direction="row-reverse">
-    <span style="padding: 8px; background: #f5f5f5;">第一</span>
-    <span style="padding: 8px; background: #f5f5f5;">第二</span>
-    <span style="padding: 8px; background: #f5f5f5;">第三</span>
+  <XtFlexBox direction="row-reverse" gap="8px">
+    <span style="padding: 8px; background: #1890ff; color: white; width: 80px;">第一</span>
+    <span style="padding: 8px; background: #1890ff; color: white; width: 80px;">第二</span>
+    <span style="padding: 8px; background: #1890ff; color: white; width: 80px;">第三</span>
   </XtFlexBox>
 </template>
 ```
@@ -101,7 +91,7 @@
 ```vue
 <template>
   <XtFlexBox direction="column" gap="16px">
-    <XtFlexBox content="space-between">
+    <XtFlexBox content="between">
       <span>头部左侧</span>
       <span>头部右侧</span>
     </XtFlexBox>
@@ -113,3 +103,13 @@
 </template>
 ```
 :::
+
+## 属性说明
+| 属性 | 类型 | 默认值 | 可选值 | 说明 |
+|------|------|--------|--------|------|
+| `type` | String | flex | - | 布局类型 |
+| `align` | String | center | `start`、`center`、`end`、`stretch`、`baseline` | 交叉轴对齐方式 |
+| `content` | String | start | `start`、`center`、`end`、`between`、`around`、`evenly` | 主轴对齐方式 |
+| `direction` | String | row | `row`、`row-reverse`、`column`、`column-reverse` | 排列方向 |
+| `wrap` | String | unset | `wrap`、`nowrap`、`wrap-reverse` | 是否换行 |
+| `gap` | String | - | - | 子元素间距 |

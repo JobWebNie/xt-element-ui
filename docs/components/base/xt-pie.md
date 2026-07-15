@@ -1,5 +1,3 @@
-## XtPie 饼图组件
-
 基于 ECharts 封装的饼图组件，支持环形图、玫瑰图、自定义颜色等功能。
 
 ## 基本用法
@@ -145,29 +143,6 @@ export default {
 ```
 :::
 
-### 暗色主题
-
-::: demo 暗色主题
-```vue
-<template>
-  <XtPie :chart-data="chartData" theme="dark" />
-</template>
-
-<script>
-export default {
-  data() {
-    return {
-      chartData: [
-        { value: 53, label: "张三" },
-        { value: 60, label: "李四" },
-        { value: 78, label: "王五" }
-      ]
-    }
-  }
-}
-</script>
-```
-:::
 
 ## 注意事项
 

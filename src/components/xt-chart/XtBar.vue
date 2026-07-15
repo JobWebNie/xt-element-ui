@@ -161,9 +161,6 @@ export default {
         },
         min: 0,
         splitNumber: _self.splitNumber,
-        max: function(value) {
-          return Math.ceil(value.max / _self.splitNumber) * _self.splitNumber;
-        },
         scale: true,
         axisLabel: {
           margin: 2,

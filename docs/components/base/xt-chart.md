@@ -1,5 +1,3 @@
-## XtChart 图表容器组件
-
 基于 ECharts 封装的图表容器组件，通过 `type` 属性切换不同图表类型（柱状图、折线图、饼图、组合图）。
 
 ## 基本用法
@@ -7,7 +5,7 @@
 ::: demo 基本用法
 ```vue
 <template>
-  <XtChart type="bar" :chart-data="chartData" />
+  <XtChart type="bar" :chart-data="chartData" style="height: 400px;" />
 </template>
 
 <script>
@@ -41,7 +39,7 @@ export default {
 ::: demo 柱状图
 ```vue
 <template>
-  <XtChart type="bar" :chart-data="chartData" />
+  <XtChart type="bar" :chart-data="chartData" style="height: 400px;" />
 </template>
 
 <script>
@@ -67,7 +65,7 @@ export default {
 ::: demo 折线图
 ```vue
 <template>
-  <XtChart type="line" :chart-data="chartData" />
+  <XtChart type="line" :chart-data="chartData" style="height: 400px;" />
 </template>
 
 <script>
@@ -93,7 +91,7 @@ export default {
 ::: demo 饼图
 ```vue
 <template>
-  <XtChart type="pie" :chart-data="chartData" />
+  <XtChart type="pie" :chart-data="chartData" style="height: 400px;" />
 </template>
 
 <script>
@@ -118,7 +116,7 @@ export default {
 ::: demo 组合图
 ```vue
 <template>
-  <XtChart type="multi" :chart-data="chartData" />
+  <XtChart type="multi" :chart-data="chartData" style="height: 400px;" />
 </template>
 
 <script>
@@ -144,30 +142,6 @@ export default {
             { label: "3月", value: 45 }
           ]
         }
-      ]
-    }
-  }
-}
-</script>
-```
-:::
-
-### 暗色主题
-
-::: demo 暗色主题
-```vue
-<template>
-  <XtChart type="bar" :chart-data="chartData" theme="dark" />
-</template>
-
-<script>
-export default {
-  data() {
-    return {
-      chartData: [
-        { value: 65, label: "张三" },
-        { value: 78, label: "李四" },
-        { value: 95, label: "王五" }
       ]
     }
   }

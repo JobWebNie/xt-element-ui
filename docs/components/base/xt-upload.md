@@ -7,7 +7,9 @@
 ::: demo 基本用法
 ```vue
 <template>
-  <XtUpload v-model="imageSrc" action="/upload" base-url="/api" />
+  <div>
+    <XtUpload v-model="imageSrc" action="/upload" base-url="/api" />
+  </div>
 </template>
 
 <script>
@@ -35,6 +37,13 @@ export default {
 | `accept` | String | `.jpg,.jpeg,.png` | 允许的文件类型 |
 | `autoUpload` | Boolean | `true` | 是否自动上传 |
 | `size` | String | `''` | 缩略图大小，可选 `big` |
+| `icon` | String | `el-icon-camera` | 自定义图标 |
+
+## 事件
+
+| 事件名 | 说明 | 参数 |
+|--------|------|------|
+| `change` | 文件上传或删除时触发 | `src` |
 
 ## 示例
 
@@ -43,7 +52,7 @@ export default {
 ::: demo 多文件上传
 ```vue
 <template>
-  <XtUpload v-model="fileSrc" action="/upload" multiple />
+  <XtUpload v-model="fileSrc" icon="el-icon-plus" action="/upload" multiple />
 </template>
 
 <script>
@@ -77,9 +86,3 @@ export default {
 </script>
 ```
 :::
-
-## 事件
-
-| 事件名 | 说明 | 参数 |
-|--------|------|------|
-| `change` | 文件上传或删除时触发 | `src` |

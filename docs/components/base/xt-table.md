@@ -93,8 +93,8 @@ export default {
   fixed: true,           // 是否固定
   align: 'center',       // 对齐方式
   sortable: true,        // 是否可排序
-  render: (scope) => {}, // 自定义渲染函数
-  formatter: (row, col) => {}, // 格式化函数
+  render: (h, { row, index, column }) => {}, // 自定义渲染函数 返回 VNode
+  formatter: (row, index, column) => {}, // 返回字符串
   slot: 'custom-slot',    // 自定义插槽名
   children: []           // 多级表头
 }

@@ -8,11 +8,15 @@
 ```vue
 <template>
   <XtPage>
-    <template #header>页面标题</template>
-    <template #default="{ tableHeight }">
-      <XtTable :height="tableHeight" :table-data="tableData" :columns="columns" />
+    <template slot="header">页面标题</template>
+    <template slot-scope="scope">
+      <XtTable
+        :table-data="tableData"
+        :height="scope.tableHeight"
+        :columns="columns"
+      />
     </template>
-    <template #footer>页面底部</template>
+    <template slot="footer">页面底部</template>
   </XtPage>
 </template>
 
@@ -20,8 +24,15 @@
 export default {
   data() {
     return {
-      tableData: [],
-      columns: []
+      tableData: [
+        { name: '张三', age: 18 },
+        { name: '李四', age: 20 }
+      ],
+      columns: [
+        { prop: "name", label:"姓名" },
+        { prop: "age", label:"年龄" },
+        { label: '操作', slot: 'action' }
+      ]
     }
   }
 }

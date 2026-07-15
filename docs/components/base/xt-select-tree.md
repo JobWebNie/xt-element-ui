@@ -1,5 +1,3 @@
-## XtSelectTree 下拉选择树组件
-
 下拉选择树组件，基于 ElementUI Tree 封装，支持单选、多选、懒加载等功能。
 
 ## 基本用法

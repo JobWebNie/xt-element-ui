@@ -93,18 +93,3 @@
   }
 }
 
-// 暗色主题
-[data-theme='dark'], html.dark {
-  .xt-text--primary {
-    color: $xt-dark-color-primary;
-  }
-  .xt-text--success {
-    color: $xt-dark-color-success;
-  }
-  .xt-text--warning {
-    color: $xt-dark-color-warning;
-  }
-  .xt-text--danger {
-    color: $xt-dark-color-danger;
-  }
-}

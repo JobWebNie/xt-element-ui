@@ -1,5 +1,3 @@
-## XtIcon 图标组件
-
 图标组件支持多种图标类型：ElementUI 字体图标、SVG Sprite、内联 SVG 和自定义字体图标。
 
 ## 基本用法

@@ -1,5 +1,5 @@
 <template>
-  <BaseFlexBox type="inline-flex" gap="5px">
+  <XtFlexBox type="inline-flex" gap="5px">
     <el-upload
       v-if="action"
       ref="uploadFile"
@@ -13,11 +13,13 @@
       :show-file-list="false"
       :auto-upload="autoUpload"
       :before-upload="uploadBefore"
-      accept=".jpg,.jpeg,.png"
+      :accept="accept"
     >
-      <i class="el-icon-camera" style="font-size: 20px;padding: 20px;background:#f0f0f1;color:#409EFF" :style="{padding: plusPx / 2 + 'px',cursor:disabled ? 'not-allowed':'pointer'}"></i>
+      <span style="font-size: 20px;padding: 20px;background:#f0f0f1;color:#409EFF" :style="{padding: plusPx / 2 + 'px',cursor:disabled ? 'not-allowed':'pointer'}">
+        <slot><i :class="icon"></i></slot>
+      </span>
     </el-upload>
-    <BaseFlexBox class="el-upload-list el-upload-list--picture-card" gap="5px" wrap="wrap" style="flex: 1" v-if="fileList!==null&&fileList.length>0">
+    <XtFlexBox class="el-upload-list el-upload-list--picture-card" gap="5px" wrap="wrap" style="flex: 1" v-if="fileList!==null&&fileList.length>0">
       <li v-for="(ite,index) in fileList" :key="index" class="el-upload-list__item is-ready" style="margin: 0;width:62px;height: 62px;" :style="{ width: (plusPx + 22)+ 'px',height: (plusPx + 22)+ 'px'}">
         <el-image class="el-upload-list__item-thumbnail" :src="YSSQP+'/'+ite" alt="" @click="clickHandler" />
         <span class="el-upload-list__item-actions" @click="preShowPicture(ite, index)">
@@ -29,11 +31,11 @@
           </span>
         </span>
       </li>
-    </BaseFlexBox>
+    </XtFlexBox>
     <template v-if="preview">
       <ImageViewer v-if="previewVisible" :z-index="3000" :base-url="baseUrl + '/'" :infiniteLoop="false" :initial-index="imageIndex" :url-list="allFileList || fileList" :on-close="closeViewer" />
     </template>
-  </BaseFlexBox>
+  </XtFlexBox>
 </template>
 <script>
 import ImageViewer from "./preview.vue";
@@ -111,6 +113,10 @@ export default {
     // 当前图片在图片库中预览
     allFileList: {
       type: Array
+    },
+    icon: {
+      type: String,
+      default: "el-icon-camera"
     }
   },
   data() {

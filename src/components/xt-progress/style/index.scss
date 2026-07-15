@@ -103,17 +103,3 @@
   opacity: 0;
 }
 
-[data-theme='dark'], html.dark {
-  .xt-progress__bar {
-    background: $xt-dark-color-border;
-  }
-  
-  .xt-progress__bar-text,
-  .xt-progress__text {
-    color: $xt-dark-color-text-secondary;
-  }
-  
-  .xt-progress__circle-percent {
-    color: $xt-dark-color-text-primary;
-  }
-}

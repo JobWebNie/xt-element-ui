@@ -1,5 +1,3 @@
-## XtMapProvider 统一地图提供组件
-
 ### 全局配置（推荐）
 
 使用 `XtMapProvider` 统一配置项目中所有地图，无需在每个 `<XtMap>` 上重复写密钥：

@@ -243,7 +243,7 @@ export default {
   methods: {
     // 关闭原生单选日期下拉面板
     closePickerPanels() {
-      if (this.$refs.singlePicker?.pickerVisible !== undefined) {
+      if (this.$refs.singlePicker) {
         this.$refs.singlePicker.pickerVisible = false;
       }
     }

@@ -1,5 +1,3 @@
-## XtLine 折线图组件
-
 基于 ECharts 封装的折线图组件，支持面积图、平滑曲线等功能。
 
 ## 基本用法
@@ -107,30 +105,6 @@ export default {
         { month: "1月", amount: 53 },
         { month: "2月", amount: 60 },
         { month: "3月", amount: 78 }
-      ]
-    }
-  }
-}
-</script>
-```
-:::
-
-### 暗色主题
-
-::: demo 暗色主题
-```vue
-<template>
-  <XtLine :chart-data="chartData" theme="dark" />
-</template>
-
-<script>
-export default {
-  data() {
-    return {
-      chartData: [
-        { value: 53, label: "张三" },
-        { value: 60, label: "李四" },
-        { value: 78, label: "王五" }
       ]
     }
   }

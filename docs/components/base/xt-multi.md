@@ -1,5 +1,3 @@
-## XtMulti 组合图组件
-
 基于 ECharts 封装的组合图组件，支持多系列数据展示，自动根据单位分组使用不同 Y 轴。
 
 ## 基本用法
@@ -224,43 +222,6 @@ export default {
           data: [
             { label: "1", value: 80 },
             { label: "2", value: 90 }
-          ]
-        }
-      ]
-    }
-  }
-}
-</script>
-```
-:::
-
-### 暗色主题
-
-::: demo 暗色主题
-```vue
-<template>
-  <XtMulti :chart-data="chartData" theme="dark" />
-</template>
-
-<script>
-export default {
-  data() {
-    return {
-      chartData: [
-        {
-          label: "入户数",
-          unit: "户",
-          data: [
-            { label: "01月", value: 980 },
-            { label: "02月", value: 806 }
-          ]
-        },
-        {
-          label: "隐患数",
-          unit: "个",
-          data: [
-            { label: "01月", value: 200 },
-            { label: "02月", value: 120 }
           ]
         }
       ]

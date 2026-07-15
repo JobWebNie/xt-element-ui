@@ -1,16 +1,16 @@
 <template>
   <fieldset class="exFieldset" :class="[border ? 'is-border' : 'part',type ? `is-${type}`: '',effect?`effect-${effect}`:'' ]">
     <legend class="fix-top legend">
-      <BaseFlexBox class="title" content="between">
+      <XtFlexBox class="title" content="between">
         <slot name="legend">
           {{ legend }}
         </slot>
-      </BaseFlexBox>
+      </XtFlexBox>
     </legend>
     <legend class="fix-top tool" v-if="$slots.tool">
-      <BaseFlexBox content="end" gap="0 5">
+      <XtFlexBox content="end" gap="0 5">
         <slot name="tool"></slot>
-      </BaseFlexBox>
+      </XtFlexBox>
     </legend>
     <div class="field" v-if="$slots.default">
       <slot />

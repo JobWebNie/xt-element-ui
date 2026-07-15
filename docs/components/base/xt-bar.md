@@ -1,5 +1,3 @@
-## XtBar 柱状图组件
-
 基于 ECharts 封装的柱状图组件，支持数据标记、缩放、反转、长标签等功能。
 
 ## 基本用法
@@ -39,7 +37,6 @@ export default {
 |------|------|--------|------|
 | `chartData` | Array | - | 图表数据，格式为 `[{ label, value }]` |
 | `fieldKeys` | Object | `{ label: "label", value: "value", data: "data" }` | 字段映射配置 |
-| `theme` | String | - | 主题，`dark` 或 `default` |
 | `size` | String | `medium` | 尺寸，`small` / `medium` / `large` |
 | `markPoint` | Boolean | `false` | 是否显示最大值/最小值标记 |
 | `unit` | String | `""` | 数据单位 |
@@ -144,30 +141,6 @@ export default {
         { name: "张三", score: 65 },
         { name: "李四", score: 78 },
         { name: "王五", score: 95 }
-      ]
-    }
-  }
-}
-</script>
-```
-:::
-
-### 暗色主题
-
-::: demo 暗色主题
-```vue
-<template>
-  <XtBar :chart-data="chartData" theme="dark" />
-</template>
-
-<script>
-export default {
-  data() {
-    return {
-      chartData: [
-        { value: 65, label: "张三" },
-        { value: 78, label: "李四" },
-        { value: 95, label: "王五" }
       ]
     }
   }

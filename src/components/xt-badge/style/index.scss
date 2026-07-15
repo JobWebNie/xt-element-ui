@@ -64,25 +64,3 @@
 .xt-badge--hidden {
   display: none;
 }
-
-[data-theme='dark'], html.dark {
-  .xt-badge--primary .xt-badge__badge {
-    background: $xt-dark-color-primary;
-  }
-  
-  .xt-badge--success .xt-badge__badge {
-    background: $xt-dark-color-success;
-  }
-  
-  .xt-badge--warning .xt-badge__badge {
-    background: $xt-dark-color-warning;
-  }
-  
-  .xt-badge--danger .xt-badge__badge {
-    background: $xt-dark-color-danger;
-  }
-  
-  .xt-badge--info .xt-badge__badge {
-    background: $xt-dark-color-info;
-  }
-}
