@@ -12,13 +12,13 @@ export default {
     span: {
       type: Number,
       default: 1,
-      validator: (val) => val > 0
+      validator: (val) => val >= 1
     },
     // 跨行数
     rowSpan: {
       type: Number,
       default: 1,
-      validator: (val) => val > 0
+      validator: (val) => val >= 1
     },
     // 起始列
     start: {

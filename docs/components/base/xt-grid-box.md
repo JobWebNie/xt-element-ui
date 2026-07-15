@@ -42,10 +42,10 @@
 
 | 属性 | 类型 | 默认值 | 可选值 | 说明 |
 |------|------|--------|--------|------|
-| `span` | Number | `1` | >0 | 跨列数 |
-| `rowSpan` | Number | `1` | >0 | 跨行数 |
-| `start` | Number | `0` | >=0 | 起始列位置 |
-| `rowStart` | Number | `0` | >=0 | 起始行位置 |
+| `span` | Number | `1` | >1 | 跨列数 |
+| `rowSpan` | Number | `1` | >1 | 跨行数 |
+| `start` | Number | `0` | >0 | 起始列位置 |
+| `rowStart` | Number | `0` | >0 | 起始行位置 |
 | `area` | String | - | - | 命名区域名称 |
 | `justifySelf` | String | `auto` | `auto`、`start`、`end`、`center`、`stretch` | 水平对齐 |
 | `alignSelf` | String | `auto` | `auto`、`start`、`end`、`center`、`stretch`、`baseline` | 垂直对齐 |
