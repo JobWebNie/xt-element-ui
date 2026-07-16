@@ -23,6 +23,12 @@ module.exports = {
         alias: {
           '@': resolve('src')
         }
+      },
+      externals(id) {
+        // 匹配 src/enhance 资源，标记为外部依赖，不打入产物
+        if (/src[\\/]enhance/.test(id)) {
+          return 'skip-enhance'
+        }
       }
     },
   
@@ -42,7 +48,13 @@ module.exports = {
       if (process.env.NODE_ENV === "production") {
         // 入口改为组件库总入口
         config.entry("index").clear().add("./src/index.js").end();
-  
+        
+      // 排除enhance下所有资源进入打包
+        config.module
+          .rule('exclude-enhance')
+          .test(/src[\\/]enhance[\\/]/)
+          .use('null-loader')
+
         // 输出 UMD 格式
         config.output
           .filename("index.js")

@@ -31,6 +31,7 @@ import XtMapProvider from './components/xt-map-provider'
 import XtGridBox from './components/xt-grid-box'
 import XtGridItem from './components/xt-grid-item'
 import XtProgress from './components/xt-progress'
+import XtTabPane from './components/xt-tab-pane'
 import XtTabs from './components/xt-tabs'
 import XtBadge from './components/xt-badge'
 import XtDatePicker from './components/xt-date-picker'
@@ -66,6 +67,7 @@ const components = [
   XtGridBox,
   XtGridItem,
   XtProgress,
+  XtTabPane,
   XtTabs,
   XtBadge,
   XtDatePicker,

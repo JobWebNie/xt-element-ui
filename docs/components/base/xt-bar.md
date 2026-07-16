@@ -5,7 +5,7 @@
 ::: demo 基本用法
 ```vue
 <template>
-  <XtBar :chart-data="chartData" width="600px" height="400px"  />
+  <div class="demo-container"><XtBar :chart-data="chartData" /></div>
 </template>
 
 <script>
@@ -55,7 +55,7 @@ export default {
 ::: demo 横向柱状图
 ```vue
 <template>
-  <XtBar :chart-data="chartData" reverse />
+  <div  class="demo-container"><XtBar :chart-data="chartData" reverse /></div>
 </template>
 
 <script>
@@ -80,7 +80,7 @@ export default {
 ::: demo 显示数据标记
 ```vue
 <template>
-  <XtBar :chart-data="chartData" :mark-point="true" />
+  <div  class="demo-container"><XtBar :chart-data="chartData" :mark-point="true" /></div>
 </template>
 
 <script>
@@ -106,7 +106,7 @@ export default {
 ::: demo 极简模式
 ```vue
 <template>
-  <XtBar :chart-data="chartData" simple-mode />
+  <div  class="demo-container"><XtBar :chart-data="chartData"  simple-mode /></div>
 </template>
 
 <script>
@@ -130,7 +130,7 @@ export default {
 ::: demo 自定义字段映射
 ```vue
 <template>
-  <XtBar :chart-data="chartData" :field-keys="{ label: 'name', value: 'score' }" />
+  <div  class="demo-container"><XtBar :chart-data="chartData" :field-keys="{ label: 'name', value: 'score' }" /></div>
 </template>
 
 <script>

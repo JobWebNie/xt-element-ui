@@ -5,7 +5,7 @@
 ::: demo 基本用法
 ```vue
 <template>
-  <XtMulti :chart-data="chartData" />
+  <div class="demo-container"><XtMulti :chart-data="chartData" /></div>
 </template>
 
 <script>
@@ -68,7 +68,7 @@ export default {
 ::: demo 多单位组合图
 ```vue
 <template>
-  <XtMulti :chart-data="chartData" />
+  <div class="demo-container"><XtMulti :chart-data="chartData" /></div>
 </template>
 
 <script>
@@ -116,7 +116,7 @@ export default {
 ::: demo 折线与柱状图组合
 ```vue
 <template>
-  <XtMulti :chart-data="chartData" />
+  <div class="demo-container"><XtMulti :chart-data="chartData" /></div>
 </template>
 
 <script>
@@ -157,7 +157,7 @@ export default {
 ::: demo 自定义颜色
 ```vue
 <template>
-  <XtMulti :chart-data="chartData" :colors="['#1890ff', '#52c41a', '#faad14']" />
+  <div class="demo-container"><XtMulti :chart-data="chartData" :colors="['#1890ff', '#52c41a', '#faad14']" /></div>
 </template>
 
 <script>
@@ -202,7 +202,7 @@ export default {
 ::: demo 极简模式
 ```vue
 <template>
-  <XtMulti :chart-data="chartData" simple-mode />
+  <div class="demo-container"><XtMulti :chart-data="chartData" simple-mode /></div>
 </template>
 
 <script>

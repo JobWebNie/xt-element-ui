@@ -109,21 +109,41 @@ export default {
     },
     // 计算main可视高度
     calcMainHeight() {
-      if (!this.$refs.main?.$el) return;
+      if (!this.$refs.main || !this.$refs.main.$el) return;
       const rect = this.$refs.main.$el.getBoundingClientRect();
       this.rawMainHeight = rect.height;
     }
   }
 };
 </script>
+
 <style lang="scss" scoped>
 .xt-page-container {
-  // 全部读取根定义变量，无硬编码颜色/尺寸
-  padding: var(--xt-page-container-padding);
-  background: var(--xt-page-container-bg);
-  gap: var(--xt-page-aside-gap);
+  // 全局默认样式变量（统一维护，全局:root可覆盖）
+  --xt-page-container-padding: 20px;
+  --xt-page-container-bg: #f0f0f2;
+
+  --xt-header-padding: 0;
+  --xt-header-bg: #ffffff;
+  --xt-header-border: none;
+
+  --xt-main-padding: 0;
+  --xt-main-bg: #ffffff;
+
+  --xt-footer-padding: 5px 0;
+  --xt-footer-border-top: 1px solid #f0f0f2;
+
+  --xt-aside-margin-left: 10px;
+  --xt-aside-bg: #ffffff;
+  --xt-aside-border: 1px solid #eeeeee;
+  --xt-aside-padding: 0;
+  --xt-aside-overflow-x: hidden;
+
   display: flex;
   height: 100%;
+  padding: var(--xt-page-container-padding);
+  background: var(--xt-page-container-bg);
+  gap: var(--xt-page-aside-gap, 0);
 
   .xt-page-main-wrap {
     flex: 1;

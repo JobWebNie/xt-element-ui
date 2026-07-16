@@ -1,0 +1,13 @@
+/* 覆盖 vuepress-theme-reco 主题的 table 样式 */
+
+table:not(.el-date-table),
+table:not(.el-year-table),
+table:not(.el-month-table) {
+  border-collapse: unset;
+  width: unset;
+  margin: unset;
+}
+
+.demo-container {
+  height: 400px;
+}

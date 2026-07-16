@@ -5,7 +5,7 @@
 ::: demo 基本用法
 ```vue
 <template>
-  <XtPie :chart-data="chartData" />
+  <div class="demo-container"><XtPie :chart-data="chartData" /></div>
 </template>
 
 <script>
@@ -47,7 +47,7 @@ export default {
 ::: demo 玫瑰图
 ```vue
 <template>
-  <XtPie :chart-data="chartData" rose-type="radius" />
+  <div class="demo-container"><XtPie :chart-data="chartData" rose-type="radius" /></div>
 </template>
 
 <script>
@@ -73,7 +73,7 @@ export default {
 ::: demo 隐藏图例
 ```vue
 <template>
-  <XtPie :chart-data="chartData" :show-legend="false" />
+  <div class="demo-container"><XtPie :chart-data="chartData" :show-legend="false" /></div>
 </template>
 
 <script>
@@ -98,7 +98,7 @@ export default {
 ::: demo 自定义颜色
 ```vue
 <template>
-  <XtPie :chart-data="chartData" :colors="['#1890ff', '#52c41a', '#faad14', '#f5222d']" />
+  <div class="demo-container"><XtPie :chart-data="chartData" :colors="['#1890ff', '#52c41a', '#faad14', '#f5222d']" /></div>
 </template>
 
 <script>
@@ -123,7 +123,7 @@ export default {
 ::: demo 极简模式
 ```vue
 <template>
-  <XtPie :chart-data="chartData" simple-mode />
+  <div class="demo-container"><XtPie :chart-data="chartData" simple-mode /></div>
 </template>
 
 <script>

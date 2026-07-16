@@ -15,6 +15,14 @@ export default {
     label: {
       type: String,
       default: ''
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    closable: {
+      type: Boolean,
+      default: true
     }
   },
   computed: {
@@ -24,7 +32,12 @@ export default {
   },
   mounted() {
     if (this.$parent && typeof this.$parent.addPane === 'function') {
-      this.$parent.addPane({ name: this.name, label: this.label })
+      this.$parent.addPane({ 
+        name: this.name, 
+        label: this.label,
+        disabled: this.disabled,
+        closable: this.closable
+      })
     }
   },
   beforeDestroy() {

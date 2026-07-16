@@ -5,7 +5,7 @@
 ::: demo 基本用法
 ```vue
 <template>
-  <XtLine :chart-data="chartData" />
+  <div class="demo-container"><XtLine :chart-data="chartData" /></div>
 </template>
 
 <script>
@@ -44,7 +44,7 @@ export default {
 ::: demo 面积图
 ```vue
 <template>
-  <XtLine :chart-data="chartData" :is-area="true" />
+  <div class="demo-container"><XtLine :chart-data="chartData" :is-area="true" /></div>
 </template>
 
 <script>
@@ -70,7 +70,7 @@ export default {
 ::: demo 极简模式
 ```vue
 <template>
-  <XtLine :chart-data="chartData" simple-mode />
+  <div class="demo-container"><XtLine :chart-data="chartData" simple-mode /></div>
 </template>
 
 <script>
@@ -94,7 +94,7 @@ export default {
 ::: demo 自定义字段映射
 ```vue
 <template>
-  <XtLine :chart-data="chartData" :field-keys="{ label: 'month', value: 'amount' }" />
+  <div class="demo-container"><XtLine :chart-data="chartData" :field-keys="{ label: 'month', value: 'amount' }" /></div>
 </template>
 
 <script>

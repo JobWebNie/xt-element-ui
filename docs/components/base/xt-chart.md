@@ -5,7 +5,7 @@
 ::: demo 基本用法
 ```vue
 <template>
-  <XtChart type="bar" :chart-data="chartData" style="height: 400px;" />
+  <div class="demo-container"><XtChart type="bar" :chart-data="chartData" /></div>
 </template>
 
 <script>
@@ -39,7 +39,7 @@ export default {
 ::: demo 柱状图
 ```vue
 <template>
-  <XtChart type="bar" :chart-data="chartData" style="height: 400px;" />
+  <div class="demo-container"><XtChart type="bar" :chart-data="chartData" /></div>
 </template>
 
 <script>
@@ -65,7 +65,7 @@ export default {
 ::: demo 折线图
 ```vue
 <template>
-  <XtChart type="line" :chart-data="chartData" style="height: 400px;" />
+  <div class="demo-container"><XtChart type="line" :chart-data="chartData" /></div>
 </template>
 
 <script>
@@ -91,7 +91,7 @@ export default {
 ::: demo 饼图
 ```vue
 <template>
-  <XtChart type="pie" :chart-data="chartData" style="height: 400px;" />
+  <div class="demo-container"><XtChart type="pie" :chart-data="chartData" /></div>
 </template>
 
 <script>
@@ -116,7 +116,7 @@ export default {
 ::: demo 组合图
 ```vue
 <template>
-  <XtChart type="multi" :chart-data="chartData" style="height: 400px;" />
+  <div class="demo-container"><XtChart type="multi" :chart-data="chartData" /></div>
 </template>
 
 <script>

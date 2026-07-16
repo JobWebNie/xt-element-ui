@@ -87,7 +87,12 @@
       />
       <h4>阶梯价格</h4>
       <price />
-
+      <h4>阶梯价格</h4>
+      <XtTabs v-model="activeName">
+        <XtTabPane label="用户管理" name="first">用户管理内容</XtTabPane>
+        <XtTabPane label="配置管理" name="second" disabled>配置管理内容</XtTabPane>
+        <XtTabPane label="角色管理" name="third">角色管理内容</XtTabPane>
+      </XtTabs>
 
       
     </div>
@@ -104,6 +109,7 @@ export default {
   },
   data() {
     return {
+      activeName: 'first',
       cardList: [{title: '卡片标题',diff: 301, value: 123321.889, change: 301, type: 'primary'},{title: '卡片标题',diff: 301, value: 123321.889, change: 301, type: 'success'},{title: '卡片标题',diff: 301, value: 123321.889, change: 301, type: 'warning'},{title: '卡片标题',diff: 301, value: -1232889, change: 301, type: 'danger'}],
       theme: 'white',
       size: 'small',

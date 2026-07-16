@@ -1,6 +1,6 @@
 {
   "name": "xt-element-ui",
-  "version": "2.1.6",
+  "version": "2.1.61",
   "description": "基于 Vue 2.7 + ElementUI 的企业级组件库，提供丰富的自定义组件和扩展组件",
   "main": "lib/index.common.js",
   "module": "lib/index.esm.js",
@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "@vue/cli-service": "~4.5.19",
+    "null-loader": "^4.0.1",
     "patch-package": "^8.0.1",
     "sass": "^1.56.0",
     "sass-loader": "^10.5.2",
