@@ -1,0 +1,14 @@
+diff --git a/node_modules/vuepress-plugin-demo-container/src/DemoBlock.vue b/node_modules/vuepress-plugin-demo-container/src/DemoBlock.vue
+index 60d741d..1013ac4 100644
+--- a/node_modules/vuepress-plugin-demo-container/src/DemoBlock.vue
++++ b/node_modules/vuepress-plugin-demo-container/src/DemoBlock.vue
+@@ -67,7 +67,8 @@ export default {
+       return this.options.locales || defaultLang
+     },
+     langConfig() {
+-        return this.compoLang.filter(config => config.lang === this.$lang)[0]['demo-block'];
++      const matched = this.compoLang.filter(config => config.lang === this.$lang)[0]
++      return matched ? matched['demo-block'] : this.compoLang[0]['demo-block']
+     },
+     blockClass() {
+       return `demo-${this.$lang} demo-${this.$router.currentRoute.path

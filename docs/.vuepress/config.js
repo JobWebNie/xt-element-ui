@@ -8,7 +8,6 @@ module.exports = {
   // 使用 vuepress-theme-reco 主题
   theme: 'reco',
   head: [
-    ['link', { rel: 'stylesheet', href: '/styles/override.scss' }]
   ],
   plugins: [
     ['demo-container', {
