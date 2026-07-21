@@ -1,3 +1,4 @@
+import './style/index.scss'
 import XtGridBox from './index.vue'
 
 XtGridBox.install = function (Vue) {

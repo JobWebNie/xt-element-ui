@@ -1,3 +1,4 @@
+import './style/index.scss'
 import XtButton from './index.vue'
 
 XtButton.install = function (Vue) {

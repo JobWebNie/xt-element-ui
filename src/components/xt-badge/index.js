@@ -1,3 +1,4 @@
+import './style/index.scss'
 import XtBadge from './index.vue'
 
 XtBadge.install = function(Vue) {

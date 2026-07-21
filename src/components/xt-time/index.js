@@ -1,3 +1,4 @@
+import './style/index.scss'
 import XtTime from './index.vue'
 
 XtTime.install = function (Vue) {

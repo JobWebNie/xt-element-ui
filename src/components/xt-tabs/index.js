@@ -1,3 +1,4 @@
+import './style/index.scss'
 import XtTabs from './index.vue'
 
 XtTabs.install = function(Vue) {

@@ -1,3 +1,4 @@
+import './style/index.scss'
 import XtIcon from './index.vue'
 
 XtIcon.install = function (Vue) {

@@ -1,6 +1,6 @@
 {
   "name": "xt-element-ui",
-  "version": "2.1.61",
+  "version": "2.2.0",
   "description": "基于 Vue 2.7 + ElementUI 的企业级组件库，提供丰富的自定义组件和扩展组件",
   "main": "lib/index.common.js",
   "unpkg": "lib/index.umd.min.js",
@@ -9,7 +9,8 @@
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
     "dev": "vue-cli-service serve",
-    "lib": "vue-cli-service build --target lib --name index --dest lib src/index.js",
+    "lib": "node scripts/build-lib.js",
+    "build:components": "node scripts/build-components.js",
     "prepublishOnly": "npm run lib",
     "postinstall": "patch-package"
   },
@@ -18,7 +19,7 @@
   },
   "devDependencies": {
     "@vue/cli-service": "~4.5.19",
-    "patch-package": "^8.0.1",
+    "babel-plugin-component": "^1.1.1",
     "sass": "^1.56.0",
     "sass-loader": "^10.5.2",
     "vuepress": "^1.9.10",
@@ -39,6 +40,7 @@
   "dependencies": {
     "echarts": "^4.0.0",
     "element-ui": "^2.11.1",
+    "patch-package": "^8.0.1",
     "vue": "^2.6.10"
   },
   "keywords": [

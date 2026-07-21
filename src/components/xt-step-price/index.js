@@ -1,3 +1,4 @@
+import './style/index.scss'
 import XtStepPrice from './index.vue'
 import XtStepPriceItem from '../xt-step-price-item/index.vue'
 

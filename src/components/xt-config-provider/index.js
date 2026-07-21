@@ -1,3 +1,4 @@
+import './style/index.scss'
 import XtConfigProvider from './index.vue'
 
 XtConfigProvider.install = function (Vue) {

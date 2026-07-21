@@ -1,3 +1,4 @@
+import './style/index.scss'
 import XtScrollArrow from './index.vue'
 
 XtScrollArrow.install = function (Vue) {

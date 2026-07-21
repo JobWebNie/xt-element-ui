@@ -1,3 +1,4 @@
+import './style/index.scss'
 import XtMap from './index.vue'
 
 XtMap.install = function (Vue) {

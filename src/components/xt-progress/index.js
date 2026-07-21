@@ -1,3 +1,4 @@
+import './style/index.scss'
 import XtProgress from './index.vue'
 
 XtProgress.install = function(Vue) {

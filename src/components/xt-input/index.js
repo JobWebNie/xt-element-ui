@@ -1,3 +1,4 @@
+import './style/index.scss'
 import XtInput from './index.vue'
 
 XtInput.install = function (Vue) {
