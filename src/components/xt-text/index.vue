@@ -14,7 +14,7 @@
         'xt-text--' + size,
         { 'xt-text--bold': bold },
         { 'xt-text--money': format === 'money' },
-        { 'xt-text--ellipsis': ellipsis },
+        { 'xt-text--ellipsis': ellipsis && ellipsisRows == 1 },
         { 'xt-text--ellipsis-multiline': ellipsis && ellipsisRows > 1 }
       ]"
       :style="customStyle"
@@ -42,7 +42,7 @@
       'xt-text--' + size,
       { 'xt-text--bold': bold },
       { 'xt-text--money': format === 'money' },
-      { 'xt-text--ellipsis': ellipsis },
+      { 'xt-text--ellipsis': ellipsis && ellipsisRows == 1 },
       { 'xt-text--ellipsis-multiline': ellipsis && ellipsisRows > 1 }
     ]"
     :style="customStyle"
@@ -155,6 +155,7 @@ export default {
   },
   data() {
     return {
+      ellipsisWidth: undefined,
       isOverflow: false
     }
   },
@@ -171,6 +172,7 @@ export default {
       }
       if (this.ellipsis && this.ellipsisRows > 1) {
         style.WebkitLineClamp = this.ellipsisRows
+        style.width = `${this.ellipsisWidth}px`
       }
       return style
     },
@@ -250,6 +252,7 @@ export default {
 
       if (this.ellipsisRows > 1) {
         this.isOverflow = el.scrollHeight > el.clientHeight
+        this.ellipsisWidth =  el.clientWidth;
       } else {
         this.isOverflow = el.scrollWidth > el.clientWidth
       }

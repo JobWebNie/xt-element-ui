@@ -1,5 +1,5 @@
 <template>
-  <div class="base-date-root">
+  <div class="date-picker">
     <el-date-picker
       v-if="type !== 'quarter'"
       v-model="innerValue"
@@ -73,9 +73,7 @@ export default {
     disabled: {
       type: Boolean,
       default: false
-    },
-    placeholder: String,
-    valueFormat: String
+    }
   },
   data() {
     return {
@@ -89,7 +87,6 @@ export default {
       return this.type === 'quarter' ? null : this.type
     },
     placeholder() {
-      if (this.$props.placeholder) return this.$props.placeholder
       const map = {
         date: '请选择日期',
         month: '请选择月份',
@@ -100,7 +97,6 @@ export default {
       return map[this.type] || '请选择日期'
     },
     valueFormat() {
-      if (this.$props.valueFormat) return this.$props.valueFormat
       const map = {
         date: 'yyyy-MM-dd',
         month: 'yyyy-MM',
@@ -154,43 +150,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.base-date-root {
-}
-
-.quarter-panel {
-  padding: 10px;
-}
-
-.quarter-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-
-.quarter-list {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-}
-
-.quarter-item {
-  text-align: center;
-  padding: 8px 0;
-  border: 1px solid #e4e7ed;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.quarter-item.active {
-  background: #409eff;
-  color: #fff;
-  border-color: #409eff;
-}
-
-::v-deep .base-date-popper {
-  border-radius: 4px;
-}
-</style>

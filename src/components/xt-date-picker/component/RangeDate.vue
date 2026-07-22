@@ -1,6 +1,6 @@
 <!-- RangeDate.vue 区间业务组件 -->
 <template>
-    <div class="range-wrap">
+    <div class="range-picker">
       <Picker
         v-model="startVal"
         :type="type"
@@ -107,14 +107,14 @@
   }
   </script>
   <style scoped>
-  .range-wrap {
+  .range-picker {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
     gap: 8px;
     width: 100%;
   }
-  .range-wrap .el-date-editor {
+  .range-picker .el-date-editor {
     flex: 1;
     min-width: 130px;
   }
@@ -124,7 +124,7 @@
   }
   /* 手机/窄侧边栏自动竖向排列 */
   @media (max-width: 360px) {
-    .range-wrap {
+    .range-picker {
       flex-direction: column;
       align-items: stretch;
     }

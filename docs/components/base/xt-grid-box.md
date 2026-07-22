@@ -6,12 +6,12 @@
 ```vue
 <template>
   <XtGridBox :columns="3" gap="16px">
-    <div style="padding: 16px; background: #f0f0f0; border-radius: 8px;">项目1</div>
-    <div style="padding: 16px; background: #f0f0f0; border-radius: 8px;">项目2</div>
-    <div style="padding: 16px; background: #f0f0f0; border-radius: 8px;">项目3</div>
-    <div style="padding: 16px; background: #f0f0f0; border-radius: 8px;">项目4</div>
-    <div style="padding: 16px; background: #f0f0f0; border-radius: 8px;">项目5</div>
-    <div style="padding: 16px; background: #f0f0f0; border-radius: 8px;">项目6</div>
+    <div style="padding: 16px; background: #1890ff; color: white; border-radius: 8px;">元素1</div>
+    <div style="padding: 16px; background: #52c41a; color: white; border-radius: 8px;">元素2</div>
+    <div style="padding: 16px; background: #faad14; color: white; border-radius: 8px;">元素3</div>
+    <div style="padding: 16px; background: #f56c6c; color: white; border-radius: 8px;">元素4</div>
+    <div style="padding: 16px; background: #9adbbe; color: white; border-radius: 8px;">元素5</div>
+    <div style="padding: 16px; background: #40ffef; color: white; border-radius: 8px;">元素6</div>
   </XtGridBox>
 </template>
 ```
@@ -56,7 +56,7 @@
 ```vue
 <template>
   <XtGridBox :columns="4" gap="12px">
-    <div v-for="i in 8" :key="i" style="padding: 12px; background: #e6f7ff; border-radius: 4px; text-align: center;">{{ i }}</div>
+    <div v-for="i in 8" :key="i" style="padding: 12px; background: #1890ff; border-radius: 4px; text-align: center;">{{ i }}</div>
   </XtGridBox>
 </template>
 ```
@@ -70,21 +70,21 @@
   <div>
     <!-- 数字方式：自动 repeat -->
     <XtGridBox :columns="3" gap="8px" style="margin-bottom: 16px;">
-      <div v-for="i in 3" :key="i" style="padding: 12px; background: #f0f0f0;">{{ i }}</div>
+      <div v-for="i in 3" :key="i" style="padding: 12px; background: #1890ff;">{{ i }}</div>
     </XtGridBox>
     
     <!-- 字符串方式 -->
     <XtGridBox columns="200px 1fr 1fr" gap="8px" style="margin-bottom: 16px;">
-      <div style="padding: 12px; background: #e6f7ff;">固定宽度</div>
-      <div style="padding: 12px; background: #f6ffed;">弹性1</div>
-      <div style="padding: 12px; background: #fff7e6;">弹性2</div>
+      <div style="padding: 12px; background: #52c41a;">固定宽度</div>
+      <div style="padding: 12px; background: #faad14;">弹性1</div>
+      <div style="padding: 12px; background: #f5222d;">弹性2</div>
     </XtGridBox>
     
     <!-- 数组方式 -->
     <XtGridBox :columns="['100px', '1fr', '2fr']" gap="8px">
-      <div style="padding: 12px; background: #f9f0ff;">固定</div>
-      <div style="padding: 12px; background: #e6fffb;">1份</div>
-      <div style="padding: 12px; background: #fff7e6;">2份</div>
+      <div style="padding: 12px; background: #52c41a;">固定</div>
+      <div style="padding: 12px; background: #faad14;">1份</div>
+      <div style="padding: 12px; background: #f5222d;">2份</div>
     </XtGridBox>
   </div>
 </template>
@@ -97,13 +97,13 @@
 ```vue
 <template>
   <XtGridBox :columns="4" gap="12px">
-    <XtGridItem :span="2" style="padding: 24px; background: #1890ff; color: white; border-radius: 8px;">跨2列</XtGridItem>
+    <XtGridItem :span="2" style="padding: 24px; background: #52c41a; color: white; border-radius: 8px;">跨2列</XtGridItem>
     <XtGridItem style="padding: 24px; background: #52c41a; color: white; border-radius: 8px;">普通</XtGridItem>
     <XtGridItem style="padding: 24px; background: #52c41a; color: white; border-radius: 8px;">普通</XtGridItem>
     <XtGridItem :rowSpan="2" style="padding: 48px 16px; background: #faad14; color: white; border-radius: 8px;">跨2行</XtGridItem>
-    <XtGridItem style="padding: 24px; background: #f5222d; color: white; border-radius: 8px;">普通</XtGridItem>
-    <XtGridItem style="padding: 24px; background: #f5222d; color: white; border-radius: 8px;">普通</XtGridItem>
-    <XtGridItem style="padding: 24px; background: #f5222d; color: white; border-radius: 8px;">普通</XtGridItem>
+    <XtGridItem style="padding: 24px; background: #52c41a; color: white; border-radius: 8px;">普通</XtGridItem>
+    <XtGridItem style="padding: 24px; background: #52c41a; color: white; border-radius: 8px;">普通</XtGridItem>
+    <XtGridItem style="padding: 24px; background: #52c41a; color: white; border-radius: 8px;">普通</XtGridItem>
   </XtGridBox>
 </template>
 ```
@@ -139,16 +139,16 @@
   <div>
     <!-- 子项居中对齐 -->
     <XtGridBox :columns="3" gap="8px" align="center" style="height: 120px; background: #f0f0f0; margin-bottom: 16px;">
-      <div style="padding: 8px 16px; background: white;">居中</div>
-      <div style="padding: 8px 16px; background: white;">居中</div>
-      <div style="padding: 8px 16px; background: white;">居中</div>
+      <div style="padding: 8px 16px; background: #1890ff; color: white;">居中</div>
+      <div style="padding: 8px 16px; background: #1890ff; color: white;">居中</div>
+      <div style="padding: 8px 16px; background: #1890ff; color: white;">居中</div>
     </XtGridBox>
     
     <!-- 内容两端对齐 -->
     <XtGridBox :columns="3" gap="8px" justify="space-between" style="background: #f0f0f0;">
-      <div style="padding: 8px 16px; background: white;">左</div>
-      <div style="padding: 8px 16px; background: white;">中</div>
-      <div style="padding: 8px 16px; background: white;">右</div>
+      <div style="padding: 8px 16px;background: #1890ff; color: white;">左</div>
+      <div style="padding: 8px 16px;background: #1890ff; color: white;">中</div>
+      <div style="padding: 8px 16px;background: #1890ff; color: white;">右</div>
     </XtGridBox>
   </div>
 </template>
@@ -161,7 +161,7 @@
 ```vue
 <template>
   <XtGridBox :columns="3" rowGap="24px" colGap="8px">
-    <div v-for="i in 6" :key="i" style="padding: 12px; background: #e6f7ff; text-align: center;">{{ i }}</div>
+    <div v-for="i in 6" :key="i" style="padding: 12px; background: #1890ff; text-align: center;">{{ i }}</div>
   </XtGridBox>
 </template>
 ```
@@ -173,7 +173,7 @@
 ```vue
 <template>
   <XtGridBox columns="repeat(auto-fill, minmax(150px, 1fr))" gap="12px">
-    <div v-for="i in 8" :key="i" style="padding: 16px; background: #f0f0f0; text-align: center;">项目{{ i }}</div>
+    <div v-for="i in 8" :key="i" style="padding: 16px; background: #1890ff; text-align: center;">项目{{ i }}</div>
   </XtGridBox>
 </template>
 ```
@@ -186,22 +186,22 @@
 <template>
   <XtGridBox :columns="2" gap="16px">
     <!-- 左侧 -->
-    <div style="padding: 16px; background: #e6f7ff;">
+    <div style="padding: 16px; background: #f5222d;">
       <h4>左侧面板</h4>
       <XtGridBox :columns="1" gap="8px">
-        <div style="padding: 8px; background: white;">子项1</div>
-        <div style="padding: 8px; background: white;">子项2</div>
+        <div style="padding: 8px; background: #1890ff;">子项1</div>
+        <div style="padding: 8px; background: #1890ff;">子项2</div>
       </XtGridBox>
     </div>
     
     <!-- 右侧 -->
-    <div style="padding: 16px; background: #f6ffed;">
+    <div style="padding: 16px; background: #faad14;">
       <h4>右侧面板</h4>
       <XtGridBox :columns="2" gap="8px">
-        <div style="padding: 8px; background: white;">A</div>
-        <div style="padding: 8px; background: white;">B</div>
-        <div style="padding: 8px; background: white;">C</div>
-        <div style="padding: 8px; background: white;">D</div>
+        <div style="padding: 8px; background: #1890ff;">A</div>
+        <div style="padding: 8px; background: #1890ff;">B</div>
+        <div style="padding: 8px; background: #1890ff;">C</div>
+        <div style="padding: 8px; background: #1890ff;">D</div>
       </XtGridBox>
     </div>
   </XtGridBox>

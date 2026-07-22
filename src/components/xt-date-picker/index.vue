@@ -31,6 +31,7 @@
         ref="singlePicker"
         v-model="singleValue"
         size="small"
+        class="xt-date"
         :disabled="disabled"
         append-to-body
         :format="format"
@@ -45,6 +46,7 @@
         v-else-if="!useRangeMode && realDateType === 'quarter'"
         v-model="singleValue"
         type="quarter"
+        class="xt-date"
         size="small"
         :disabled="disabled"
         :placeholder="innerPlaceholder"
@@ -89,12 +91,9 @@ const NORMAL_TO_RANGE_TYPE = {
   week: 'week'
 };
 
-import RangeDate from './component/RangeDate.vue';
-import Picker from './component/Picker.vue';
-
 export default {
   name: 'XtDatePicker',
-  components: { RangeDate, Picker },
+  components: { RangeDate: () => import( './component/RangeDate.vue'), Picker: () => import( './component/Picker.vue') },
   // 标准v-model：父组件 v-model="xxx"
   model: {
     prop: 'value',
@@ -250,22 +249,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss" scoped>
-.xt-date-picker-container {
-  display: inline-block;
-  width: 100%;
-}
-
-.xt-date-dimension {
-  margin-bottom: 8px;
-}
-
-.xt-date-picker-wrapper {
-  display: inline-block;
-}
-
-.xt-date {
-  width: 100%;
-}
-</style>

@@ -45,12 +45,12 @@ export default {
 
 ## 示例
 
-### 日期范围选择
+### 范围选择
 
-::: demo 日期范围选择
+::: demo 日期选择
 ```vue
 <template>
-  <XtDatePicker v-model="dateRange" rangeMode="true" />
+  <XtDatePicker v-model="dateRange" :rangeMode="true" />
 </template>
 
 <script>
@@ -65,9 +65,9 @@ export default {
 ```
 :::
 
-### 月份范围选择
+### 月份选择
 
-::: demo 月份范围选择
+::: demo 月份选择
 ```vue
 <template>
   <XtDatePicker v-model="monthRange" dateType="month" />
@@ -85,9 +85,9 @@ export default {
 ```
 :::
 
-### 年份范围选择
+### 年份选择
 
-::: demo 年份范围选择
+::: demo 年份选择
 ```vue
 <template>
   <XtDatePicker v-model="yearRange" dateType="year" />
@@ -125,25 +125,6 @@ export default {
 ```
 :::
 
-### 单选模式
-
-::: demo 单选模式
-```vue
-<template>
-  <XtDatePicker v-model="singleDate" :range-mode="false" />
-</template>
-
-<script>
-export default {
-  data() {
-    return {
-      singleDate: null
-    }
-  }
-}
-</script>
-```
-:::
 
 ### 时间维度选择（统计分析）
 

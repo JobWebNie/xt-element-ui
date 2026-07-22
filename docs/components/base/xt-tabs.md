@@ -61,7 +61,7 @@ export default {
 ```vue
 <template>
   <div style="display: flex; flex-direction: column; gap: 16px;">
-    <XtTabs v-model="activeName">
+    <XtTabs v-model="activeName" type="card">
       <XtTabPane label="卡片式" name="first">卡片式标签页</XtTabPane>
       <XtTabPane label="配置管理" name="second">配置管理内容</XtTabPane>
     </XtTabs>
@@ -89,10 +89,15 @@ export default {
 ::: demo 标签位置
 ```vue
 <template>
-  <XtTabs v-model="activeName" tab-position="left">
-    <XtTabPane label="用户管理" name="first">用户管理内容</XtTabPane>
-    <XtTabPane label="配置管理" name="second">配置管理内容</XtTabPane>
-    <XtTabPane label="角色管理" name="third">角色管理内容</XtTabPane>
+  <XtTabs v-model="activeName" tab-position="top" closable addable @edit="handleTabsEdit">
+    <XtTabPane
+    :key="item.name"
+    v-for="(item, index) in editableTabs"
+    :label="item.title"
+    :name="item.name"
+  >
+    {{item.content}}
+  </XtTabPane>
   </XtTabs>
 </template>
 
@@ -100,7 +105,47 @@ export default {
 export default {
   data() {
     return {
-      activeName: 'first'
+      editableTabsValue: '2',
+      editableTabs: [{
+        title: 'Tab 1',
+        name: '1',
+        content: 'Tab 1 content'
+      }, {
+        title: 'Tab 2',
+        name: '2',
+        content: 'Tab 2 content'
+      }],
+      tabIndex: 2
+    }
+  },
+  methods: {
+    handleTabsEdit(targetName, action) {
+      if (action === 'add') {
+        let newTabName = ++this.tabIndex + '';
+        this.editableTabs.push({
+          title: 'New Tab',
+          name: newTabName,
+          content: 'New Tab content'
+        });
+        this.editableTabsValue = newTabName;
+      }
+      if (action === 'remove') {
+        let tabs = this.editableTabs;
+        let activeName = this.editableTabsValue;
+        if (activeName === targetName) {
+          tabs.forEach((tab, index) => {
+            if (tab.name === targetName) {
+              let nextTab = tabs[index + 1] || tabs[index - 1];
+              if (nextTab) {
+                activeName = nextTab.name;
+              }
+            }
+          });
+        }
+        
+        this.editableTabsValue = activeName;
+        this.editableTabs = tabs.filter(tab => tab.name !== targetName);
+      }
     }
   }
 }

@@ -1,3 +1,4 @@
+import './style/index.scss'
 import XtDatePicker from './index.vue'
 
 XtDatePicker.install = function (Vue) {

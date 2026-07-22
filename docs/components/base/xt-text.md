@@ -6,7 +6,6 @@
 ```vue
 <template>
   <XtText type="primary">主要文本</XtText>
-  <div style="width: 80px;"><XtText ellipsis>溢出隐藏文本溢出隐藏文本</XtText></div>
 </template>
 ```
 :::
@@ -17,8 +16,12 @@
 | `type` | String | - | `primary`、`success`、`warning`、`danger` | 文本颜色类型 |
 | `size` | String | base | `extra-large`、`large`、`medium`、`base`、`small`、`extra-small` | 字体大小 |
 | `bold` | Boolean | false | - | 是否加粗 |
-| `letterSpacing` | String / Number | - | - | 字间距 |
-| `money` | Boolean | false | - | 是否启用金额格式化 |
+| `ellipsis` | Boolean | false | - | 是否显示省略号 |
+| `ellipsisRows` | Number | 1 | 1至10 | 省略行数 |
+| `showTooltip` | Boolean | true | - | 当文字溢出隐藏时，是否显示悬浮提示 |
+| `tooltipPlacement` | String | `top` | - | 悬浮窗提示位置 |
+| `format` | String | normal | 'normal', 'thousand', 'money' |- | 格式化模式 |
+| `money` | Boolean | false | - | 是否启用金额格式化（使用format替代） |
 | `value` | Number / String | - | - | 金额数值 |
 | `currency` | String | CNY | `CNY`、`USD`、`EUR`、`JPY`、`GBP`、`AUD`、`CAD` | 货币类型 |
 | `decimals` | Number | 2 | 0-10 | 小数位数 |
@@ -80,6 +83,20 @@
     <XtText>正常字间距</XtText>
     <XtText :letterSpacing="4">宽字距文本</XtText>
     <XtText letterSpacing="8px">更宽字距文本</XtText>
+  </div>
+</template>
+```
+:::
+
+
+### 溢出隐藏
+::: demo 溢出隐藏
+```vue
+<template>
+  <div style="display: flex; flex-direction: column; gap: 8px;width: 80px;">
+    <XtText ellipsis>溢出隐藏文本溢出隐藏文本</XtText>
+    <XtText ellipsis :ellipsisRows="5">溢出隐藏文本显示5行，溢出隐藏文本显示5行，溢出隐藏文本显示5行，溢出隐藏文本显示5行，</XtText>
+    <XtText ellipsis :showTooltip="false">不显示浮窗提示信息</XtText>
   </div>
 </template>
 ```
