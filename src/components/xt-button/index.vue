@@ -16,17 +16,17 @@ export default {
   inject: {
     xtConfig: {
       default: () => ({
-        theme: 'light',
-        size: 'medium',
-        primaryColor: '#1890ff'
+        theme: undefined,
+        size: undefined,
+        primaryColor: undefined
       })
     }
   },
   props: {
     type: {
       type: String,
-      default: 'default',
-      validator: (val) => ['default', 'primary', 'success', 'warning', 'danger'].includes(val)
+      default: '',
+      validator: (val) => ['', 'primary', 'success', 'warning', 'danger'].includes(val)
     },
     throttle: {
       type: Number,
@@ -36,6 +36,10 @@ export default {
       type: String,
       default: null,
       validator: (val) => !val || ['mini', 'small', 'medium', 'large'].includes(val)
+    },
+    square: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -51,7 +55,8 @@ export default {
     buttonClasses() {
       return [
         `xt-button-${this.finalSize}`,
-        `xt-button-${this.type}`
+        `xt-button-${this.type}`,
+        this.square ? 'is-square' : ''
       ]
     }
   },

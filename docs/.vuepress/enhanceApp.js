@@ -12,8 +12,8 @@ import 'element-ui/lib/theme-chalk/index.css'
 import XtElementUI, { createVirtualScrollData, setTheme } from '../../src/index'
 // 导入项目全局样式
 // import '../../src/styles/css-variables.scss'
-import '../../src/styles/variables.scss'
-import '../../src/components/index.scss'
+// import '../../src/styles/variables.scss'
+// import '../../src/components/index.scss'
 
 // 改为指向 src 下的增强样式
 import '../../src/enhance/index.scss'

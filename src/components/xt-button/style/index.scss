@@ -6,11 +6,8 @@
   font-size: var(--xt-font-size-small);
   border: 1px solid var(--xt-border-color, #dcdfe6);
   transition: all 0.3s;
-  &-default{
-    background-color: var(--xt-bg-color-page, #ffffff);
-    border: 1px solid var(--xt-border-color, #303133);
-    color: var(--xt-text-color-primary, #303133);
-  }
+  background-color: var(--xt-bg-color, #ffffff);
+  color: var(--xt-text-color-primary, #303133);
   &-primary{
     background-color: var(--xt-color-primary, #ffffff);
     border-color: var(--xt-color-primary, #ffffff);
@@ -35,6 +32,11 @@
     background-color: var(--xt-color-info, #ffffff);
     border-color: var(--xt-color-info, #ffffff);
     color: var(--xt-color-white, #ffffff);
+  }
+  
+  &.is-square{
+    padding: 12px;
+    border-radius: 0;
   }
 
   &:hover {

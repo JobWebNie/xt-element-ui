@@ -7,89 +7,95 @@ const HTMLElementType = typeof HTMLElement !== 'undefined' ? HTMLElement : Objec
 export default {
   name: 'XtConfigProvider',
   inheritAttrs: false,
-  provide() {
+  data() {
     return {
       xtConfig: {
         theme: this.theme,
         size: this.size,
-        primaryColor: this.primaryColor
+        primaryColor: this.primaryColor,
+        brand: this.brand
       }
+    }
+  },
+  provide() {
+    return {
+      xtConfig: this.xtConfig
     }
   },
   watch: {
     theme(newVal) {
-      this.xtConfig ={
-        theme: newVal,
-        size: this.size,
-        primaryColor: this.primaryColor
-      }
+      this.xtConfig.theme = newVal
+      this.updateConfig()
     },
     size(newVal) {
-      this.xtConfig ={
-        theme: newVal,
-        size: this.size,
-        primaryColor: this.primaryColor
-      }
+      this.xtConfig.size = newVal
+      this.updateConfig()
     },
     primaryColor(newVal) {
-      this.xtConfig ={
-        theme: newVal,
-        size: this.size,
-        primaryColor: this.primaryColor
-      }
+      this.xtConfig.primaryColor = newVal
+      this.updateConfig()
+    },
+    brand(newVal) {
+      this.xtConfig.brand = newVal
+      this.updateConfig()
     }
   },
   render(h) {
-    // Vue 2 不支持 Fragment，当 tag="template" 时需要特殊处理
-    // 如果设置了 proxyElement，则不渲染包裹元素，只渲染 slot 内容
-    if (this.tag === 'template' || this.proxyElement) {
-      // 渲染 slot 内容，如果只有一个元素则直接返回，否则包裹一个 div
-      const slotContent = this.$slots.default
+    const slotContent = this.$slots.default
 
+    if (this.tag === 'template' || this.proxyElement) {
       if (!slotContent || slotContent.length === 0) {
         return h('div')
       }
 
-      // 如果 slot 只有一个元素，直接返回该元素
       if (slotContent.length === 1) {
         return slotContent[0]
       }
 
-      // Vue 2 不支持多根节点，需要包裹一个 div
-      // 使用普通的 div 包裹，避免 display: contents 的兼容性问题
       return h('div', {
         class: 'xt-config-provider-wrapper',
         attrs: {
-          'data-theme': this.theme
+          'data-theme': this.theme,
+          'data-brand': this.brand
         }
       }, slotContent)
     }
 
-    // 正常渲染包裹元素
     return h(this.tag, {
       style: this.mergedStyle,
       class: this.computedClass,
       attrs: {
         ...this.customAttrs,
-        'data-theme': this.theme
+        'data-theme': this.theme,
+        'data-brand': this.brand
       }
     }, this.$slots.default)
   },
   props: {
     theme: {
       type: String,
-      default: 'white',
+      default: 'light',
       validator: (value) => {
-        return ['white', 'dark', 'auto'].includes(value)
+        return ['light', 'dark', 'auto'].includes(value)
       }
     },
     size: {
       type: String,
-      default: 'medium'
+      default: 'medium',
+      validator: (value) => {
+        return ['small', 'medium', 'large'].includes(value)
+      }
     },
     primaryColor: {
       type: String,
       default: '#1890ff'
+    },
+    brand: {
+      type: String,
+      default: '',
+      validator: (value) => {
+        return ['', 'water', 'electricity', 'gas'].includes(value)
+      }
     },
     vars: {
       type: Object,
@@ -118,12 +124,12 @@ export default {
     onThemeChange: {
       type: Function,
       default: null,
-      description: '主题改变时的钩子函数，接收参数: { theme, size, primaryColor }'
+      description: '主题改变时的钩子函数，接收参数: { theme, size, primaryColor, brand }'
     },
     onStyleApplied: {
       type: Function,
       default: null,
-      description: '样式应用完成时的钩子函数，接收参数: { element, style, theme }'
+      description: '样式应用完成时的钩子函数，接收参数: { element, style, theme, brand }'
     }
   },
   computed: {
@@ -133,13 +139,11 @@ export default {
       if (this.primaryColor) {
         const color = this.normalizeColor(this.primaryColor)
         result['--xt-color-primary'] = color
-        // 浅色系列（与 css-variables.scss 保持一致）
         result['--xt-color-primary-light-3'] = this.lightenColor(color, 30)
         result['--xt-color-primary-light-5'] = this.lightenColor(color, 50)
         result['--xt-color-primary-light-7'] = this.lightenColor(color, 70)
         result['--xt-color-primary-light-8'] = this.lightenColor(color, 80)
         result['--xt-color-primary-light-9'] = this.lightenColor(color, 90)
-        // 深色系列
         result['--xt-color-primary-dark-2'] = this.darkenColor(color, 20)
       }
       
@@ -154,18 +158,17 @@ export default {
       
       if (this.theme === 'dark') {
         if (this.injectBackground) {
-          result.backgroundColor = result['--xt-color-bg-primary'] || '#141414'
+          result.backgroundColor = result['--xt-bg-color'] || '#141414'
         }
         if (this.injectColor) {
-          result.color = result['--xt-color-text-primary'] || '#E5EAF3'
+          result.color = result['--xt-text-color-primary'] || '#E5EAF3'
         }
       } else {
-        // 恢复默认主题颜色（light 主题）
         if (this.injectBackground) {
-          result.backgroundColor = result['--xt-color-bg-primary'] || '#ffffff'
+          result.backgroundColor = result['--xt-bg-color'] || '#ffffff'
         }
         if (this.injectColor) {
-          result.color = result['--xt-color-text-primary'] || '#2c3e50'
+          result.color = result['--xt-text-color-primary'] || '#303133'
         }
       }
       
@@ -181,7 +184,7 @@ export default {
       return classes
     },
     customAttrs() {
-      const props = ['theme', 'size', 'primaryColor', 'vars', 'tag', 'injectBackground', 'injectColor', 'proxyElement']
+      const props = ['theme', 'size', 'primaryColor', 'brand', 'vars', 'tag', 'injectBackground', 'injectColor', 'proxyElement']
       const attrs = {}
 
       for (const key in this.$attrs) {
@@ -203,6 +206,10 @@ export default {
     this.clearProxyElementStyle()
   },
   methods: {
+    updateConfig() {
+      this.applyProxyElementStyle()
+    },
+    
     normalizeColor(color) {
       if (!color) return '#1890ff'
       
@@ -250,8 +257,6 @@ export default {
       const rgb = this.hexToRgb(hex)
       if (!rgb) return hex
       
-      // 使用与 Element Plus 一致的算法：将颜色与白色按比例混合
-      // percent 表示混合白色的比例（0-100），即 (1 - percent/100) 是原色比例
       const ratio = percent / 100
       const r = Math.round(rgb.r * (1 - ratio) + 255 * ratio)
       const g = Math.round(rgb.g * (1 - ratio) + 255 * ratio)
@@ -264,8 +269,6 @@ export default {
       const rgb = this.hexToRgb(hex)
       if (!rgb) return hex
 
-      // 使用按比例混合黑色的方式变暗
-      // percent 表示混合黑色的比例（0-100）
       const ratio = percent / 100
       const r = Math.max(0, Math.round(rgb.r * (1 - ratio)))
       const g = Math.max(0, Math.round(rgb.g * (1 - ratio)))
@@ -305,36 +308,36 @@ export default {
       
       const style = this.mergedStyle
       const prevTheme = element.getAttribute('data-theme')
+      const prevBrand = element.getAttribute('data-brand')
       
-      // 应用样式到代理元素
       for (const key in style) {
         element.style.setProperty(key, style[key])
       }
       
-      // 设置 data-theme 属性
       element.setAttribute('data-theme', this.theme)
+      element.setAttribute('data-brand', this.brand)
 
-      // 更新图表颜色
-      EchartsUtil.changeAllTheme(this.theme, this.size, this.primaryColor)
+      EchartsUtil.changeAllTheme(this.theme, this.size, this.primaryColor, this.brand)
       
-      // 触发主题改变钩子（当主题实际发生变化时）
       if (prevTheme !== this.theme && typeof this.onThemeChange === 'function') {
         this.onThemeChange({
           theme: this.theme,
           size: this.size,
           primaryColor: this.primaryColor,
-          prevTheme: prevTheme
+          brand: this.brand,
+          prevTheme: prevTheme,
+          prevBrand: prevBrand
         })
       }
       
-      // 触发样式应用完成钩子
       if (typeof this.onStyleApplied === 'function') {
         this.onStyleApplied({
           element: element,
           style: style,
           theme: this.theme,
           size: this.size,
-          primaryColor: this.primaryColor
+          primaryColor: this.primaryColor,
+          brand: this.brand
         })
       }
       
@@ -350,15 +353,14 @@ export default {
         element.style.removeProperty(key)
       }
 
-      // 移除 data-theme 属性
       element.removeAttribute('data-theme')
+      element.removeAttribute('data-brand')
     }
   }
 }
 </script>
 
 <style scoped>
-/* 包裹容器样式 - 最小化影响布局 */
 .xt-config-provider-wrapper {
   width: 100%;
   height: 100%;

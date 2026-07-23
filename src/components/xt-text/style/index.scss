@@ -36,15 +36,15 @@
 }
 
 .xt-text--success {
-  color: $xt-color-success;
+  color: var(--xt-color-success);
 }
 
 .xt-text--warning {
-  color: $xt-color-warning;
+  color: var(--xt-color-warning);
 }
 
 .xt-text--danger {
-  color: $xt-color-danger;
+  color: var(--xt-color-danger);
 }
 
 // 粗体
@@ -81,15 +81,15 @@
   }
   
   &.xt-text--success {
-    color: $xt-color-success;
+    color: var(--xt-color-success);
   }
   
   &.xt-text--warning {
-    color: $xt-color-warning;
+    color: var(--xt-color-warning);
   }
   
   &.xt-text--danger {
-    color: $xt-color-danger;
+    color: var(--xt-color-danger);
   }
 }
 

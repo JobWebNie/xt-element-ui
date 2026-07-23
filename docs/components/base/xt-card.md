@@ -5,7 +5,7 @@
 ::: demo 基本用法
 ```vue
 <template>
-  <XtCard title="卡片标题" value="123" unit="元"></XtCard>
+  <XtCard title="卡片标题"></XtCard>
 </template>
 ```
 :::
@@ -17,7 +17,7 @@
 ::: demo 基础卡片
 ```vue
 <template>
-  <XtCard title="今日销售额" :value="123456" unit="元"></XtCard>
+  <XtCard title="今日销售额"></XtCard>
 </template>
 ```
 :::
@@ -49,12 +49,10 @@
 ```vue
 <template>
   <XtCard>
-    <template #title>
+    <template v-slot:title>
       <span style="color: #1890ff;">📊 数据分析</span>
     </template>
-    <template #value>
-      <span style="font-size: 32px; color: #52c41a;">98.5%</span>
-    </template>
+    <span style="font-size: 32px; color: #52c41a;">98.5%</span>
   </XtCard>
 </template>
 ```
@@ -93,14 +91,10 @@
 | 属性 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
 | `title` | String | - | 卡片标题 |
-| `value` | String / Number | - | 卡片数值 |
-| `unit` | String | - | 数值单位 |
-| `noPadding` | Boolean | false | 是否取消内边距 |
 
 ## 插槽说明
 
 | 插槽名 | 说明 |
 |--------|------|
 | `default` | 自定义内容区域 |
-| `title` | 自定义标题区域 |
-| `value` | 自定义数值区域 |
+| `header` | 自定义头部区域 |

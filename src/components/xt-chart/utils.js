@@ -7,6 +7,13 @@ const themeKeys = {
   "dark": themeDark
 };
 
+// 品牌色映射 - 用于 ECharts 图表调色板
+const brandColors = {
+  "water": ["#0077be", "#0099cc", "#5DB1FF", "#005C91", "#003D61"],
+  "electricity": ["#2ecc71", "#27ae60", "#5DD3B0", "#22A85A", "#167039"],
+  "gas": ["#f39c12", "#e67e22", "#F5C976", "#C28500", "#8C6000"]
+};
+
 // echarts 仅在客户端加载，避免 SSR 编译/渲染报错
 let echarts = null;
 
@@ -58,6 +65,43 @@ function EchartsUtil() {}
 EchartsUtil.currentTheme = "default";
 EchartsUtil.currentSize = "medium";
 EchartsUtil.inverse = false;
+
+// 颜色处理工具方法
+EchartsUtil.hexToRgb = function(hex) {
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result ? {
+    r: parseInt(result[1], 16),
+    g: parseInt(result[2], 16),
+    b: parseInt(result[3], 16)
+  } : null;
+};
+
+EchartsUtil.rgbToHex = function(r, g, b) {
+  return '#' + [r, g, b].map(x => {
+    const hex = x.toString(16);
+    return hex.length === 1 ? '0' + hex : hex;
+  }).join('');
+};
+
+EchartsUtil.lightenColor = function(hex, percent) {
+  const rgb = this.hexToRgb(hex);
+  if (!rgb) return hex;
+  const ratio = percent / 100;
+  const r = Math.round(rgb.r * (1 - ratio) + 255 * ratio);
+  const g = Math.round(rgb.g * (1 - ratio) + 255 * ratio);
+  const b = Math.round(rgb.b * (1 - ratio) + 255 * ratio);
+  return this.rgbToHex(r, g, b);
+};
+
+EchartsUtil.darkenColor = function(hex, percent) {
+  const rgb = this.hexToRgb(hex);
+  if (!rgb) return hex;
+  const ratio = percent / 100;
+  const r = Math.max(0, Math.round(rgb.r * (1 - ratio)));
+  const g = Math.max(0, Math.round(rgb.g * (1 - ratio)));
+  const b = Math.max(0, Math.round(rgb.b * (1 - ratio)));
+  return this.rgbToHex(r, g, b);
+};
 
 EchartsUtil.EchartsUtil = {
   backgroundColor: "transparent",
@@ -401,12 +445,11 @@ EchartsUtil.changeSingleTheme = function(dom, chartIns, customOption, newTheme) 
   return newChart;
 };
 
-EchartsUtil.changeAllTheme = function(newTheme, newSize) {
+EchartsUtil.changeAllTheme = function(newTheme, newSize, primaryColor, brand) {
   const ec = getEcharts();
   if (!ec || !newTheme) return;
   
   this.currentTheme = newTheme;
-  // 如果传入了新的 size，则更新全局 size
   if (newSize) {
     this.currentSize = newSize;
   }
@@ -415,7 +458,6 @@ EchartsUtil.changeAllTheme = function(newTheme, newSize) {
     const dom = item.dom;
     const chart = item.chart;
     const customOption = item.customOption;
-    // 使用图表自己的 size，如果没有则使用全局 size
     const useSize = item.size || EchartsUtil.currentSize;
     
     if (chart) {
@@ -424,13 +466,28 @@ EchartsUtil.changeAllTheme = function(newTheme, newSize) {
     
     const newChart = ec.init(dom, newTheme);
     let themeOption = themeKeys[newTheme];
-    // 应用字体大小配置
     themeOption = EchartsUtil.applyFontSize(themeOption, useSize);
+    
+    // 应用品牌色到图表调色板
+    if (brand && brandColors[brand]) {
+      themeOption = JSON.parse(JSON.stringify(themeOption));
+      themeOption.color = brandColors[brand];
+    } else if (primaryColor) {
+      // 如果没有品牌色但有自定义主色，生成衍生色系
+      themeOption = JSON.parse(JSON.stringify(themeOption));
+      themeOption.color = [
+        primaryColor,
+        EchartsUtil.lightenColor(primaryColor, 30),
+        EchartsUtil.lightenColor(primaryColor, 50),
+        EchartsUtil.darkenColor(primaryColor, 20),
+        EchartsUtil.darkenColor(primaryColor, 40)
+      ];
+    }
+    
     const option = EchartsUtil.mergeOptions(themeOption, customOption);
     
     newChart.setOption(option, true);
     item.chart = newChart;
-    // 更新图表的 size 记录
     item.size = useSize;
     EchartsUtil.bindResize(newChart);
   });

@@ -4,9 +4,6 @@ import './styles/css-variables.scss'
 // 导入组件样式（统一入口）
 import './components/index.scss'
 
-// 导入 SCSS 变量（通过 CSS Modules :export 导出）
-import variables from './styles/variables-export.scss'
-
 import utilsModule from './utils/index'
 
 // ES Module 默认导出需要通过 .default 访问
@@ -175,7 +172,6 @@ export { createVirtualScrollData, virtualScrollColumns } from './components/xt-t
 // 导出工具函数和变量
 export {
   utils,
-  variables,
   // 配置管理函数（从 utils 导入）
   getConfig,
   setConfig,

@@ -18,6 +18,9 @@
 | `plain` | Boolean | false | - | 是否为朴素按钮 |
 | `disabled` | Boolean | false | - | 是否禁用按钮 |
 | `round` | Boolean | false | - | 是否为圆角按钮 |
+| `square` | Boolean | false | - | 是否为正方形按钮 |
+| `circle` | Boolean | false | - | 是否为圆形按钮 |
+
 
 ## 事件说明
 
@@ -31,11 +34,13 @@
 ::: demo 不同类型的按钮
 ```vue
 <template>
-  <div style="display: flex; gap: 12px;">
+  <div style="display: inline-flex; gap: 12px;">
+    <XtButton>默认按钮</XtButton>
     <XtButton type="primary">主要按钮</XtButton>
     <XtButton type="success">成功按钮</XtButton>
     <XtButton type="warning">警告按钮</XtButton>
     <XtButton type="danger">危险按钮</XtButton>
+    <XtButton type="info">信息按钮</XtButton>
   </div>
 </template>
 ```
@@ -45,7 +50,7 @@
 ::: demo 不同尺寸的按钮
 ```vue
 <template>
-  <div style="display: flex; gap: 12px; align-items: center;">
+  <div style="display: inline-flex; gap: 12px; align-items: center;">
     <XtButton size="large">大号按钮</XtButton>
     <XtButton>默认按钮</XtButton>
     <XtButton size="small">小号按钮</XtButton>
@@ -59,7 +64,7 @@
 ::: demo 朴素按钮
 ```vue
 <template>
-  <div style="display: flex; gap: 12px;">
+  <div style="display: inline-flex; gap: 12px;">
     <XtButton type="primary" plain>朴素主按钮</XtButton>
     <XtButton type="success" plain>朴素成功按钮</XtButton>
     <XtButton type="warning" plain>朴素警告按钮</XtButton>
@@ -73,11 +78,13 @@
 ::: demo 状态按钮
 ```vue
 <template>
-  <div style="display: flex; gap: 12px;">
+  <div style="display: inline-flex; gap: 12px;">
     <XtButton disabled>禁用按钮</XtButton>
     <XtButton round>圆角按钮</XtButton>
     <XtButton type="primary" disabled>禁用主按钮</XtButton>
     <XtButton type="primary" round>圆角主按钮</XtButton>
+    <XtButton type="success" icon="el-icon-plus" circle></XtButton>
+    <XtButton type="success" icon="el-icon-plus" square></XtButton>
   </div>
 </template>
 ```

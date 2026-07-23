@@ -25,7 +25,7 @@
   color: #ffffff;
   text-align: center;
   white-space: nowrap;
-  background: $xt-color-danger;
+  background: var(--xt-color-danger);
 }
 
 .xt-badge--dot .xt-badge__badge {
@@ -42,23 +42,23 @@
 }
 
 .xt-badge--primary .xt-badge__badge {
-  background: $xt-color-primary;
+  background: var(--xt-color-primary);
 }
 
 .xt-badge--success .xt-badge__badge {
-  background: $xt-color-success;
+  background: var(--xt-color-success);
 }
 
 .xt-badge--warning .xt-badge__badge {
-  background: $xt-color-warning;
+  background: var(--xt-color-warning);
 }
 
 .xt-badge--danger .xt-badge__badge {
-  background: $xt-color-danger;
+  background: var(--xt-color-danger);
 }
 
 .xt-badge--info .xt-badge__badge {
-  background: $xt-color-info;
+  background: var(--xt-color-info);
 }
 
 .xt-badge--hidden {

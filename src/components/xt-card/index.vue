@@ -18,9 +18,9 @@ export default {
   inject: {
     xtConfig: {
       default: () => ({
-        theme: 'light',
-        size: 'medium',
-        primaryColor: '#1890ff'
+        theme: undefined,
+        size: undefined,
+        primaryColor: undefined
       })
     }
   },

@@ -240,3 +240,75 @@
 [data-size="small"] {
   --xt-font-size-increment: 0px;
 }
+
+// ============================
+// 品牌色配置（水电气子系统 + 大屏分析）
+// 品牌色与主题模式可叠加使用
+// 示例：<div data-theme="dark" data-brand="water">
+// ============================
+
+// 水务系统 - 蓝色系
+[data-brand="water"] {
+  --xt-color-primary: #0077be;
+  --xt-color-primary-light-3: rgb(51, 142, 206);
+  --xt-color-primary-light-5: rgb(102, 179, 229);
+  --xt-color-primary-light-7: rgb(153, 216, 252);
+  --xt-color-primary-light-8: rgb(178, 229, 253);
+  --xt-color-primary-light-9: rgb(204, 241, 255);
+  --xt-color-primary-dark-2: rgb(0, 92, 145);
+}
+
+[data-theme="dark"][data-brand="water"],
+[data-brand="water"][data-theme="dark"] {
+  --xt-color-primary: #0099cc;
+  --xt-color-primary-light-3: rgb(0, 124, 167);
+  --xt-color-primary-light-5: rgb(0, 93, 125);
+  --xt-color-primary-light-7: rgb(0, 62, 83);
+  --xt-color-primary-light-8: rgb(0, 47, 63);
+  --xt-color-primary-light-9: rgb(0, 31, 42);
+  --xt-color-primary-dark-2: rgb(0, 159, 204);
+}
+
+// 电力系统 - 绿色系
+[data-brand="electricity"] {
+  --xt-color-primary: #2ecc71;
+  --xt-color-primary-light-3: rgb(95, 224, 146);
+  --xt-color-primary-light-5: rgb(140, 234, 176);
+  --xt-color-primary-light-7: rgb(185, 244, 206);
+  --xt-color-primary-light-8: rgb(208, 249, 221);
+  --xt-color-primary-light-9: rgb(230, 252, 238);
+  --xt-color-primary-dark-2: rgb(34, 181, 94);
+}
+
+[data-theme="dark"][data-brand="electricity"],
+[data-brand="electricity"][data-theme="dark"] {
+  --xt-color-primary: #27ae60;
+  --xt-color-primary-light-3: rgb(50, 168, 102);
+  --xt-color-primary-light-5: rgb(38, 126, 77);
+  --xt-color-primary-light-7: rgb(26, 84, 51);
+  --xt-color-primary-light-8: rgb(19, 63, 38);
+  --xt-color-primary-light-9: rgb(13, 42, 26);
+  --xt-color-primary-dark-2: rgb(73, 212, 131);
+}
+
+// 燃气系统 - 橙色系
+[data-brand="gas"] {
+  --xt-color-primary: #f39c12;
+  --xt-color-primary-light-3: rgb(247, 176, 85);
+  --xt-color-primary-light-5: rgb(249, 199, 140);
+  --xt-color-primary-light-7: rgb(251, 222, 195);
+  --xt-color-primary-light-8: rgb(252, 233, 222);
+  --xt-color-primary-light-9: rgb(254, 244, 248);
+  --xt-color-primary-dark-2: rgb(194, 133, 0);
+}
+
+[data-theme="dark"][data-brand="gas"],
+[data-brand="gas"][data-theme="dark"] {
+  --xt-color-primary: #e67e22;
+  --xt-color-primary-light-3: rgb(214, 146, 75);
+  --xt-color-primary-light-5: rgb(161, 109, 56);
+  --xt-color-primary-light-7: rgb(107, 73, 38);
+  --xt-color-primary-light-8: rgb(80, 55, 28);
+  --xt-color-primary-light-9: rgb(54, 36, 19);
+  --xt-color-primary-dark-2: rgb(241, 152, 66);
+}

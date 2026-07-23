@@ -34,13 +34,25 @@ module.exports = {
     },
 
     chainWebpack: (config) => {
-      // 将 element-ui 标记为外部依赖，避免打包进组件库
+      // 将 element-ui、vue、echarts 标记为外部依赖，避免打包进组件库
       config.externals({
         'element-ui': {
           commonjs: 'element-ui',
           commonjs2: 'element-ui',
           amd: 'element-ui',
           root: 'ElementUI'
+        },
+        'vue': {
+          commonjs: 'vue',
+          commonjs2: 'vue',
+          amd: 'vue',
+          root: 'Vue'
+        },
+        'echarts': {
+          commonjs: 'echarts',
+          commonjs2: 'echarts',
+          amd: 'echarts',
+          root: 'echarts'
         }
       })
     }

@@ -127,6 +127,7 @@
   <XtConfigProvider 
     :primaryColor="primaryColor"
     :theme="currentTheme"
+    :brand="brand"
     injectBackground
   >
     <div style="min-height: 120px; padding: 16px;">
@@ -160,6 +161,7 @@
 export default {
   data() {
     return {
+      brand: 'water',
       primaryColor: '#1890ff',
       currentTheme: 'light',
       colors: ['#1890ff', '#52c41a', '#faad14', '#f5222d', '#722ed1']
