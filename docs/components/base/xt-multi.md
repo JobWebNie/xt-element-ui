@@ -52,14 +52,13 @@ export default {
 | `highlightKey` | String | - | 高亮系列的 label |
 | `config` | Object | - | 配置对象 |
 
-## config 配置说明
+##  配置说明
 
 | 属性 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
-| `interval` | Number | `0` | X 轴标签间隔 |
-| `rotate` | Number | `0` | X 轴标签旋转角度 |
-| `gridbottom` | Number | `40` | 底部网格间距 |
-| `isShowthreshold` | Boolean | `false` | 是否显示阈值线 |
+| `type` | Number | `40` | 底部网格间距 |
+| `areaStyle` | Number | `0` | X 轴标签旋转角度 |
+| `smooth` | Number | `0` | X 轴标签间隔 |
 
 ## 示例
 
@@ -138,6 +137,7 @@ export default {
           label: "增长率",
           unit: "%",
           type: "line",
+          areaStyle: true,
           data: [
             { label: "1月", value: 10 },
             { label: "2月", value: 20 },

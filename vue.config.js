@@ -9,8 +9,8 @@ module.exports = {
 
     pages: {
       index: {
-        entry: './examples/main.js',
-        template: './examples/index.html',
+        entry: './public/main.js',
+        template: './public/index.html',
         filename: 'index.html'
       }
     },
@@ -34,26 +34,28 @@ module.exports = {
     },
 
     chainWebpack: (config) => {
-      // 将 element-ui、vue、echarts 标记为外部依赖，避免打包进组件库
-      config.externals({
-        'element-ui': {
-          commonjs: 'element-ui',
-          commonjs2: 'element-ui',
-          amd: 'element-ui',
-          root: 'ElementUI'
-        },
-        'vue': {
-          commonjs: 'vue',
-          commonjs2: 'vue',
-          amd: 'vue',
-          root: 'Vue'
-        },
-        'echarts': {
-          commonjs: 'echarts',
-          commonjs2: 'echarts',
-          amd: 'echarts',
-          root: 'echarts'
-        }
-      })
+      // 仅在生产构建时设置 externals，避免影响开发服务器的热更新
+      if (process.env.NODE_ENV === 'production') {
+        config.externals({
+          'element-ui': {
+            commonjs: 'element-ui',
+            commonjs2: 'element-ui',
+            amd: 'element-ui',
+            root: 'ElementUI'
+          },
+          'vue': {
+            commonjs: 'vue',
+            commonjs2: 'vue',
+            amd: 'vue',
+            root: 'Vue'
+          },
+          'echarts': {
+            commonjs: 'echarts',
+            commonjs2: 'echarts',
+            amd: 'echarts',
+            root: 'echarts'
+          }
+        })
+      }
     }
 }

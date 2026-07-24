@@ -1,0 +1,359 @@
+// ============================
+// xt-flow 审批流程轨迹组件样式
+// 全部使用 CSS 变量，无缝适配明暗主题
+// ============================
+
+.xt-flow {
+  position: relative;
+  padding: var(--xt-spacing-md, 16px) 0;
+}
+
+// ============================
+// 节点主体
+// ============================
+.xt-flow__node {
+  display: flex;
+  align-items: flex-start;
+  padding-bottom: 0;
+  position: relative;
+
+  &:last-child {
+    .xt-flow__line {
+      display: none;
+    }
+  }
+}
+
+// ============================
+// 时间线区域（左侧）
+// ============================
+.xt-flow__timeline {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  width: 40px;
+  margin-right: var(--xt-spacing-sm, 12px);
+}
+
+// ============================
+// 节点图标
+// ============================
+.xt-flow__icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  z-index: 1;
+  transition: background var(--xt-transition-duration-fast, 0.2s) ease;
+
+  // 默认圆点
+  &-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: block;
+  }
+
+  // 通过
+  &--approved {
+    background: var(--xt-color-primary-light-9, #e8f4ff);
+    .xt-flow__icon-dot {
+      background: var(--xt-color-primary, #1890ff);
+    }
+  }
+
+  // 驳回
+  &--rejected {
+    background: var(--xt-color-danger-light-9, #fef0f0);
+    .xt-flow__icon-dot {
+      background: var(--xt-color-danger, #f56c6c);
+    }
+  }
+
+  // 待办
+  &--pending {
+    background: var(--xt-color-warning-light-9, #fdf6ec);
+    .xt-flow__icon-dot {
+      background: var(--xt-color-warning, #e6a23c);
+      animation: xt-flow-pulse 1.5s ease-in-out infinite;
+    }
+  }
+
+  // 转办
+  &--transferred,
+  &--delegated {
+    background: var(--xt-color-info-light-9, #f4f4f5);
+    .xt-flow__icon-dot {
+      background: var(--xt-color-info, #909399);
+    }
+  }
+
+  // 撤回
+  &--recalled,
+  &--cancelled {
+    background: var(--xt-fill-color-light, #f5f7fa);
+    .xt-flow__icon-dot {
+      background: var(--xt-text-color-secondary, #909399);
+    }
+  }
+
+  // 发起
+  &--started {
+    background: var(--xt-color-primary-light-9, #e8f4ff);
+    .xt-flow__icon-dot {
+      background: var(--xt-color-primary, #1890ff);
+    }
+  }
+}
+
+@keyframes xt-flow-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+// ============================
+// 连接线
+// ============================
+.xt-flow__line {
+  width: 2px;
+  flex: 1;
+  min-height: 32px;
+  background: var(--xt-border-color-light, #e4e7ed);
+  margin: 4px 0;
+  transition: background var(--xt-transition-duration-fast, 0.2s) ease;
+
+  // 通过 - 实线主题色
+  &--approved {
+    background: var(--xt-color-primary-light-5, #8cc8ff);
+  }
+
+  // 驳回 - 虚线
+  &--rejected,
+  &--dashed {
+    background: repeating-linear-gradient(
+      to bottom,
+      var(--xt-color-danger, #f56c6c) 0px,
+      var(--xt-color-danger, #f56c6c) 4px,
+      transparent 4px,
+      transparent 8px
+    );
+  }
+
+  // 待办 - 浅色虚线
+  &--pending {
+    background: repeating-linear-gradient(
+      to bottom,
+      var(--xt-border-color, #dcdfe6) 0px,
+      var(--xt-border-color, #dcdfe6) 3px,
+      transparent 3px,
+      transparent 6px
+    );
+  }
+
+  // 转办/委托
+  &--transferred,
+  &--delegated {
+    background: var(--xt-border-color, #dcdfe6);
+  }
+
+  // 撤回/取消
+  &--recalled,
+  &--cancelled {
+    background: var(--xt-border-color-lighter, #ebeef5);
+  }
+}
+
+// ============================
+// 节点内容区域
+// ============================
+.xt-flow__body {
+  flex: 1;
+  min-width: 0;
+  padding-bottom: var(--xt-spacing-md, 16px);
+  border-radius: var(--xt-border-radius-small, 4px);
+  transition: background var(--xt-transition-duration-fast, 0.2s) ease;
+}
+
+// ============================
+// 节点头部
+// ============================
+.xt-flow__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.xt-flow__title {
+  font-size: calc(14px + var(--xt-font-size-increment, 0px));
+  font-weight: var(--xt-font-weight-primary, 500);
+  color: var(--xt-text-color-primary, #303133);
+  line-height: 1.4;
+  word-break: break-all;
+}
+
+.xt-flow__status {
+  flex-shrink: 0;
+  font-size: calc(12px + var(--xt-font-size-increment, 0px));
+  padding: 1px 8px;
+  border-radius: var(--xt-border-radius-mini, 2px);
+  margin-left: var(--xt-spacing-xs, 8px);
+  line-height: 20px;
+  white-space: nowrap;
+
+  // 通过
+  &--approved {
+    color: var(--xt-color-primary, #1890ff);
+    background: var(--xt-color-primary-light-9, #e8f4ff);
+  }
+
+  // 驳回
+  &--rejected {
+    color: var(--xt-color-danger, #f56c6c);
+    background: var(--xt-color-danger-light-9, #fef0f0);
+  }
+
+  // 待办
+  &--pending {
+    color: var(--xt-color-warning, #e6a23c);
+    background: var(--xt-color-warning-light-9, #fdf6ec);
+  }
+
+  // 转办/委托
+  &--transferred,
+  &--delegated {
+    color: var(--xt-color-info, #909399);
+    background: var(--xt-color-info-light-9, #f4f4f5);
+  }
+
+  // 撤回/取消
+  &--recalled,
+  &--cancelled {
+    color: var(--xt-text-color-secondary, #909399);
+    background: var(--xt-fill-color-light, #f5f7fa);
+  }
+
+  // 发起
+  &--started {
+    color: var(--xt-color-primary, #1890ff);
+    background: var(--xt-color-primary-light-9, #e8f4ff);
+  }
+}
+
+// ============================
+// 节点元信息
+// ============================
+.xt-flow__meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--xt-spacing-xs, 8px);
+  font-size: calc(12px + var(--xt-font-size-increment, 0px));
+  color: var(--xt-text-color-secondary, #909399);
+  line-height: 1.5;
+}
+
+.xt-flow__assignee {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.xt-flow__assignee-icon {
+  font-size: 12px;
+}
+
+.xt-flow__time,
+.xt-flow__duration {
+  color: var(--xt-text-color-placeholder, #a8abb2);
+}
+
+// ============================
+// 节点描述/审批意见
+// ============================
+.xt-flow__desc {
+  margin-top: 6px;
+  padding: var(--xt-spacing-xs, 8px);
+  font-size: calc(13px + var(--xt-font-size-increment, 0px));
+  color: var(--xt-text-color-regular, #606266);
+  background: var(--xt-fill-color-light, #f5f7fa);
+  border-radius: var(--xt-border-radius-small, 4px);
+  line-height: 1.6;
+  word-break: break-all;
+}
+
+.xt-flow__desc-label {
+  font-weight: var(--xt-font-weight-primary, 500);
+  color: var(--xt-text-color-primary, #303133);
+}
+
+// ============================
+// 节点操作按钮
+// ============================
+.xt-flow__actions {
+  margin-top: 8px;
+  display: flex;
+  gap: var(--xt-spacing-xs, 8px);
+  flex-wrap: wrap;
+}
+
+// ============================
+// 折叠/展开触发器
+// ============================
+.xt-flow__collapse {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--xt-spacing-sm, 12px) 0;
+  cursor: pointer;
+  user-select: none;
+  transition: color var(--xt-transition-duration-fast, 0.2s) ease;
+
+  &:hover {
+    .xt-flow__collapse-text {
+      color: var(--xt-color-primary, #1890ff);
+    }
+  }
+}
+
+.xt-flow__collapse-text {
+  font-size: calc(13px + var(--xt-font-size-increment, 0px));
+  color: var(--xt-text-color-secondary, #909399);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: color var(--xt-transition-duration-fast, 0.2s) ease;
+}
+
+.xt-flow__collapse-arrow {
+  font-size: 10px;
+
+  &--up {
+    transform: rotate(0deg);
+  }
+}
+
+// ============================
+// 方形 / 圆形两套圆角
+// ============================
+.xt-flow--square {
+  .xt-flow__icon {
+    border-radius: 4px;
+  }
+  .xt-flow__icon-dot {
+    border-radius: 2px;
+  }
+}
+
+.xt-flow--round {
+  .xt-flow__icon {
+    border-radius: 50%;
+  }
+  .xt-flow__icon-dot {
+    border-radius: 50%;
+  }
+}

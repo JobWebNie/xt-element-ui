@@ -182,6 +182,7 @@ export default {
       if (this.simpleMode) {
         EchartsUtil.applySimpleMode(option, "pie");
       }
+      console.log('option', option);
       this.myChart = EchartsUtil.init(_self.$refs.piechart, this.theme, option, this.size);
     }
   }

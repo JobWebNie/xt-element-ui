@@ -3,7 +3,7 @@
 .xt-date-picker-container {
     display: inline-block;
     width: 100%;
-    
+    --xt-input-height: 32px;
   }
   .xt-date .el-date-editor .el-input__inner {
     background-color: var(--xt-fill-color-blank);
@@ -13,7 +13,7 @@
     border-radius: var(--xt-border-radius-small, 4px);
     height: var(--xt-input-height);
     line-height: var(--xt-input-height);
-    padding: 0 15px;
+    padding: 0 30px;
 }
   .xt-date-dimension {
     margin-bottom: 8px;
@@ -26,10 +26,8 @@
 
 
 
-.date-picker {
-    .quarter-panel {
-      padding: 10px;
-    }
+  .quarter-panel {
+    padding: 10px;
   
     .quarter-header {
       display: flex;

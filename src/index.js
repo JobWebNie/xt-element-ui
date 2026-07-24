@@ -46,6 +46,7 @@ import XtSelectTree from './components/xt-select-tree'
 import XtUpload from './components/xt-upload'
 import XtTransferTree from './components/xt-transfer-tree'  // XtTransferTree 组件（树形穿梭框）
 import XtFormSchema from './components/xt-form-schema'  // XtFormSchema 组件（表单配置化搜索）
+import XtFlow from './components/xt-flow'  // XtFlow 组件（审批流程轨迹）
 
 
 const components = [
@@ -81,7 +82,8 @@ const components = [
   XtSelectTree,
   XtUpload,
   XtTransferTree,
-  XtFormSchema
+  XtFormSchema,
+  XtFlow
 ]
 
 const install = function (Vue, options = {}) {
@@ -160,14 +162,9 @@ export default {
   XtSelectTree,
   XtUpload,
   XtTransferTree,
-  XtFormSchema
+  XtFormSchema,
+  XtFlow
 }
-
-// XtChart 组件按需导出（使用时需自行安装 echarts 依赖）
-export { default as XtChart } from './components/xt-chart'
-
-// XtTable 虚拟滚动演示数据工具
-export { createVirtualScrollData, virtualScrollColumns } from './components/xt-table/virtualScrollData'
 
 // 导出工具函数和变量
 export {
@@ -207,11 +204,13 @@ export {
   XtScrollArrow,
   XtBar,
   XtLine,
+  XtChart,
   XtPie,
   XtMulti,
   XtPage,
   XtSelectTree,
   XtUpload,
   XtTransferTree,
-  XtFormSchema
+  XtFormSchema,
+  XtFlow
 }

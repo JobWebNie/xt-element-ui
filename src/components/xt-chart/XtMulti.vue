@@ -32,17 +32,6 @@ export default {
       default: false
     },
     highlightKey: String,
-    config: {
-      type: Object,
-      default() {
-        return {
-          interval: 0,
-          rotate: 0,
-          gridbottom: 40,
-          isShowthreshold: false
-        };
-      }
-    },
     chartData: {
       type: Array,
       default: () => {
@@ -227,16 +216,15 @@ export default {
           }
         },
         grid: {
-          top: "25%",
-          left: "40",
-          right: "15",
-          bottom: this.config.gridbottom == null ? 20 : this.config.gridbottom
+          left: 16,
+          right: 16,
+          top: 40,
+          bottom: 48,
+          containLabel: true
         },
         xAxis: {
           type: "category",
-          axisLabel: {
-            rotate: this.config.rotate
-          },
+          axisLabel: {},
           data: firstSeriesData.map((item) => {
             return item[keys.label];
           })
@@ -267,6 +255,8 @@ export default {
           name: item[keys.label],
           type: item.type || "bar",
           avoidLabelOverlap: true,
+          areaStyle: item.areaStyle ? {} : null,
+          smooth: item.smooth ? {} : false,
           data: seriesItems.map(it => it[keys.value]),
           yAxisIndex: unitToYAxisIndex[item.unit || ""] != null ? unitToYAxisIndex[item.unit || ""] : 0
         };

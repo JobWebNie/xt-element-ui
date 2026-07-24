@@ -74,9 +74,9 @@ export default {
   props: {
     theme: {
       type: String,
-      default: 'light',
+      default: 'white',
       validator: (value) => {
-        return ['light', 'dark', 'auto'].includes(value)
+        return ['white', 'dark', 'auto'].includes(value)
       }
     },
     size: {

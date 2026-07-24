@@ -1,13 +1,13 @@
 ---
 home: true
-heroImage: /favicon.ico
+# heroImage: /favicon.ico
 heroText: XT-Element-UI
 tagline: 基于 Vue 2.7 + ElementUI 的企业级组件库
 actionText: 🚀 快速上手
 actionLink: /components/base/xt-button
 features:
   - title: 🎯 丰富的组件
-    details: 提供 20+ 组件，覆盖布局、表单、数据展示、图表等常见场景
+    details: 提供 30+ 组件，覆盖布局、表单、数据展示、图表、工作流等常见场景
   - title: 📦 开箱即用
     details: 基于 ElementUI 构建，与现有 ElementUI 项目无缝集成
   - title: 🪶 按需引入
@@ -50,12 +50,16 @@ Vue.use(XtElementUI)
 | **XtCardItem** | 卡片项组件 |
 | **XtFlexBox** | 弹性布局组件 |
 | **XtGridBox** | 网格布局组件 |
+| **XtGridItem** | 网格项组件 |
 | **XtText** | 文本组件 |
 | **XtTime** | 时间组件（当前时间/倒计时/日期格式化） |
 | **XtInput** | 输入框组件 |
 | **XtConfigProvider** | 全局配置提供器 |
 | **XtMap** | 统一地图组件（支持高德/天地图/百度） |
+| **XtMapProvider** | 地图提供器 |
 | **XtStepPrice** | 阶梯价格组件 |
+| **XtStepPriceItem** | 阶梯价格项组件 |
+| **XtList** | 卡片列表组件 |
 
 ### 🔧 扩展组件
 
@@ -69,8 +73,12 @@ Vue.use(XtElementUI)
 | **XtPage** | 页面组件 |
 | **XtProgress** | 进度条组件 |
 | **XtTabs** | 标签页组件 |
+| **XtTabPane** | 标签页面板组件 |
 | **XtBadge** | 徽标组件 |
 | **XtScrollArrow** | 滚动箭头组件 |
+| **XtTransferTree** | 树形穿梭框组件 |
+| **XtFormSchema** | 表单配置化搜索组件 |
+| **XtFlow** | 审批流程轨迹组件（支持 Flowable 工作流对接） |
 
 ### 📊 图表组件
 
@@ -108,4 +116,3 @@ Vue.use(XtElementUI)
 - **[GitHub 仓库](https://github.com/JobWebNie/xt-element-ui)**
 
 
-# 在 GitHub 新建仓库后

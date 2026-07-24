@@ -9,7 +9,7 @@ if (typeof window !== 'undefined' && typeof global === 'undefined') {
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
-import XtElementUI, { createVirtualScrollData, setTheme } from '../../src/index'
+import XtElementUI, { setTheme } from '../../src/index'
 // 导入项目全局样式
 // import '../../src/styles/css-variables.scss'
 // import '../../src/styles/variables.scss'
@@ -28,7 +28,6 @@ export default ({ Vue, options, router, siteData, isServer }) => {
   if(!isServer) {
     // 使用 xt-element-ui 模块包注册所有组件
     Vue.use(XtElementUI)
-    Vue.prototype.createVirtualScrollData = createVirtualScrollData
 
     // 手动注册 DemoBlock 组件（修复 demo-container 插件注册问题）
     const DemoBlock = require('../../node_modules/vuepress-plugin-demo-container/src/DemoBlock.vue').default

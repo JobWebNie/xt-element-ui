@@ -179,7 +179,7 @@ xt-element-ui/
 │   ├── utils/                # 工具函数
 │   └── index.js              # 组件库入口
 │
-├── examples/                  # 本地开发示例
+├── public/                  # 本地开发示例
 ├── lib/                       # 构建产物（git 忽略）
 │
 ├── .github/                   # GitHub 配置

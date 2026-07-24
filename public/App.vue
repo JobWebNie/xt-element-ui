@@ -62,55 +62,24 @@
           {{ color.label }}
         </xt-button>
       </xt-flex-box>
-      
-      <h4 style="margin-top: 20px;">效果预览</h4>
-      <xt-card>
-        <xt-card-item iconType="icon" icon="el-icon-user" label="知识问答" :value="0" type="primary"></xt-card-item>
-      </xt-card>
-
-      <xt-chart type="bar" :chartData="chartData" style="height: 400px;" />
-
-      <!-- 极简模式 -->
-      <xt-chart type="bar" :chart-data="chartData" simple-mode  style="height: 400px;" />
-
-      <XtCardItem style="margin-top: 10px;" v-for="item in cardList" :key="item.title" :type="item.type" :title="item.title" :diff="item.diff" v-model="item.value" :change="item.change" />
-
-      <h4 style="margin-top: 20px;">虚拟滚动测试（10000条数据）</h4>
-      <xt-table 
-        :height="400"
-        :virtual-scroll="true"
-        :row-init-height="48"
-        :buffer-size="3"
-        :tableData="virtualScrollData"
-        :columns="virtualColumns"
-        :selection="true"
-      />
-      <h4>阶梯价格</h4>
-      <price />
-      <h4>阶梯价格</h4>
-      <XtTabs v-model="activeName">
-        <XtTabPane label="用户管理" name="first">用户管理内容</XtTabPane>
-        <XtTabPane label="配置管理" name="second" disabled>配置管理内容</XtTabPane>
-        <XtTabPane label="角色管理" name="third">角色管理内容</XtTabPane>
-      </XtTabs>
-
-      
     </div>
   </xt-config-provider>
 </template>
 
 <script>
-import { createVirtualScrollData, virtualScrollColumns } from '../src/components/xt-table/virtualScrollData'
-import price from './demo/price.vue'
 export default {
   name: 'App',
   components: {
-    price
   },
   data() {
     return {
       activeName: 'first',
-      cardList: [{title: '卡片标题',diff: 301, value: 123321.889, change: 301, type: 'primary'},{title: '卡片标题',diff: 301, value: 123321.889, change: 301, type: 'success'},{title: '卡片标题',diff: 301, value: 123321.889, change: 301, type: 'warning'},{title: '卡片标题',diff: 301, value: -1232889, change: 301, type: 'danger'}],
+      cardList: [
+        {title: '卡片标题',diff: 301, value: 123321.889, reference: 301, type: 'primary'},
+        {title: '卡片标题',diff: 301, value: 123321.889, reference: 301, type: 'success'},
+        {title: '卡片标题',diff: 301, value: 123321.889, reference: 301, type: 'warning'},
+        {title: '卡片标题',diff: 301, value: -1232889, reference: 301, type: 'danger'}
+      ],
       theme: 'white',
       size: 'small',
       primaryColor: '#1890ff',
@@ -135,9 +104,7 @@ export default {
         { value: 103, name: "宋五" },
         { value: 113, name: "李四" },
         { value: 125, name: "张三" }
-      ],
-      virtualColumns: virtualScrollColumns,
-      virtualScrollData: createVirtualScrollData(10000)
+      ]
     }
   },
   mounted() {

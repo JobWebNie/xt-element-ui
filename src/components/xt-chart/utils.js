@@ -14,16 +14,20 @@ const brandColors = {
   "gas": ["#f39c12", "#e67e22", "#F5C976", "#C28500", "#8C6000"]
 };
 
-// echarts 仅在客户端加载，避免 SSR 编译/渲染报错
 let echarts = null;
+let themesRegistered = false;
 
 function getEcharts() {
   if (!echarts && typeof window !== 'undefined') {
     try {
       echarts = require('echarts');
-      // 注册所有主题
-      for (const key in themeKeys) {
-        echarts.registerTheme(key, themeKeys[key]);
+      
+      // 主题只注册一次
+      if (!themesRegistered) {
+        for (const key in themeKeys) {
+          echarts.registerTheme(key, themeKeys[key]);
+        }
+        themesRegistered = true;
       }
     } catch (e) {
       console.warn('[XtChart] echarts 加载失败:', e.message);
@@ -118,42 +122,11 @@ EchartsUtil.EchartsUtil = {
     }
   },
   grid: {
-    top: "25%",
-    left: "40",
-    right: "15",
-    bottom: "40"
-  },
-  xAxis: {
-    type: "category",
-    boundaryGap: false,
-    axisTick: {
-      show: true,
-      length: 4
-    },
-    axisLabel: {
-      fontSize: 12,
-      interval: 0,
-      formatter: function(value) {
-        return !this.reverse && this.longLable ? value.replace(new RegExp(`(.{${this.longLableSplitNum}})`, "g"), `$1\n`) : value;
-      }
-    }
-  },
-  yAxis: {
-    type: "value",
-    axisTick: {
-      show: false
-    },
-    min: null,
-    max: null,
-    axisLabel: {
-      show: false
-    },
-    splitLine: {
-      lineStyle: {
-        type: "dashed",
-        width: 1
-      }
-    }
+    left: 16,
+    right: 16,
+    top: 40,
+    bottom: 48,
+    containLabel: true
   }
 };
 
@@ -402,11 +375,13 @@ EchartsUtil.init = function(dom, theme, customOption, size) {
   this.currentTheme = useTheme;
   this.currentSize = useSize;
   
-  let themeOption = themeKeys[useTheme];
+  // 使用基础选项配置作为 option 模板
+  // 主题已通过 ec.init(dom, useTheme) 应用，这里不需要再使用 themeOption
+  let baseOption = JSON.parse(JSON.stringify(EchartsUtil.EchartsUtil));
   // 应用字体大小配置
-  themeOption = this.applyFontSize(themeOption, useSize);
+  baseOption = this.applyFontSize(baseOption, useSize);
   
-  const option = this.mergeOptions(themeOption, customOption);
+  const option = this.mergeOptions(baseOption, customOption);
   
   const chart = ec.init(dom, useTheme);
   chart.setOption(option, true);
@@ -465,17 +440,19 @@ EchartsUtil.changeAllTheme = function(newTheme, newSize, primaryColor, brand) {
     }
     
     const newChart = ec.init(dom, newTheme);
-    let themeOption = themeKeys[newTheme];
-    themeOption = EchartsUtil.applyFontSize(themeOption, useSize);
+    
+    // 使用基础选项配置（EchartsUtil.EchartsUtil）作为 option 模板
+    let baseOption = JSON.parse(JSON.stringify(EchartsUtil.EchartsUtil));
+    
+    // 应用字体大小配置
+    baseOption = EchartsUtil.applyFontSize(baseOption, useSize);
     
     // 应用品牌色到图表调色板
     if (brand && brandColors[brand]) {
-      themeOption = JSON.parse(JSON.stringify(themeOption));
-      themeOption.color = brandColors[brand];
+      baseOption.color = brandColors[brand];
     } else if (primaryColor) {
       // 如果没有品牌色但有自定义主色，生成衍生色系
-      themeOption = JSON.parse(JSON.stringify(themeOption));
-      themeOption.color = [
+      baseOption.color = [
         primaryColor,
         EchartsUtil.lightenColor(primaryColor, 30),
         EchartsUtil.lightenColor(primaryColor, 50),
@@ -484,8 +461,8 @@ EchartsUtil.changeAllTheme = function(newTheme, newSize, primaryColor, brand) {
       ];
     }
     
-    const option = EchartsUtil.mergeOptions(themeOption, customOption);
-    
+    const option = EchartsUtil.mergeOptions(baseOption, customOption);
+    console.log('option1', option);
     newChart.setOption(option, true);
     item.chart = newChart;
     item.size = useSize;

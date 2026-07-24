@@ -6,7 +6,7 @@
             <xt-text bold size="large" v-model="value" format="thousand" :type="type" :decimals="0"></xt-text>
             <div style="margin: 5px 0;">
               <xt-text size="small">较昨日</xt-text>
-              <xt-text v-model="change" format="normal" :type="diff > 0 ? 'success' : 'danger'" :suffix="diff > 0 ? '↑' : '↓'"></xt-text> 
+              <xt-text v-model="reference" format="normal" :type="diff > 0 ? 'success' : 'danger'" :suffix="diff > 0 ? '↑' : '↓'"></xt-text> 
             </div>
           </div>
           <div style="height: 100%;">
@@ -25,7 +25,7 @@ export default {
         title: { type: String, default: '' },
         diff: { type: Number, default: 0 },
         value: { type: Number, default: 0 },
-        change: { type: Number, default: 0 },
+        reference: { type: Number, default: 0 },
     },
     data() {
         return {

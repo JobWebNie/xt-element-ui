@@ -31,7 +31,8 @@ const components = [
   'xt-select-tree',
   'xt-upload',
   'xt-transfer-tree',
-  'xt-form-schema'
+  'xt-form-schema',
+  'xt-flow'
 ]
 
 const libDir = path.join(__dirname, '../lib')
