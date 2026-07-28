@@ -30,10 +30,10 @@
       </div>
     </div>
 
-    <!-- 主体区域 -->
-    <div
+    <!-- 主体区域：使用 xt-scroll 作为滚动容器 -->
+    <xt-scroll
       ref="scrollContainer"
-      class="xt-list__body"
+      :class="['xt-list__body', { 'xt-list__body--virtual': virtualScroll }]"
       :style="bodyStyle"
       @scroll="onScroll"
     >
@@ -184,7 +184,7 @@
           {{ loadMoreText }}
         </el-button>
       </div>
-    </div>
+    </xt-scroll>
 
     <!-- 加载状态 -->
     <div v-if="loading" class="xt-list__loading">
@@ -212,11 +212,17 @@
 </template>
 
 <script>
+import XtScroll from '../xt-scroll'
+
 const CARD_ITEM_HEIGHT = 160
 const GROUP_HEADER_HEIGHT = 44
 
 export default {
   name: 'XtList',
+
+  components: {
+    XtScroll
+  },
 
   props: {
     data: { type: Array, default: () => [] },
@@ -547,9 +553,10 @@ export default {
       return group._items.indexOf(item)
     },
 
-    onScroll() {
+    onScroll(e) {
       if (!this.virtualScroll) return
-      this.scrollTop = this.$refs.scrollContainer.scrollTop
+      // xt-scroll 传递的是 { scrollTop, scrollLeft } 对象
+      this.scrollTop = e && e.scrollTop != null ? e.scrollTop : 0
       if (this.rafId) return
       if (typeof requestAnimationFrame === 'undefined') return
       this.rafId = requestAnimationFrame(() => {
@@ -560,18 +567,22 @@ export default {
 
     updateContainerHeight() {
       if (this.$refs.scrollContainer) {
-        this.containerHeight = this.$refs.scrollContainer.clientHeight
+        const scrollCmp = this.$refs.scrollContainer
+        const wrap = scrollCmp.getScrollContainer && scrollCmp.getScrollContainer()
+        this.containerHeight = wrap ? wrap.clientHeight : 0
       }
     },
 
     bindResizeObserver() {
       if (typeof ResizeObserver === 'undefined') return
-      const container = this.$refs.scrollContainer
-      if (!container) return
+      const scrollCmp = this.$refs.scrollContainer
+      if (!scrollCmp) return
+      const wrap = scrollCmp.getScrollContainer && scrollCmp.getScrollContainer()
+      if (!wrap) return
       this.resizeObserver = new ResizeObserver(() => {
         this.updateContainerHeight()
       })
-      this.resizeObserver.observe(container)
+      this.resizeObserver.observe(wrap)
     },
 
     unbindResizeObserver() {
@@ -611,8 +622,8 @@ export default {
 
     // ========== 对外暴露方法 ==========
     scrollToTop() {
-      if (this.$refs.scrollContainer) {
-        this.$refs.scrollContainer.scrollTo({ top: 0, behavior: 'smooth' })
+      if (this.$refs.scrollContainer && this.$refs.scrollContainer.scrollToStart) {
+        this.$refs.scrollContainer.scrollToStart()
       }
     },
 

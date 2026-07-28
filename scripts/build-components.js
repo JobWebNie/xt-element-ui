@@ -26,6 +26,7 @@ const components = [
   'xt-icon',
   'xt-table',
   'xt-list',
+  'xt-scroll',
   'xt-scroll-arrow',
   'xt-page',
   'xt-select-tree',

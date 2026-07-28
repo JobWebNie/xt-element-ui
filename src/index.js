@@ -37,6 +37,7 @@ import XtIcon from './components/xt-icon'    // XtIcon 组件（支持 el-icon /
 import XtTable from './components/xt-table'  // XtTable 组件（基于 ElementUI Table 封装）
 import XtList from './components/xt-list'  // XtList 组件（卡片列表）
 import XtScrollArrow from './components/xt-scroll-arrow'
+import XtScroll from './components/xt-scroll'  // XtScroll 组件（虚拟滚动容器）
 import XtBar from './components/xt-chart/XtBar.vue'
 import XtLine from './components/xt-chart/XtLine.vue'
 import XtPie from './components/xt-chart/XtPie.vue'
@@ -47,6 +48,7 @@ import XtUpload from './components/xt-upload'
 import XtTransferTree from './components/xt-transfer-tree'  // XtTransferTree 组件（树形穿梭框）
 import XtFormSchema from './components/xt-form-schema'  // XtFormSchema 组件（表单配置化搜索）
 import XtFlow from './components/xt-flow'  // XtFlow 组件（审批流程轨迹）
+import Theme from './components/theme'  // Theme 模块（iframe 主题注入工具）
 
 
 const components = [
@@ -74,6 +76,7 @@ const components = [
   XtTable,
   XtList,
   XtScrollArrow,
+  XtScroll,
   XtBar,
   XtLine,
   XtPie,
@@ -154,6 +157,7 @@ export default {
   XtTable,
   XtList,
   XtScrollArrow,
+  XtScroll,
   XtBar,
   XtLine,
   XtPie,
@@ -163,7 +167,8 @@ export default {
   XtUpload,
   XtTransferTree,
   XtFormSchema,
-  XtFlow
+  XtFlow,
+  Theme
 }
 
 // 导出工具函数和变量
@@ -202,6 +207,7 @@ export {
   XtTable,
   XtList,
   XtScrollArrow,
+  XtScroll,
   XtBar,
   XtLine,
   XtChart,
@@ -212,5 +218,6 @@ export {
   XtUpload,
   XtTransferTree,
   XtFormSchema,
-  XtFlow
+  XtFlow,
+  Theme
 }

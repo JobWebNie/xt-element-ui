@@ -80,11 +80,24 @@ export default {
 
 ### setPrimaryColor(color)
 
-设置全局主色调。
+设置全局主色调，同时更新 `--el-color-primary*`（Element UI）和 `--xt-color-primary*`（xt 组件）两套 CSS 变量。
 
 | 参数 | 类型 | 必填 | 说明 |
 |------|------|------|------|
 | `color` | String | 是 | 十六进制颜色值 |
+
+**自动衍生变量**：设置主色后会自动生成以下 Element UI 变量：
+
+| 变量 | 说明 |
+|------|------|
+| `--el-color-primary` | 主色 |
+| `--el-color-primary-light-3` | 主色 +30% 亮度 |
+| `--el-color-primary-light-5` | 主色 +50% 亮度 |
+| `--el-color-primary-light-7` | 主色 +70% 亮度 |
+| `--el-color-primary-light-8` | 主色 +80% 亮度 |
+| `--el-color-primary-light-9` | 主色 +90% 亮度 |
+| `--el-color-primary-dark-2` | 主色 -20% 亮度 |
+| `--el-color-primary-rgb` | 主色 RGB 值 |
 
 ```vue
 <template>
@@ -280,6 +293,7 @@ export default {
 ## 注意事项
 
 1. `setPrimaryColor` 只支持十六进制颜色格式（如 `#1890ff`、`#fff`）
-2. 设置主色调时，会自动生成对应的浅色系列（light-3 到 light-9）
-3. `onConfigChange` 返回的取消订阅函数应在组件销毁时调用，避免内存泄漏
-4. 所有配置修改都会触发 `onConfigChange` 监听器
+2. 设置主色调时，会自动生成对应的浅色系列（light-3 到 light-9）和暗色系列（dark-2）
+3. `setPrimaryColor` 会**同时设置** `--el-*`（Element UI）和 `--xt-*`（xt 组件）两套变量
+4. `onConfigChange` 返回的取消订阅函数应在组件销毁时调用，避免内存泄漏
+5. 所有配置修改都会触发 `onConfigChange` 监听器

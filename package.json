@@ -1,6 +1,6 @@
 {
   "name": "xt-element-ui",
-  "version": "2.2.2",
+  "version": "2.2.3",
   "description": "基于 Vue 2.7 + ElementUI 的企业级组件库，提供丰富的自定义组件和扩展组件",
   "main": "lib/index.common.js",
   "unpkg": "lib/index.umd.min.js",
@@ -15,13 +15,14 @@
     "postinstall": "patch-package"
   },
   "peerDependencies": {
-    "vue": "^2.6.10",
+    "echarts": "^4.0.0",
     "element-ui": "^2.11.1",
-    "echarts": "^4.0.0"
+    "vue": "^2.6.10"
   },
   "devDependencies": {
     "@vue/cli-service": "~4.5.19",
     "babel-plugin-component": "^1.1.1",
+    "raw-loader": "^4.0.2",
     "sass": "^1.56.0",
     "sass-loader": "^10.5.2",
     "vuepress": "^1.9.10",
@@ -31,6 +32,7 @@
   "files": [
     "lib",
     "src/components",
+    "src/components/theme",
     "src/styles",
     "src/utils",
     "src/index.js",

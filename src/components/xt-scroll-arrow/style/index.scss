@@ -16,13 +16,24 @@
 
   &__content {
     flex: 1;
-    overflow: auto;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+    overflow: hidden;
 
-    &::-webkit-scrollbar {
-      display: none;
+    // 虚拟滚动模式下的内容容器
+    &--virtual {
+      width: 100%;
     }
+  }
+
+  // 虚拟滚动 item
+  &__vitem {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 8px;
+    box-sizing: border-box;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   &__btn {

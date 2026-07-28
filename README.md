@@ -1,244 +1,192 @@
-# XT-Element-UI
+# 🚀 XT-Element-UI：基于 Vue 2.7 + ElementUI 的企业级组件库
 
-> 基于 Vue 2.7 + ElementUI 的企业级组件库
-
-<div align="center">
-
-[![npm](https://img.shields.io/npm/v/xt-element-ui.svg?style=flat-square)](https://www.npmjs.com/package/xt-element-ui)
-[![npm](https://img.shields.io/npm/dm/xt-element-ui.svg?style=flat-square)](https://www.npmjs.com/package/xt-element-ui)
-[![license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](./LICENSE)
-[![Node.js](https://img.shields.io/badge/node-%3E%3D12.0.0-green.svg?style=flat-square)](package.json)
-[![Vue](https://img.shields.io/badge/vue-2.7.x-brightgreen.svg?style=flat-square)](https://vuejs.org)
-
-📖 [在线文档](https://JobWebNie.github.io/xt-element-ui/) ·
-🐛 [问题反馈](https://github.com/JobWebNie/xt-element-ui/issues) ·
-💡 [功能建议](https://github.com/JobWebNie/xt-element-ui/issues/new?labels=enhancement)
-
-</div>
+> 30+ 高质量组件，开箱即用，让你的企业级开发效率翻倍！
 
 ---
 
-## ✨ 特性
+## 🔥 为什么选择 XT-Element-UI？
 
-- **🎯 丰富的组件**：提供 15+ 组件，覆盖布局、表单、数据展示、图表等常见场景
-- **📦 开箱即用**：基于 ElementUI 构建，与现有 ElementUI 项目无缝集成
-- **🪶 按需引入**：完整的 npm 包架构，支持按需引入，减小打包体积
-- **🌓 主题系统**：支持亮色/暗色主题切换，支持自定义主色调
-- **📐 响应式设计**：组件支持多种尺寸配置，适配不同屏幕
-- **📊 图表能力**：内置 ECharts 封装，提供柱状图、折线图、饼图、混合图
-- **⚡️ 虚拟滚动**：表格组件支持虚拟滚动，轻松应对万级数据
+在日常的企业级开发中，你是否遇到过以下痛点：
+
+- 🎨 ElementUI 原生组件样式不够精致，二次开发成本高
+- 📊 图表组件与业务系统耦合度高，复用困难
+- 🌓 主题切换需要大量 CSS 覆盖，代码冗余
+- 🔄 审批流程轨迹展示丑陋，难以定制
+
+**XT-Element-UI** 正是为解决这些痛点而生！基于 Vue 2.7 + ElementUI 构建，提供 30+ 企业级组件，覆盖布局、表单、数据展示、图表、工作流等常见场景。
 
 ---
 
-## 🚀 快速开始
+## ✨ 核心亮点
+
+### 1️⃣ 丰富的组件体系
+
+```
+├── 🎨 基础组件 (13个)
+│   ├── XtButton / XtCard / XtFlexBox
+│   ├── XtInput / XtText / XtTime
+│   ├── XtGridBox / XtGridItem
+│   └── XtStepPrice / XtList ...
+├── 🔧 扩展组件 (15个)
+│   ├── XtTable (虚拟滚动)
+│   ├── XtSelectTree / XtTransferTree
+│   ├── XtUpload (图片预览)
+│   └── XtFlow (审批流程轨迹) ...
+└── 📊 图表组件 (5个)
+    ├── XtBar / XtLine / XtPie
+    └── XtMulti (组合图)
+```
+
+### 2️⃣ 开箱即用的主题系统
+
+无需复杂配置，轻松切换明暗主题：
+
+```vue
+<template>
+  <xt-config-provider 
+    tag="template"
+    :proxyElement="htmlElement"
+    :theme="theme"
+    :primaryColor="primaryColor"
+    :injectBackground="true"
+  >
+    <your-app />
+  </xt-config-provider>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      theme: 'white',      // 'white' | 'dark'
+      primaryColor: '#1890ff',
+      htmlElement: null
+    }
+  },
+  mounted() {
+    this.htmlElement = document.querySelector('html')
+  },
+  methods: {
+    changeTheme(newTheme) {
+      this.theme = newTheme
+    }
+  }
+}
+</script>
+```
+
+### 3️⃣ 优雅的审批流程轨迹
+
+`XtFlow` 组件专为企业级审批场景设计：
+
+- 📐 纯纵向布局，规避行内拓扑图的丑陋
+- 📦 自动折叠长审批链，控制页面高度
+- ✅ 区分通过/驳回/待办/转办四种状态
+- 🎯 原生对接 Flowable 工作流后端数据
+
+```html
+<xt-flow 
+  :data="flowData" 
+  :rounded="'square'"
+  @node-click="handleNodeClick"
+>
+  <template #node-action="{ node }">
+    <el-button size="mini">查看详情</el-button>
+  </template>
+</xt-flow>
+```
+
+### 4️⃣ 强大的图表能力
+
+内置 ECharts 封装，支持柱状图、折线图、饼图、组合图：
+
+```html
+<xt-bar 
+  :data="chartData" 
+  :theme="theme"
+  :size="'medium'"
+/>
+
+<xt-multi 
+  :data="multiData" 
+  :type="['line', 'bar']"
+/>
+```
+
+### 5️⃣ 灵活的布局组件
+
+```html
+<!-- 弹性布局 -->
+<xt-flex-box :gap="'16px'" :direction="'row'" :align="'center'">
+  <xt-button>按钮1</xt-button>
+  <xt-button>按钮2</xt-button>
+</xt-flex-box>
+
+<!-- 网格布局 -->
+<xt-grid-box :cols="4" :gap="'16px'">
+  <xt-grid-item v-for="item in list" :key="item.id">
+    <xt-card-item :title="item.title" :value="item.value" />
+  </xt-grid-item>
+</xt-grid-box>
+```
+
+---
+
+## 📦 快速开始
 
 ### 安装
 
 ```bash
-# 使用 npm
 npm install xt-element-ui --save
-
-# 使用 yarn
-yarn add xt-element-ui
 ```
-
-> 前置依赖：Vue 2.6+ 或 Vue 2.7+，ElementUI 2.15+
 
 ### 全局引入
 
 ```javascript
 import Vue from 'vue'
-import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
-
 import XtElementUI from 'xt-element-ui'
 import 'xt-element-ui/lib/index.css'
 
-Vue.use(ElementUI)
 Vue.use(XtElementUI)
-
-// 配置选项（可选）
-Vue.use(XtElementUI, {
-  theme: 'dark',         // 主题：'white' 或 'dark'
-  size: 'medium',        // 组件尺寸：'small' | 'medium' | 'large'
-  primaryColor: '#1890ff' // 主色调
-})
 ```
 
 ### 按需引入
 
 ```javascript
-import { XtButton, XtFlexBox, XtTable, XtBar } from 'xt-element-ui'
-import 'xt-element-ui/lib/index.css'
+import XtButton from 'xt-element-ui/lib/xt-button'
+import XtCard from 'xt-element-ui/lib/xt-card'
+import 'xt-element-ui/lib/xt-button/style.css'
+import 'xt-element-ui/lib/xt-card/style.css'
 
 Vue.component('XtButton', XtButton)
-Vue.component('XtFlexBox', XtFlexBox)
-Vue.component('XtTable', XtTable)
-Vue.component('XtBar', XtBar)
+Vue.component('XtCard', XtCard)
 ```
 
 ---
 
-## 📦 组件列表
+## 🌐 资源链接
 
-所有组件统一以 `Xt` 开头命名，不再区分双架构：
-
-| 组件 | 说明 |
+| 资源 | 链接 |
 |------|------|
-| **XtButton** | 按钮组件 |
-| **XtCard** | 卡片组件 |
-| **XtCardItem** | 卡片项组件 |
-| **XtFlexBox** | 弹性布局组件 |
-| **XtGridBox** | 网格布局组件 |
-| **XtGridItem** | 网格子项组件 |
-| **XtText** | 文本组件 |
-| **XtInput** | 输入框组件 |
-| **XtConfigProvider** | 全局配置提供器 |
-| **XtTime** | 时间组件（当前时间/倒计时/日期格式化） |
-| **XtStepPrice** | 阶梯价格组件 |
-| **XtStepPriceItem** | 阶梯价格子项组件 |
-| **XtMap** | 统一地图组件（支持高德/天地图/百度） |
-| **XtMapProvider** | 地图全局配置提供器 |
-| **XtDatePicker** | 日期选择器（支持季度选择） |
-| **XtIcon** | 图标组件（支持 el-icon/SVG/自定义字体） |
-| **XtTable** | 扩展表格（含虚拟滚动） |
-| **XtChart** | 图表容器（含 XtBar/XtLine/XtPie/XtMulti） |
-| **XtSelectTree** | 下拉选择树组件 |
-| **XtUpload** | 上传组件（支持图片预览） |
-| **XtPage** | 页面组件 |
-| **XtProgress** | 进度条组件 |
-| **XtTabs** | 标签页组件 |
-| **XtBadge** | 徽标组件 |
-
+| 📖 在线文档 | https://JobWebNie.github.io/xt-element-ui/ |
+| 🐛 GitHub 仓库 | https://github.com/JobWebNie/xt-element-ui |
+| 📦 npm 主页 | https://www.npmjs.com/package/xt-element-ui |
+| 📝 更新日志 | https://github.com/JobWebNie/xt-element-ui/blob/main/CHANGELOG.md |
 
 ---
 
-## 🛠 工具函数
+## 🤝 贡献指南
 
-组件库通过 `this.$xt` 全局挂载以下工具方法：
-
-```javascript
-// 设置主题（white / dark）
-this.$xt.setTheme('dark')
-
-// 设置全局组件尺寸（small / medium / large）
-this.$xt.setSize('large')
-
-// 设置主色调
-this.$xt.setPrimaryColor('#52c41a')
-
-// 获取当前配置
-console.log(this.$xt.getConfig())
-```
+欢迎提交 Issue 和 Pull Request！如果你有好的组件想法或发现 Bug，欢迎参与贡献。
 
 ---
 
-## 📁 项目结构
+## 📄 License
 
-```
-xt-element-ui/
-├── docs/                      # VuePress 文档
-│   ├── README.md             # 文档首页
-│   ├── .vuepress/            # VuePress 配置
-│   │   ├── config.js         # 主题、导航、侧边栏配置
-│   │   └── enhanceApp.js     # 应用增强
-│   └── components/            # 各组件文档
-│       ├── base/             # 组件文档
-│       └── utils/            # 工具类文档
-│
-├── src/                       # 组件源码
-│   ├── components/           # 组件目录（统一 Xt 前缀命名）
-│   │   ├── xt-button/        # 按钮组件
-│   │   ├── xt-card/          # 卡片组件
-│   │   ├── xt-card-item/     # 卡片项组件
-│   │   ├── xt-flex-box/      # 弹性布局组件
-│   │   ├── xt-grid-box/      # 网格布局组件
-│   │   ├── xt-grid-item/     # 网格子项组件
-│   │   ├── xt-text/          # 文本组件
-│   │   ├── xt-time/          # 时间组件
-│   │   ├── xt-input/         # 输入框组件
-│   │   ├── xt-config-provider/ # 配置提供者
-│   │   ├── xt-date-picker/   # 日期选择器
-│   │   ├── xt-icon/          # 图标组件
-│   │   ├── xt-table/         # 扩展表格（含虚拟滚动）
-│   │   ├── xt-chart/         # 图表组件（XtBar/XtLine/XtPie/XtMulti）
-│   │   ├── xt-select-tree/   # 下拉选择树
-│   │   ├── xt-upload/        # 上传组件
-│   │   ├── xt-page/          # 页面组件
-│   │   ├── xt-step-price/    # 阶梯价格组件
-│   │   ├── xt-step-price-item/ # 阶梯价格子项组件
-│   │   ├── xt-map/           # 统一地图组件
-│   │   ├── xt-map-provider/  # 地图配置提供者
-│   │   ├── xt-progress/      # 进度条组件
-│   │   ├── xt-tabs/          # 标签页组件
-│   │   ├── xt-badge/         # 徽标组件
-│   │   └── xt-layout/        # 布局组件
-│   │
-│   ├── config/               # 配置模块
-│   ├── styles/               # 全局样式与变量
-│   ├── utils/                # 工具函数
-│   └── index.js              # 组件库入口
-│
-├── public/                  # 本地开发示例
-├── lib/                       # 构建产物（git 忽略）
-│
-├── .github/                   # GitHub 配置
-│   └── workflows/            # CI/CD 工作流
-│       ├── deploy-docs.yml   # 自动部署文档到 GitHub Pages
-│       └── publish-npm.yml   # 自动发布 npm 包
-│
-├── package.json               # 项目配置
-├── .gitignore                 # Git 忽略文件
-├── README.md                  # 项目说明
-├── CHANGELOG.md               # 更新日志
-├── CONTRIBUTING.md            # 贡献指南
-└── LICENSE                    # 许可证（MIT）
-```
+MIT License
 
 ---
 
-## 🌐 浏览器支持
+> 如果觉得这个组件库对你有帮助，欢迎 ⭐ Star 支持一下！你的支持是我们持续更新的动力！
 
-| Chrome | Firefox | Safari | Edge |
-|--------|---------|--------|------|
-| ✅ 最新 2 个版本 | ✅ 最新 2 个版本 | ✅ 10.1+ | ✅ 15+ |
-
----
-
-## 📚 更多文档
-
-- 📖 [完整在线文档](https://JobWebNie.github.io/xt-element-ui/)
-- 📋 [更新日志](./CHANGELOG.md)
-- 🤝 [贡献指南](./CONTRIBUTING.md)
-
----
-
-## 💪 开发
-
-```bash
-# 1. 克隆项目
-git clone https://github.com/JobWebNie/xt-element-ui.git
-cd xt-element-ui
-
-# 2. 安装依赖
-npm install
-
-# 3. 启动本地开发服务器
-npm run dev
-
-# 4. 启动文档开发服务器（本地预览文档）
-npm run docs:dev
-
-# 5. 构建组件库
-npm run lib
-
-# 6. 构建文档（用于部署）
-npm run docs:build
-# 产物位于 docs/.vuepress/dist/
-```
-
----
-
-## 📄 许可证
-
-[MIT License](./LICENSE) © 2026 XT-Element-UI Contributors
+#Vue #ElementUI #组件库 #前端 #企业级

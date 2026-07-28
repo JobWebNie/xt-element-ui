@@ -1,4 +1,4 @@
-滚动箭头组件用于在内容溢出时显示滚动箭头，支持水平和垂直方向的滚动。
+滚动箭头组件用于在内容溢出时显示滚动箭头，支持水平和垂直方向的滚动。基于 `XtScroll` 封装，支持虚拟滚动模式处理海量数据。
 
 ## 基本用法
 
@@ -24,11 +24,27 @@
 | `autoHide` | Boolean | true | - | 是否自动隐藏箭头（滚动到边界时隐藏） |
 | `height` | String / Number | - | - | 容器高度 |
 | `width` | String / Number | - | - | 容器宽度 |
+| `v-scroll` | Boolean | false | - | 是否启用虚拟滚动 |
+| `v-scroll-data` | Array | [] | - | 虚拟滚动数据源 |
+| `item-size` | Number | 50 | - | 每个 item 的固定尺寸（px） |
+| `key-field` | String | 'id' | - | item 的唯一键字段名 |
+| `buffer-size` | Number | 5 | - | 预渲染缓冲区大小 |
+| `v-scroll-loading` | Boolean | false | - | 虚拟滚动加载状态 |
+| `load-more` | Boolean | false | - | 是否启用加载更多 |
+| `load-more-text` | String | '加载更多' | - | 加载更多按钮文字 |
+| `load-more-loading` | Boolean | false | - | 加载更多按钮加载状态 |
+
+## 插槽说明
+| 插槽名 | 作用域 | 说明 |
+|--------|--------|------|
+| `default` | — | 非虚拟滚动模式下的默认内容 |
+| `vitem` | `{ item, index }` | 虚拟滚动模式下每个 item 的渲染内容 |
 
 ## 事件说明
 | 事件名称 | 说明 | 参数 |
 |----------|------|------|
 | `scroll` | 滚动时触发 | `scrollContainer` - 滚动容器元素 |
+| `load-more` | 触发加载更多 | — |
 
 ## 示例
 
@@ -152,5 +168,75 @@ export default {
     </div>
   </XtScrollArrow>
 </template>
+```
+:::
+
+### 虚拟滚动（水平）
+
+::: demo 虚拟滚动（水平）—— 渲染 5000 条数据
+```vue
+<template>
+  <XtScrollArrow
+    direction="horizontal"
+    :v-scroll="true"
+    :v-scroll-data="tagData"
+    :item-size="120"
+  >
+    <template #vitem="{ item }">
+      <div style="width: 100px; height: 40px; display: flex; align-items: center; justify-content: center; background: #ecf5ff; border-radius: 4px; margin: 0 4px; color: #409eff; font-size: 13px;">
+        {{ item.label }}
+      </div>
+    </template>
+  </XtScrollArrow>
+</template>
+<script>
+export default {
+  data() {
+    return {
+      tagData: Array.from({ length: 5000 }, (_, i) => ({
+        id: i,
+        label: `标签 ${i + 1}`
+      }))
+    }
+  }
+}
+</script>
+```
+:::
+
+### 虚拟滚动（垂直）
+
+::: demo 虚拟滚动（垂直）—— 渲染 5000 条数据
+```vue
+<template>
+  <XtScrollArrow
+    direction="vertical"
+    :height="200"
+    :v-scroll="true"
+    :v-scroll-data="listData"
+    :item-size="48"
+  >
+    <template #vitem="{ item, index }">
+      <div style="height: 48px; display: flex; align-items: center; padding: 0 12px; border-bottom: 1px solid #ebeef5; gap: 8px;">
+        <span style="color: #909399; font-size: 12px;">{{ index + 1 }}</span>
+        <span>{{ item.name }}</span>
+        <span style="color: #909399; font-size: 12px; margin-left: auto;">{{ item.desc }}</span>
+      </div>
+    </template>
+  </XtScrollArrow>
+</template>
+<script>
+export default {
+  data() {
+    return {
+      listData: Array.from({ length: 5000 }, (_, i) => ({
+        id: i,
+        name: `用户 ${i + 1}`,
+        desc: `部门 ${(i % 10) + 1}`
+      }))
+    }
+  }
+}
+</script>
 ```
 :::

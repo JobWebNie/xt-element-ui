@@ -1,35 +1,59 @@
 <template>
   <div class="xt-scroll-arrow" :class="[`xt-scroll-arrow--${direction}`]" :style="containerStyle">
-    <div 
-      v-if="showLeftArrow" 
+    <div
+      v-if="showLeftArrow"
       class="xt-scroll-arrow__btn xt-scroll-arrow__btn--left"
       @click="scrollLeft"
     >
       <i class="el-icon-arrow-left"></i>
     </div>
 
-    <div ref="scrollContainer" class="xt-scroll-arrow__content" @scroll="handleScroll" @click="handleClick">
-      <slot></slot>
-    </div>
-
-    <div 
-      v-if="showRightArrow" 
-      class="xt-scroll-arrow__btn xt-scroll-arrow__btn--right"
-      @click="scrollRight"
-    >
-      <i class="el-icon-arrow-right"></i>
-    </div>
-
-    <div 
-      v-if="showTopArrow && direction === 'vertical'" 
+    <div
+      v-if="showTopArrow && direction === 'vertical'"
       class="xt-scroll-arrow__btn xt-scroll-arrow__btn--top"
       @click="scrollTop"
     >
       <i class="el-icon-arrow-up"></i>
     </div>
 
-    <div 
-      v-if="showBottomArrow && direction === 'vertical'" 
+    <!-- 使用 xt-scroll 作为滚动容器 -->
+    <xt-scroll
+      ref="scrollRef"
+      :class="['xt-scroll-arrow__content', scrollClass]"
+      :v-scroll="vScroll"
+      :data="vScrollData"
+      :item-size="itemSize"
+      :key-field="keyField"
+      :buffer-size="bufferSize"
+      :scroll-direction="direction"
+      :loading="vScrollLoading"
+      :load-more="loadMore"
+      :load-more-text="loadMoreText"
+      :load-more-loading="loadMoreLoading"
+      @scroll="onScroll"
+      @load-more="$emit('load-more')"
+    >
+      <!-- 虚拟滚动模式：使用 item 插槽 -->
+      <template v-if="vScroll" #item="{ item, index }">
+        <slot name="vitem" :item="item" :index="index">
+          <div class="xt-scroll-arrow__vitem">{{ item }}</div>
+        </slot>
+      </template>
+
+      <!-- 非虚拟滚动模式：默认插槽 -->
+      <slot v-else></slot>
+    </xt-scroll>
+
+    <div
+      v-if="showRightArrow"
+      class="xt-scroll-arrow__btn xt-scroll-arrow__btn--right"
+      @click="scrollRight"
+    >
+      <i class="el-icon-arrow-right"></i>
+    </div>
+
+    <div
+      v-if="showBottomArrow && direction === 'vertical'"
       class="xt-scroll-arrow__btn xt-scroll-arrow__btn--bottom"
       @click="scrollBottom"
     >
@@ -39,22 +63,36 @@
 </template>
 
 <script>
+import XtScroll from '../xt-scroll'
+
 export default {
   name: 'XtScrollArrow',
+
+  components: {
+    XtScroll
+  },
+
   props: {
+    // ========== 滚动方向 ==========
     direction: {
       type: String,
       default: 'horizontal',
       validator: (val) => ['horizontal', 'vertical'].includes(val)
     },
+
+    // ========== 滚动步长 ==========
     scrollStep: {
       type: Number,
       default: 100
     },
+
+    // ========== 箭头显示 ==========
     autoHide: {
       type: Boolean,
       default: true
     },
+
+    // ========== 容器尺寸 ==========
     height: {
       type: [String, Number],
       default: ''
@@ -63,6 +101,8 @@ export default {
       type: [String, Number],
       default: ''
     },
+
+    // ========== 模式 ==========
     appendMode: {
       type: Boolean,
       default: false
@@ -70,16 +110,65 @@ export default {
     clickMode: {
       type: Boolean,
       default: false
+    },
+
+    // ========== 虚拟滚动配置 ==========
+    /** 是否启用虚拟滚动 */
+    vScroll: {
+      type: Boolean,
+      default: false
+    },
+    /** 虚拟滚动数据源 */
+    vScrollData: {
+      type: Array,
+      default: () => []
+    },
+    /** 每个 item 的固定尺寸（px） */
+    itemSize: {
+      type: Number,
+      default: 50
+    },
+    /** item 的唯一键字段名 */
+    keyField: {
+      type: String,
+      default: 'id'
+    },
+    /** 预渲染缓冲区大小 */
+    bufferSize: {
+      type: Number,
+      default: 5
+    },
+    /** 虚拟滚动加载状态 */
+    vScrollLoading: {
+      type: Boolean,
+      default: false
+    },
+
+    // ========== 加载更多 ==========
+    loadMore: {
+      type: Boolean,
+      default: false
+    },
+    loadMoreText: {
+      type: String,
+      default: '加载更多'
+    },
+    loadMoreLoading: {
+      type: Boolean,
+      default: false
     }
   },
+
   data() {
     return {
       showLeftArrow: false,
       showRightArrow: false,
       showTopArrow: false,
-      showBottomArrow: false
+      showBottomArrow: false,
+      mutationObserver: null
     }
   },
+
   computed: {
     containerStyle() {
       const style = {}
@@ -90,27 +179,44 @@ export default {
         style.width = typeof this.width === 'number' ? `${this.width}px` : this.width
       }
       return style
+    },
+    scrollClass() {
+      return this.vScroll ? 'xt-scroll-arrow__content--virtual' : ''
     }
   },
+
   watch: {
     direction() {
       this.$nextTick(() => {
         this.checkScroll()
       })
+    },
+    vScrollData: {
+      handler() {
+        this.$nextTick(() => {
+          this.checkScroll()
+        })
+      }
     }
   },
+
   mounted() {
     this.$nextTick(() => {
       this.checkScroll()
     })
     this.addResizeObserver()
-    this.addMutationObserver()
+    if (!this.vScroll) {
+      this.addMutationObserver()
+    }
   },
+
   beforeDestroy() {
     this.removeResizeObserver()
     this.removeMutationObserver()
   },
+
   methods: {
+    // ========== 尺寸监听 ==========
     addResizeObserver() {
       if (typeof ResizeObserver !== 'undefined') {
         this.resizeObserver = new ResizeObserver(() => {
@@ -118,17 +224,19 @@ export default {
             this.checkScroll()
           })
         })
-        const container = this.$refs.scrollContainer
+        const container = this.$el
         if (container) {
           this.resizeObserver.observe(container)
         }
       }
     },
+
     removeResizeObserver() {
       if (this.resizeObserver) {
         this.resizeObserver.disconnect()
       }
     },
+
     addMutationObserver() {
       if (typeof MutationObserver !== 'undefined') {
         this.mutationObserver = new MutationObserver(() => {
@@ -139,28 +247,37 @@ export default {
             }
           })
         })
-        const container = this.$refs.scrollContainer
+        const container = this.$refs.scrollRef
         if (container) {
-          this.mutationObserver.observe(container, {
-            childList: true,
-            subtree: true
-          })
+          const wrap = container.getScrollContainer && container.getScrollContainer()
+          if (wrap) {
+            this.mutationObserver.observe(wrap, {
+              childList: true,
+              subtree: true
+            })
+          }
         }
       }
     },
+
     removeMutationObserver() {
       if (this.mutationObserver) {
         this.mutationObserver.disconnect()
       }
     },
+
+    // ========== 滚动检测 ==========
     checkScroll() {
-      const container = this.$refs.scrollContainer
-      if (!container) return
+      const scrollRef = this.$refs.scrollRef
+      if (!scrollRef) return
+
+      const wrap = scrollRef.getScrollContainer && scrollRef.getScrollContainer()
+      if (!wrap) return
 
       if (this.direction === 'horizontal') {
-        const scrollLeft = container.scrollLeft
-        const scrollWidth = container.scrollWidth
-        const clientWidth = container.clientWidth
+        const scrollLeft = wrap.scrollLeft
+        const scrollWidth = wrap.scrollWidth
+        const clientWidth = wrap.clientWidth
         const maxScroll = scrollWidth - clientWidth
 
         this.showTopArrow = false
@@ -168,15 +285,15 @@ export default {
 
         if (this.autoHide) {
           this.showLeftArrow = scrollLeft > 0
-          this.showRightArrow = maxScroll > 0 && scrollLeft < maxScroll
+          this.showRightArrow = maxScroll > 0 && scrollLeft < maxScroll - 1
         } else {
           this.showLeftArrow = maxScroll > 0
           this.showRightArrow = maxScroll > 0
         }
       } else {
-        const scrollTop = container.scrollTop
-        const scrollHeight = container.scrollHeight
-        const clientHeight = container.clientHeight
+        const scrollTop = wrap.scrollTop
+        const scrollHeight = wrap.scrollHeight
+        const clientHeight = wrap.clientHeight
         const maxScroll = scrollHeight - clientHeight
 
         this.showLeftArrow = false
@@ -184,77 +301,77 @@ export default {
 
         if (this.autoHide) {
           this.showTopArrow = scrollTop > 0
-          this.showBottomArrow = maxScroll > 0 && scrollTop < maxScroll
+          this.showBottomArrow = maxScroll > 0 && scrollTop < maxScroll - 1
         } else {
           this.showTopArrow = maxScroll > 0
           this.showBottomArrow = maxScroll > 0
         }
       }
     },
-    handleScroll() {
+
+    onScroll() {
       this.checkScroll()
-      this.$emit('scroll', this.$refs.scrollContainer)
+      this.$emit('scroll', this.$refs.scrollRef)
     },
-    handleClick(e) {
-      if (!this.clickMode) return
-      const container = this.$refs.scrollContainer
-      if (!container) return
-      
-      const target = e.target
-      if (!target || target === container) return
-      
-      const containerRect = container.getBoundingClientRect()
-      const targetRect = target.getBoundingClientRect()
-      
-      const isVisible = (
-        targetRect.left >= containerRect.left &&
-        targetRect.right <= containerRect.right &&
-        targetRect.top >= containerRect.top &&
-        targetRect.bottom <= containerRect.bottom
-      )
-      
-      if (!isVisible) {
-        if (this.direction === 'horizontal') {
-          const scrollLeft = target.offsetLeft - (container.clientWidth - targetRect.width) / 2
-          container.scrollTo({ left: scrollLeft, behavior: 'smooth' })
-        } else {
-          const scrollTop = target.offsetTop - (container.clientHeight - targetRect.height) / 2
-          container.scrollTo({ top: scrollTop, behavior: 'smooth' })
-        }
-      }
-    },
+
+    // ========== 滚动操作 ==========
     scrollLeft() {
-      const container = this.$refs.scrollContainer
-      if (container) {
-        container.scrollBy({ left: -this.scrollStep, behavior: 'smooth' })
-      }
+      this._scrollBy(-this.scrollStep)
     },
+
     scrollRight() {
-      const container = this.$refs.scrollContainer
-      if (container) {
-        container.scrollBy({ left: this.scrollStep, behavior: 'smooth' })
-      }
+      this._scrollBy(this.scrollStep)
     },
+
     scrollTop() {
-      const container = this.$refs.scrollContainer
-      if (container) {
-        container.scrollBy({ top: -this.scrollStep, behavior: 'smooth' })
-      }
+      this._scrollBy(-this.scrollStep, 'vertical')
     },
+
     scrollBottom() {
-      const container = this.$refs.scrollContainer
-      if (container) {
-        container.scrollBy({ top: this.scrollStep, behavior: 'smooth' })
+      this._scrollBy(this.scrollStep, 'vertical')
+    },
+
+    _scrollBy(delta, dir) {
+      const direction = dir || this.direction
+      const scrollRef = this.$refs.scrollRef
+      if (!scrollRef) return
+
+      const wrap = scrollRef.getScrollContainer && scrollRef.getScrollContainer()
+      if (!wrap) return
+
+      if (direction === 'horizontal') {
+        wrap.scrollBy({ left: delta, behavior: 'smooth' })
+      } else {
+        wrap.scrollBy({ top: delta, behavior: 'smooth' })
       }
     },
+
     scrollToEnd() {
-      const container = this.$refs.scrollContainer
-      if (!container) return
+      const scrollRef = this.$refs.scrollRef
+      if (!scrollRef) return
+      const wrap = scrollRef.getScrollContainer && scrollRef.getScrollContainer()
+      if (!wrap) return
+
       if (this.direction === 'horizontal') {
-        container.scrollTo({ left: container.scrollWidth, behavior: 'smooth' })
+        wrap.scrollTo({ left: wrap.scrollWidth, behavior: 'smooth' })
       } else {
-        container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' })
+        wrap.scrollTo({ top: wrap.scrollHeight, behavior: 'smooth' })
       }
+    },
+
+    // ========== 对外暴露方法 ==========
+    /** 获取滚动位置 */
+    getScrollPos() {
+      const scrollRef = this.$refs.scrollRef
+      if (!scrollRef) return 0
+      const wrap = scrollRef.getScrollContainer && scrollRef.getScrollContainer()
+      if (!wrap) return 0
+      return this.direction === 'horizontal' ? wrap.scrollLeft : wrap.scrollTop
+    },
+
+    /** 获取 xt-scroll 组件实例 */
+    getScrollInstance() {
+      return this.$refs.scrollRef
     }
   }
 }

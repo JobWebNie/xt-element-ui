@@ -1,0 +1,607 @@
+/* ============================================================
+ * XT-Element-UI Element UI 组件样式覆盖
+ * 用于注入到子系统 iframe 的 <head> 中
+ *
+ * 设计原则：
+ *   1. 覆盖 Element UI 编译后的固定颜色值，使其使用 CSS 变量
+ *   2. 使用 !important 确保覆盖编译后的样式
+ *   3. 子系统无需任何改造，注入此 CSS 后主题变量即生效
+ *   4. 覆盖范围：所有核心颜色属性（背景、文字、边框、主色）
+ * ============================================================ */
+
+/* ==================== Button 按钮 ==================== */
+.el-button--primary {
+  background-color: var(--el-color-primary) !important;
+  border-color: var(--el-color-primary) !important;
+  color: var(--el-color-white) !important;
+}
+.el-button--primary:hover,
+.el-button--primary:focus {
+  background-color: var(--el-color-primary-light-3) !important;
+  border-color: var(--el-color-primary-light-3) !important;
+}
+.el-button--primary:active {
+  background-color: var(--el-color-primary-dark-2) !important;
+  border-color: var(--el-color-primary-dark-2) !important;
+}
+.el-button--primary.is-plain {
+  background-color: var(--el-color-primary-light-9) !important;
+  border-color: var(--el-color-primary-light-5) !important;
+  color: var(--el-color-primary) !important;
+}
+.el-button--primary.is-plain:hover,
+.el-button--primary.is-plain:focus {
+  background-color: var(--el-color-primary) !important;
+  border-color: var(--el-color-primary) !important;
+  color: var(--el-color-white) !important;
+}
+.el-button--primary.is-disabled,
+.el-button--primary.is-disabled:hover {
+  background-color: var(--el-color-primary-light-5) !important;
+  border-color: var(--el-color-primary-light-5) !important;
+}
+
+/* 成功按钮 */
+.el-button--success {
+  background-color: var(--el-color-success) !important;
+  border-color: var(--el-color-success) !important;
+}
+.el-button--success.is-plain {
+  color: var(--el-color-success) !important;
+  border-color: var(--el-color-success-light-5) !important;
+  background-color: var(--el-color-success-light-9) !important;
+}
+
+/* 警告按钮 */
+.el-button--warning {
+  background-color: var(--el-color-warning) !important;
+  border-color: var(--el-color-warning) !important;
+}
+.el-button--warning.is-plain {
+  color: var(--el-color-warning) !important;
+  border-color: var(--el-color-warning-light-5) !important;
+  background-color: var(--el-color-warning-light-9) !important;
+}
+
+/* 危险按钮 */
+.el-button--danger {
+  background-color: var(--el-color-danger) !important;
+  border-color: var(--el-color-danger) !important;
+}
+.el-button--danger.is-plain {
+  color: var(--el-color-danger) !important;
+  border-color: var(--el-color-danger-light-5) !important;
+  background-color: var(--el-color-danger-light-9) !important;
+}
+
+/* 信息按钮 */
+.el-button--info {
+  background-color: var(--el-color-info) !important;
+  border-color: var(--el-color-info) !important;
+}
+.el-button--info.is-plain {
+  color: var(--el-color-info) !important;
+  border-color: var(--el-color-info-light-5) !important;
+  background-color: var(--el-color-info-light-9) !important;
+}
+
+/* 默认按钮 */
+.el-button--default {
+  background-color: var(--el-bg-color) !important;
+  border-color: var(--el-border-color) !important;
+  color: var(--el-text-color-regular) !important;
+}
+.el-button--default:hover {
+  color: var(--el-color-primary) !important;
+  border-color: var(--el-color-primary-light-5) !important;
+  background-color: var(--el-color-primary-light-9) !important;
+}
+
+/* 文字按钮 */
+.el-button--text {
+  color: var(--el-color-primary) !important;
+}
+
+/* ==================== Input 输入框 ==================== */
+.el-input__inner {
+  background-color: var(--el-bg-color) !important;
+  border-color: var(--el-border-color) !important;
+  color: var(--el-text-color-regular) !important;
+}
+.el-input__inner:hover {
+  border-color: var(--el-border-color-dark) !important;
+}
+.el-input__inner:focus {
+  border-color: var(--el-color-primary) !important;
+}
+.el-input__inner::placeholder {
+  color: var(--el-text-color-placeholder) !important;
+}
+.el-input.is-disabled .el-input__inner {
+  background-color: var(--el-fill-color-light) !important;
+  border-color: var(--el-border-color-lighter) !important;
+  color: var(--el-text-color-disabled) !important;
+}
+
+/* Textarea */
+.el-textarea__inner {
+  background-color: var(--el-bg-color) !important;
+  border-color: var(--el-border-color) !important;
+  color: var(--el-text-color-regular) !important;
+}
+.el-textarea__inner:hover {
+  border-color: var(--el-border-color-dark) !important;
+}
+.el-textarea__inner:focus {
+  border-color: var(--el-color-primary) !important;
+}
+
+/* ==================== Select 选择器 ==================== */
+.el-select .el-input__inner {
+  background-color: var(--el-bg-color) !important;
+  border-color: var(--el-border-color) !important;
+  color: var(--el-text-color-regular) !important;
+}
+.el-select-dropdown {
+  background-color: var(--el-bg-color-overlay) !important;
+  border-color: var(--el-border-color-light) !important;
+}
+.el-select-dropdown__item {
+  color: var(--el-text-color-regular) !important;
+}
+.el-select-dropdown__item:hover {
+  background-color: var(--el-fill-color-light) !important;
+}
+.el-select-dropdown__item.selected {
+  color: var(--el-color-primary) !important;
+}
+.el-select-dropdown__item.is-disabled {
+  color: var(--el-text-color-disabled) !important;
+}
+
+/* ==================== Table 表格 ==================== */
+.el-table {
+  background-color: var(--el-bg-color) !important;
+  color: var(--el-text-color-regular) !important;
+}
+.el-table th {
+  background-color: var(--el-fill-color) !important;
+  color: var(--el-text-color-primary) !important;
+  border-color: var(--el-border-color-lighter) !important;
+}
+.el-table td {
+  border-color: var(--el-border-color-lighter) !important;
+}
+.el-table--striped .el-table__body tr.el-table__row--striped td {
+  background-color: var(--el-fill-color-lighter) !important;
+}
+.el-table--enable-row-hover .el-table__body tr:hover > td {
+  background-color: var(--el-fill-color-light) !important;
+}
+.el-table__body tr.current-row > td {
+  background-color: var(--el-color-primary-light-9) !important;
+}
+.el-table__fixed-right::before,
+.el-table__fixed::before {
+  background-color: var(--el-border-color-lighter) !important;
+}
+.el-table__border::after {
+  background-color: var(--el-border-color-lighter) !important;
+}
+
+/* ==================== Dialog 对话框 ==================== */
+.el-dialog {
+  background-color: var(--el-bg-color-overlay) !important;
+}
+.el-dialog__title {
+  color: var(--el-text-color-primary) !important;
+}
+.el-dialog__header {
+  border-bottom-color: var(--el-border-color-lighter) !important;
+}
+.el-dialog__footer {
+  border-top-color: var(--el-border-color-lighter) !important;
+}
+.el-dialog__body {
+  color: var(--el-text-color-regular) !important;
+}
+
+/* ==================== Menu 菜单 ==================== */
+.el-menu {
+  background-color: var(--el-bg-color) !important;
+  border-color: var(--el-border-color-lighter) !important;
+}
+.el-menu-item {
+  color: var(--el-text-color-regular) !important;
+}
+.el-menu-item:hover {
+  background-color: var(--el-fill-color-light) !important;
+}
+.el-menu-item.is-active {
+  color: var(--el-color-primary) !important;
+  border-bottom-color: var(--el-color-primary) !important;
+}
+.el-submenu__title {
+  color: var(--el-text-color-regular) !important;
+}
+.el-submenu__title:hover {
+  background-color: var(--el-fill-color-light) !important;
+}
+
+/* 暗色菜单 */
+.el-menu--dark {
+  background-color: var(--el-bg-color) !important;
+}
+.el-menu--dark .el-menu-item {
+  color: var(--el-text-color-primary) !important;
+}
+.el-menu--dark .el-menu-item:hover {
+  background-color: var(--el-fill-color) !important;
+}
+
+/* ==================== Tabs 标签页 ==================== */
+.el-tabs__header {
+  border-bottom-color: var(--el-border-color-lighter) !important;
+}
+.el-tabs__item {
+  color: var(--el-text-color-regular) !important;
+}
+.el-tabs__item:hover {
+  color: var(--el-color-primary) !important;
+}
+.el-tabs__item.is-active {
+  color: var(--el-color-primary) !important;
+}
+.el-tabs__active-bar {
+  background-color: var(--el-color-primary) !important;
+}
+.el-tabs__nav-wrap::after {
+  background-color: var(--el-border-color-light) !important;
+}
+
+/* ==================== Tag 标签 ==================== */
+.el-tag {
+  background-color: var(--el-fill-color-light) !important;
+  border-color: var(--el-border-color-lighter) !important;
+  color: var(--el-text-color-primary) !important;
+}
+.el-tag--primary {
+  background-color: var(--el-color-primary-light-9) !important;
+  border-color: var(--el-color-primary-light-7) !important;
+  color: var(--el-color-primary) !important;
+}
+.el-tag--success {
+  background-color: var(--el-color-success-light-9) !important;
+  border-color: var(--el-color-success-light-7) !important;
+  color: var(--el-color-success) !important;
+}
+.el-tag--warning {
+  background-color: var(--el-color-warning-light-9) !important;
+  border-color: var(--el-color-warning-light-7) !important;
+  color: var(--el-color-warning) !important;
+}
+.el-tag--danger {
+  background-color: var(--el-color-danger-light-9) !important;
+  border-color: var(--el-color-danger-light-7) !important;
+  color: var(--el-color-danger) !important;
+}
+.el-tag--info {
+  background-color: var(--el-color-info-light-9) !important;
+  border-color: var(--el-color-info-light-7) !important;
+  color: var(--el-color-info) !important;
+}
+
+/* ==================== Pagination 分页 ==================== */
+.el-pagination {
+  color: var(--el-text-color-regular) !important;
+}
+.el-pagination button {
+  background-color: var(--el-bg-color) !important;
+  color: var(--el-text-color-regular) !important;
+}
+.el-pagination button:hover {
+  color: var(--el-color-primary) !important;
+}
+.el-pagination .el-pager li {
+  background-color: var(--el-bg-color) !important;
+  color: var(--el-text-color-regular) !important;
+}
+.el-pagination .el-pager li:hover {
+  color: var(--el-color-primary) !important;
+}
+.el-pagination .el-pager li.active {
+  background-color: var(--el-color-primary) !important;
+  color: var(--el-color-white) !important;
+}
+
+/* ==================== Form 表单 ==================== */
+.el-form-item__label {
+  color: var(--el-text-color-regular) !important;
+}
+.el-form-item__error {
+  color: var(--el-color-danger) !important;
+}
+
+/* ==================== Checkbox 复选框 ==================== */
+.el-checkbox__input.is-checked .el-checkbox__inner {
+  background-color: var(--el-color-primary) !important;
+  border-color: var(--el-color-primary) !important;
+}
+.el-checkbox__input.is-checked + .el-checkbox__label {
+  color: var(--el-color-primary) !important;
+}
+.el-checkbox__label {
+  color: var(--el-text-color-regular) !important;
+}
+
+/* ==================== Radio 单选框 ==================== */
+.el-radio__input.is-checked .el-radio__inner {
+  background-color: var(--el-color-primary) !important;
+  border-color: var(--el-color-primary) !important;
+}
+.el-radio__input.is-checked + .el-radio__label {
+  color: var(--el-color-primary) !important;
+}
+.el-radio__label {
+  color: var(--el-text-color-regular) !important;
+}
+
+/* ==================== Switch 开关 ==================== */
+.el-switch.is-checked .el-switch__core {
+  background-color: var(--el-color-primary) !important;
+  border-color: var(--el-color-primary) !important;
+}
+
+/* ==================== DatePicker 日期选择器 ==================== */
+.el-date-table td.current:not(.disabled) span {
+  background-color: var(--el-color-primary) !important;
+  color: var(--el-color-white) !important;
+}
+.el-date-table td.today span {
+  color: var(--el-color-primary) !important;
+}
+.el-date-table td.available:hover {
+  color: var(--el-color-primary) !important;
+}
+.el-picker-panel {
+  background-color: var(--el-bg-color-overlay) !important;
+  color: var(--el-text-color-regular) !important;
+  border-color: var(--el-border-color-light) !important;
+}
+.el-picker-panel__icon-btn:hover {
+  color: var(--el-color-primary) !important;
+}
+
+/* ==================== Dropdown 下拉菜单 ==================== */
+.el-dropdown-menu {
+  background-color: var(--el-bg-color-overlay) !important;
+  border-color: var(--el-border-color-light) !important;
+}
+.el-dropdown-menu__item {
+  color: var(--el-text-color-regular) !important;
+}
+.el-dropdown-menu__item:hover {
+  background-color: var(--el-fill-color-light) !important;
+  color: var(--el-color-primary) !important;
+}
+
+/* ==================== Cascader 级联选择器 ==================== */
+.el-cascader-menu {
+  background-color: var(--el-bg-color-overlay) !important;
+  color: var(--el-text-color-regular) !important;
+  border-color: var(--el-border-color-light) !important;
+}
+.el-cascader-node:not(.is-disabled):hover {
+  background-color: var(--el-fill-color-light) !important;
+}
+.el-cascader-node.is-active {
+  color: var(--el-color-primary) !important;
+}
+
+/* ==================== Tree 树形控件 ==================== */
+.el-tree {
+  background-color: var(--el-bg-color) !important;
+  color: var(--el-text-color-regular) !important;
+}
+.el-tree-node__content:hover {
+  background-color: var(--el-fill-color-light) !important;
+}
+.el-tree-node:focus > .el-tree-node__content {
+  background-color: var(--el-fill-color-light) !important;
+}
+.el-tree--highlight-current .el-tree-node.is-current > .el-tree-node__content {
+  background-color: var(--el-color-primary-light-9) !important;
+}
+
+/* ==================== Loading / Message / Notification ==================== */
+.el-loading-mask {
+  background-color: var(--el-mask-color-extra-light) !important;
+}
+
+.el-message {
+  background-color: var(--el-bg-color-overlay) !important;
+  border-color: var(--el-border-color-light) !important;
+}
+.el-message--success {
+  background-color: var(--el-color-success-light-9) !important;
+  border-color: var(--el-color-success-light-7) !important;
+}
+.el-message--warning {
+  background-color: var(--el-color-warning-light-9) !important;
+  border-color: var(--el-color-warning-light-7) !important;
+}
+.el-message--error {
+  background-color: var(--el-color-error-light-9) !important;
+  border-color: var(--el-color-error-light-7) !important;
+}
+.el-message--info {
+  background-color: var(--el-color-info-light-9) !important;
+  border-color: var(--el-color-info-light-7) !important;
+}
+
+.el-notification {
+  background-color: var(--el-bg-color-overlay) !important;
+  border-color: var(--el-border-color-light) !important;
+}
+
+/* ==================== Breadcrumb 面包屑 ==================== */
+.el-breadcrumb__inner {
+  color: var(--el-text-color-regular) !important;
+}
+.el-breadcrumb__inner.is-link:hover {
+  color: var(--el-color-primary) !important;
+}
+
+/* ==================== Steps 步骤条 ==================== */
+.el-step__title.is-process {
+  color: var(--el-text-color-primary) !important;
+}
+.el-step__title.is-wait {
+  color: var(--el-text-color-placeholder) !important;
+}
+.el-step__head.is-process {
+  color: var(--el-color-primary) !important;
+  border-color: var(--el-color-primary) !important;
+}
+.el-step__head.is-finish {
+  color: var(--el-color-primary) !important;
+  border-color: var(--el-color-primary) !important;
+}
+.el-step__line-inner {
+  background-color: var(--el-border-color) !important;
+}
+
+/* ==================== Card 卡片 ==================== */
+.el-card {
+  background-color: var(--el-bg-color) !important;
+  border-color: var(--el-border-color-light) !important;
+  color: var(--el-text-color-regular) !important;
+}
+.el-card__header {
+  border-bottom-color: var(--el-border-color-lighter) !important;
+}
+
+/* ==================== Collapse 折叠面板 ==================== */
+.el-collapse {
+  border-color: var(--el-border-color-light) !important;
+}
+.el-collapse-item__header {
+  background-color: var(--el-bg-color) !important;
+  color: var(--el-text-color-primary) !important;
+  border-bottom-color: var(--el-border-color-lighter) !important;
+}
+.el-collapse-item__wrap {
+  background-color: var(--el-bg-color) !important;
+  border-bottom-color: var(--el-border-color-lighter) !important;
+}
+.el-collapse-item__content {
+  color: var(--el-text-color-regular) !important;
+}
+
+/* ==================== Alert 警告 ==================== */
+.el-alert--success {
+  background-color: var(--el-color-success-light-9) !important;
+}
+.el-alert--warning {
+  background-color: var(--el-color-warning-light-9) !important;
+}
+.el-alert--error {
+  background-color: var(--el-color-danger-light-9) !important;
+}
+.el-alert--info {
+  background-color: var(--el-color-info-light-9) !important;
+}
+
+/* ==================== Badge 标记 ==================== */
+.el-badge__content--primary {
+  background-color: var(--el-color-primary) !important;
+}
+.el-badge__content--success {
+  background-color: var(--el-color-success) !important;
+}
+.el-badge__content--warning {
+  background-color: var(--el-color-warning) !important;
+}
+.el-badge__content--danger {
+  background-color: var(--el-color-danger) !important;
+}
+.el-badge__content--info {
+  background-color: var(--el-color-info) !important;
+}
+
+/* ==================== Progress 进度条 ==================== */
+.el-progress-bar__inner {
+  background-color: var(--el-color-primary) !important;
+}
+.el-progress-bar__outer {
+  background-color: var(--el-fill-color) !important;
+}
+.el-progress--success .el-progress-bar__inner {
+  background-color: var(--el-color-success) !important;
+}
+.el-progress--exception .el-progress-bar__inner {
+  background-color: var(--el-color-danger) !important;
+}
+
+/* ==================== Slider 滑块 ==================== */
+.el-slider__bar {
+  background-color: var(--el-color-primary) !important;
+}
+.el-slider__button {
+  border-color: var(--el-color-primary) !important;
+}
+
+/* ==================== Transfer 穿梭框 ==================== */
+.el-transfer-panel {
+  background-color: var(--el-bg-color) !important;
+  border-color: var(--el-border-color-light) !important;
+}
+.el-transfer-panel__header {
+  background-color: var(--el-fill-color-light) !important;
+  border-bottom-color: var(--el-border-color-lighter) !important;
+  color: var(--el-text-color-primary) !important;
+}
+.el-transfer-panel__item.el-checkbox {
+  color: var(--el-text-color-regular) !important;
+}
+
+/* ==================== Drawer 抽屉 ==================== */
+.el-drawer {
+  background-color: var(--el-bg-color-overlay) !important;
+}
+.el-drawer__header {
+  color: var(--el-text-color-primary) !important;
+}
+.el-drawer__body {
+  color: var(--el-text-color-regular) !important;
+}
+
+/* ==================== Popover / Tooltip ==================== */
+.el-popover {
+  background-color: var(--el-bg-color-overlay) !important;
+  border-color: var(--el-border-color-light) !important;
+  color: var(--el-text-color-regular) !important;
+}
+
+/* ==================== 全局背景/文字 ==================== */
+body {
+  background-color: var(--el-bg-color-page) !important;
+  color: var(--el-text-color-primary) !important;
+}
+
+/* 链接色 */
+a {
+  color: var(--el-color-primary) !important;
+}
+a:hover {
+  color: var(--el-color-primary-light-3) !important;
+}
+
+/* 分割线 */
+.el-divider__text {
+  background-color: var(--el-bg-color) !important;
+  color: var(--el-text-color-primary) !important;
+}
+.el-divider--horizontal {
+  border-top-color: var(--el-border-color-lighter) !important;
+}

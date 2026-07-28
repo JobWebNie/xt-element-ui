@@ -1,4 +1,6 @@
 import EchartsUtil from '../components/xt-chart/utils'
+import { generateXtPrimaryColorVars } from './color'
+import { applyThemeVars } from './theme-vars'
 
 const defaultConfig = {
     theme: 'white',
@@ -41,6 +43,11 @@ function isBrowser() {
   return typeof window !== 'undefined' && typeof document !== 'undefined'
 }
 
+/**
+ * 设置主题（亮/暗）
+ * 通过 applyThemeVars 统一设置 --el-* CSS 变量，确保组件库和 Element UI 同步响应
+ * 同时设置 --xt-* CSS 变量供 xt 组件使用
+ */
 export const setTheme = function(theme) {
     const validThemes = ['white', 'dark']
     if (!validThemes.includes(theme)) {
@@ -52,11 +59,17 @@ export const setTheme = function(theme) {
     
     if (isBrowser()) {
       const root = document.documentElement
-      
-      if (theme === 'dark') {
-        root.setAttribute('data-theme', 'dark')
-      } else {
-        root.setAttribute('data-theme', theme)
+
+      // 统一通过 applyThemeVars 设置 --el-* 变量
+      applyThemeVars(root, {
+        theme,
+        primaryColor: currentConfig.primaryColor
+      })
+
+      // 同步设置 xt 组件主色变量（--xt-*）
+      const xtVars = generateXtPrimaryColorVars(currentConfig.primaryColor)
+      for (const key in xtVars) {
+        root.style.setProperty(key, xtVars[key])
       }
       
       EchartsUtil.changeAllTheme(currentConfig.theme, currentConfig.size)
@@ -82,37 +95,6 @@ export const setSize = function(size) {
     emitConfigChange('size', size)
 }
 
-// 将十六进制颜色转换为 RGB 对象
-function hexToRgb(hex) {
-    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
-    return result ? {
-        r: parseInt(result[1], 16),
-        g: parseInt(result[2], 16),
-        b: parseInt(result[3], 16)
-    } : null
-}
-
-// 将 RGB 对象转换为十六进制颜色
-function rgbToHex(r, g, b) {
-    return '#' + [r, g, b].map(x => {
-        const hex = x.toString(16)
-        return hex.length === 1 ? '0' + hex : hex
-    }).join('')
-}
-
-// 计算浅色系列（混合白色）
-function lightenColor(hex, percent) {
-    const rgb = hexToRgb(hex)
-    if (!rgb) return hex
-    
-    const amount = Math.round(2.55 * percent)
-    const r = Math.min(255, rgb.r + amount)
-    const g = Math.min(255, rgb.g + amount)
-    const b = Math.min(255, rgb.b + amount)
-    
-    return rgbToHex(r, g, b)
-}
-
 export const setPrimaryColor = function(color) {
     const colorRegex = /^#[0-9A-Fa-f]{3}$|^#[0-9A-Fa-f]{6}$|^#[0-9A-Fa-f]{8}$/
     if (!colorRegex.test(color)) {
@@ -130,13 +112,19 @@ export const setPrimaryColor = function(color) {
     currentConfig.primaryColor = validColor
     
     if (isBrowser()) {
-      document.documentElement.style.setProperty('--xt-color-primary', validColor)
-      
-      document.documentElement.style.setProperty('--xt-color-primary-light-3', lightenColor(validColor, 30))
-      document.documentElement.style.setProperty('--xt-color-primary-light-5', lightenColor(validColor, 50))
-      document.documentElement.style.setProperty('--xt-color-primary-light-7', lightenColor(validColor, 70))
-      document.documentElement.style.setProperty('--xt-color-primary-light-8', lightenColor(validColor, 80))
-      document.documentElement.style.setProperty('--xt-color-primary-light-9', lightenColor(validColor, 90))
+      const root = document.documentElement
+
+      // 统一通过 applyThemeVars 设置 --el-* 主色变量
+      applyThemeVars(root, {
+        theme: currentConfig.theme,
+        primaryColor: validColor
+      })
+
+      // 同步设置 xt 组件主色变量（--xt-*）
+      const xtVars = generateXtPrimaryColorVars(validColor)
+      for (const key in xtVars) {
+        root.style.setProperty(key, xtVars[key])
+      }
     }
     
     emitConfigChange('primaryColor', validColor)

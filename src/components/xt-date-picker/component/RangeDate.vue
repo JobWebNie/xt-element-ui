@@ -106,31 +106,3 @@
     }
   }
   </script>
-  <style scoped>
-  .range-picker {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 8px;
-    width: 100%;
-  }
-  .range-picker .el-date-editor {
-    flex: 1;
-    min-width: 130px;
-  }
-  .split {
-    flex-shrink: 0;
-    padding: 0 4px;
-  }
-  /* 手机/窄侧边栏自动竖向排列 */
-  @media (max-width: 360px) {
-    .range-picker {
-      flex-direction: column;
-      align-items: stretch;
-    }
-    .split {
-      text-align: center;
-      margin: 4px 0;
-    }
-  }
-  </style>

@@ -118,7 +118,7 @@ module.exports = {
           ['/components/base/xt-progress', 'XtProgress 进度条'],
           ['/components/base/xt-tabs', 'XtTabs 标签页'],
           ['/components/base/xt-badge', 'XtBadge 徽标'],
-          ['/components/base/xt-scroll-arrow', 'XtScrollArrow 滚动箭头'],
+          ['/components/base/xt-scroll', 'XtScroll 滚动条'],
           ['/components/base/xt-form-schema', 'XtFormSchema 配置化表单'],
           ['/components/base/xt-flow', 'XtFlow 配置化流程']
         ]
