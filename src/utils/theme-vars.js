@@ -3,7 +3,7 @@
  * 供 utils/index.js 和 theme/iframe-injector.js 共同使用
  * 定义 Element UI 组件主题相关的 CSS 变量映射
  */
-import { generatePrimaryColorVars } from './color'
+import { generatePrimaryColorVars, generateXtPrimaryColorVars } from './color'
 
 /**
  * 亮色主题 Element UI CSS 变量（关键子集：主色/背景/文字/边框/填充/遮罩）
@@ -120,6 +120,14 @@ export function applyThemeVars(element, config) {
     const primaryVars = generatePrimaryColorVars(color)
     for (const key in primaryVars) {
       style.setProperty(key, primaryVars[key])
+    }
+  }
+
+  // 4. 同步设置 xt 组件主色变量（--xt-*）
+  if (color) {
+    const xtVars = generateXtPrimaryColorVars(color)
+    for (const key in xtVars) {
+      style.setProperty(key, xtVars[key])
     }
   }
 }

@@ -1,0 +1,36 @@
+
+.xt-form-schema {
+  .search-tags {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 8px 12px;
+    background: #f5f7fa;
+    border-radius: 4px;
+    margin-bottom: 12px;
+
+    .tags-title {
+      font-size: 14px;
+      color: #606266;
+      margin-right: 8px;
+      flex-shrink: 0;
+    }
+
+    .el-tag {
+      margin: 4px;
+      cursor: pointer;
+    }
+
+    .no-tags {
+      font-size: 14px;
+      color: #c0c4cc;
+    }
+  }
+
+  .dialog-footer,
+  .drawer-footer {
+    text-align: right;
+    padding-top: 16px;
+    border-top: 1px solid #ebeef5;
+  }
+}

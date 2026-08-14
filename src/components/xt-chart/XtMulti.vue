@@ -25,7 +25,7 @@ export default {
     },
     fieldKeys: {
       type: Object,
-      default: () => ({ label: "label", value: "value", data: "data" })
+      default: () => ({ label: "label", series: "series", value: "value" })
     },
     simpleMode: {
       type: Boolean,
@@ -35,63 +35,24 @@ export default {
     chartData: {
       type: Array,
       default: () => {
-        return [
-          {
-            label: "入户数",
-            unit: "户",
-            data: [
-              { label: "01月", value: 980 },
-              { label: "02月", value: 806 },
-              { label: "03月", value: 930 },
-              { label: "04月", value: 804 },
-              { label: "05月", value: 750 },
-              { label: "06月", value: 660 },
-              { label: "07月", value: 780 },
-              { label: "08月", value: 630 },
-              { label: "09月", value: 806 },
-              { label: "10月", value: 950 },
-              { label: "11月", value: 810 },
-              { label: "12月", value: 703 }
-            ]
-          },
-          {
-            label: "隐患数",
-            unit: "个",
-            data: [
-              { label: "01月", value: 200 },
-              { label: "02月", value: 120 },
-              { label: "03月", value: 110 },
-              { label: "04月", value: 109 },
-              { label: "05月", value: 108 },
-              { label: "06月", value: 150 },
-              { label: "07月", value: 126 },
-              { label: "08月", value: 130 },
-              { label: "09月", value: 108 },
-              { label: "10月", value: 109 },
-              { label: "11月", value: 140 },
-              { label: "12月", value: 106 }
-            ]
-          },
-          {
-            label: "整改数",
-            unit: "个",
-            data: [
-              { label: "01月", value: 25 },
-              { label: "02月", value: 19 },
-              { label: "03月", value: 34 },
-              { label: "04月", value: 12 },
-              { label: "05月", value: 16 },
-              { label: "06月", value: 20 },
-              { label: "07月", value: 19 },
-              { label: "08月", value: 18 },
-              { label: "09月", value: 14 },
-              { label: "10月", value: 12 },
-              { label: "11月", value: 11 },
-              { label: "12月", value: 16 }
-            ]
-          }
+        const months = ["01月", "02月", "03月", "04月", "05月", "06月", "07月", "08月", "09月", "10月", "11月", "12月"];
+        const series = [
+          { name: "入户数", values: [980, 806, 930, 804, 750, 660, 780, 630, 806, 950, 810, 703] },
+          { name: "隐患数", values: [200, 120, 110, 109, 108, 150, 126, 130, 108, 109, 140, 106] },
+          { name: "整改数", values: [25, 19, 34, 12, 16, 20, 19, 18, 14, 12, 11, 16] }
         ];
+        const result = [];
+        series.forEach(s => {
+          months.forEach((m, i) => {
+            result.push({ label: m, series: s.name, value: s.values[i] });
+          });
+        });
+        return result;
       }
+    },
+    seriesMap: {
+      type: Object,
+      default: () => ({})
     },
     colors: {
       type: Array,
@@ -126,6 +87,16 @@ export default {
         EchartsUtil.bindResizeObserver(this.$refs.multilinechart, this.myChart);
       }
     },
+    seriesMap: {
+      deep: true,
+      handler() {
+        const _self = this;
+        this.myChart && this.myChart.dispose();
+        this.myChart = null;
+        _self.initChart();
+        EchartsUtil.bindResizeObserver(this.$refs.multilinechart, this.myChart);
+      }
+    },
     theme(newVal) {
       this.myChart && this.myChart.dispose();
       this.myChart = null;
@@ -147,17 +118,68 @@ export default {
     initChart() {
       const _self = this;
       const keys = Object.assign(
-        { label: "label", value: "value", data: "data" },
+        { label: "label", series: "series", value: "value" },
         _self.fieldKeys || {}
       );
 
-      // 从 chartData 中收集所有 unit，并保持首次出现顺序去重
-      const uniqueUnits = [];
+      // 抽取所有类目（X 轴），保持首次出现顺序
+      const categorySet = [];
+      const categorySeen = {};
       (_self.chartData || []).forEach(item => {
-        const u = item.unit || "";
-        if (uniqueUnits.indexOf(u) === -1) {
-          uniqueUnits.push(u);
+        const cat = item[keys.label];
+        if (cat != null && !categorySeen[cat]) {
+          categorySeen[cat] = true;
+          categorySet.push(cat);
         }
+      });
+
+      // 按 series 分组，保持首次出现顺序
+      const seriesDataMap = {};
+      const seriesOrder = [];
+      (_self.chartData || []).forEach(item => {
+        const s = item[keys.series];
+        if (s == null) return;
+        if (!seriesDataMap[s]) {
+          seriesDataMap[s] = [];
+          seriesOrder.push(s);
+        }
+        seriesDataMap[s].push({
+          label: item[keys.label],
+          value: item[keys.value]
+        });
+      });
+
+      // 将每个 series 的数据对齐到类目维度（缺失补 null）
+      const alignedSeriesData = seriesOrder.map(s => {
+        const dataPoints = seriesDataMap[s] || [];
+        const dataMap = {};
+        dataPoints.forEach(dp => {
+          dataMap[dp.label] = dp.value;
+        });
+        return {
+          name: s,
+          alignedData: categorySet.map(cat =>
+            dataMap[cat] != null ? dataMap[cat] : null
+          )
+        };
+      });
+
+      // 根据 seriesMap 收集 unit 并建立 unit -> series 映射
+      const unitToSeries = {};
+      const unitOrder = [];
+      seriesOrder.forEach(s => {
+        const config = (_self.seriesMap && _self.seriesMap[s]) || {};
+        const unit = config.unit || "";
+        if (!unitToSeries[unit]) {
+          unitToSeries[unit] = [];
+          unitOrder.push(unit);
+        }
+        unitToSeries[unit].push(s);
+      });
+
+      const unitToYAxisIndex = {};
+      unitOrder.forEach((unit, idx) => {
+        unitToYAxisIndex[unit] = idx;
       });
 
       const groupYAxis = (unit, index) => {
@@ -168,7 +190,7 @@ export default {
           axisTick: { show: false },
           splitLine: { lineStyle: { type: "dashed" } },
           axisLabel: {
-            formatter: function(value, index) {
+            formatter: function(value) {
               if (value >= 10000 && value < 10000000) {
                 value = Math.floor(value / 10000) + "万";
               } else if (value >= 10000000) {
@@ -185,27 +207,31 @@ export default {
         return yAxis;
       };
 
-      const yAxisList = uniqueUnits.length
-        ? uniqueUnits.map((unit, idx) => groupYAxis(unit, idx))
+      const yAxisList = unitOrder.length
+        ? unitOrder.map((unit, idx) => groupYAxis(unit, idx))
         : [groupYAxis("", 0)];
 
-      const unitToYAxisIndex = {};
-      uniqueUnits.forEach((unit, idx) => {
-        unitToYAxisIndex[unit] = idx;
+      const series = alignedSeriesData.map(({ name, alignedData }) => {
+        const config = (_self.seriesMap && _self.seriesMap[name]) || {};
+        const unit = config.unit || "";
+        return {
+          animation: true,
+          name,
+          type: config.type || "bar",
+          avoidLabelOverlap: true,
+          areaStyle: config.areaStyle ? {} : null,
+          smooth: config.smooth ? {} : false,
+          data: alignedData,
+          yAxisIndex: unitToYAxisIndex[unit] != null ? unitToYAxisIndex[unit] : 0
+        };
       });
-
-      const firstSeriesData = _self.chartData && _self.chartData.length
-        ? _self.chartData[0][keys.data] || []
-        : [];
 
       const option = {
         legend: {
           right: 20,
           top: 0,
           show: true,
-          data: _self.chartData.map((item) => {
-            return item[keys.label];
-          }),
+          data: seriesOrder,
           textStyle: {}
         },
         tooltip: {
@@ -225,9 +251,7 @@ export default {
         xAxis: {
           type: "category",
           axisLabel: {},
-          data: firstSeriesData.map((item) => {
-            return item[keys.label];
-          })
+          data: categorySet
         },
         yAxis: yAxisList,
         dataZoom: [
@@ -238,31 +262,13 @@ export default {
             end: 100
           }
         ],
-        series: this.getSeriesData(unitToYAxisIndex, keys)
+        series
       };
+
       if (this.simpleMode) {
         EchartsUtil.applySimpleMode(option, "multi");
       }
       this.myChart = EchartsUtil.init(_self.$refs.multilinechart, this.theme, option, this.size);
-    },
-    getSeriesData(unitToYAxisIndex, keys) {
-      const _self = this;
-      const _seriesData = [];
-      _self.chartData.forEach((item, ind) => {
-        const seriesItems = item[keys.data] || [];
-        const _item = {
-          animation: true,
-          name: item[keys.label],
-          type: item.type || "bar",
-          avoidLabelOverlap: true,
-          areaStyle: item.areaStyle ? {} : null,
-          smooth: item.smooth ? {} : false,
-          data: seriesItems.map(it => it[keys.value]),
-          yAxisIndex: unitToYAxisIndex[item.unit || ""] != null ? unitToYAxisIndex[item.unit || ""] : 0
-        };
-        _seriesData.push(_item);
-      });
-      return _seriesData;
     }
   }
 };

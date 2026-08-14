@@ -72,6 +72,75 @@ class IframeThemeInjector {
   // ==================== 公共方法 ====================
 
   /**
+   * 注册 iframe：监听 load 事件并在加载完成后注入主题
+   * 适用于标签页「打开」场景
+   * @param {HTMLIFrameElement} iframe - iframe 元素
+   * @returns {Promise<boolean>} 注入是否成功
+   */
+  register(iframe) {
+    if (!iframe) {
+      console.warn('[IframeThemeInjector] register: iframe 参数为空')
+      return Promise.reject(new Error('iframe 参数为空'))
+    }
+
+    // 如果已注入且文档已就绪，直接返回
+    if (this.iframes.has(iframe)) {
+      const info = this.iframes.get(iframe)
+      if (info.injected) {
+        return Promise.resolve(true)
+      }
+    }
+
+    return new Promise((resolve) => {
+      const tryInject = () => {
+        const success = this._doInject(iframe)
+        resolve(success)
+      }
+
+      if (iframe.contentDocument && iframe.contentDocument.readyState === 'complete') {
+        tryInject()
+      } else {
+        // 移除旧的 load 监听（防止重复注册）
+        iframe.removeEventListener('load', this._onLoadHandler)
+        this._onLoadHandler = () => {
+          tryInject()
+          // 刷新场景：load 后可能被重复触发，移除监听
+          iframe.removeEventListener('load', this._onLoadHandler)
+        }
+        iframe.addEventListener('load', this._onLoadHandler, { once: true })
+      }
+    })
+  }
+
+  /**
+   * 处理 iframe 刷新：等待重新加载后重新注入
+   * 适用于标签页「刷新」场景
+   * @param {HTMLIFrameElement} iframe - iframe 元素
+   * @returns {Promise<boolean>} 注入是否成功
+   */
+  handleRefresh(iframe) {
+    if (!iframe) {
+      return Promise.reject(new Error('iframe 参数为空'))
+    }
+
+    // 先清理旧的注入记录
+    this.iframes.delete(iframe)
+
+    // 重新注册，等待 load 完成后注入
+    return this.register(iframe)
+  }
+
+  /**
+   * 处理 iframe 关闭：清理注入和事件监听
+   * 适用于标签页「关闭」场景
+   * @param {HTMLIFrameElement} iframe - iframe 元素
+   */
+  handleClose(iframe) {
+    if (!iframe) return
+    this.remove(iframe)
+  }
+
+  /**
    * 向指定 iframe 注入主题 CSS
    * @param {HTMLIFrameElement} iframe - iframe 元素
    * @returns {boolean} 是否注入成功
@@ -207,6 +276,11 @@ class IframeThemeInjector {
     if (info && info.styleEl && info.styleEl.parentNode) {
       info.styleEl.parentNode.removeChild(info.styleEl)
     }
+    // 清理 load 事件监听
+    if (this._onLoadHandler) {
+      iframe.removeEventListener('load', this._onLoadHandler)
+      this._onLoadHandler = null
+    }
     this.iframes.delete(iframe)
     this._injectPending.delete(iframe)
   }
@@ -219,9 +293,13 @@ class IframeThemeInjector {
       if (info.styleEl && info.styleEl.parentNode) {
         info.styleEl.parentNode.removeChild(info.styleEl)
       }
+      if (this._onLoadHandler) {
+        iframe.removeEventListener('load', this._onLoadHandler)
+      }
     })
     this.iframes.clear()
     this._injectPending.clear()
+    this._onLoadHandler = null
   }
 
   /**

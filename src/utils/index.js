@@ -1,5 +1,4 @@
 import EchartsUtil from '../components/xt-chart/utils'
-import { generateXtPrimaryColorVars } from './color'
 import { applyThemeVars } from './theme-vars'
 
 const defaultConfig = {
@@ -60,18 +59,12 @@ export const setTheme = function(theme) {
     if (isBrowser()) {
       const root = document.documentElement
 
-      // 统一通过 applyThemeVars 设置 --el-* 变量
+      // 统一通过 applyThemeVars 设置 --el-* 和 --xt-* 变量
       applyThemeVars(root, {
         theme,
         primaryColor: currentConfig.primaryColor
       })
 
-      // 同步设置 xt 组件主色变量（--xt-*）
-      const xtVars = generateXtPrimaryColorVars(currentConfig.primaryColor)
-      for (const key in xtVars) {
-        root.style.setProperty(key, xtVars[key])
-      }
-      
       EchartsUtil.changeAllTheme(currentConfig.theme, currentConfig.size)
     }
     
@@ -114,17 +107,11 @@ export const setPrimaryColor = function(color) {
     if (isBrowser()) {
       const root = document.documentElement
 
-      // 统一通过 applyThemeVars 设置 --el-* 主色变量
+      // 统一通过 applyThemeVars 设置 --el-* 和 --xt-* 主色变量
       applyThemeVars(root, {
         theme: currentConfig.theme,
         primaryColor: validColor
       })
-
-      // 同步设置 xt 组件主色变量（--xt-*）
-      const xtVars = generateXtPrimaryColorVars(validColor)
-      for (const key in xtVars) {
-        root.style.setProperty(key, xtVars[key])
-      }
     }
     
     emitConfigChange('primaryColor', validColor)

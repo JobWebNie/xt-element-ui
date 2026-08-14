@@ -6,3 +6,4 @@ XtFlow.install = function(Vue) {
 }
 
 export default XtFlow
+export { XtFlow }

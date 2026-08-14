@@ -261,6 +261,112 @@ export default {
 ```
 :::
 
+### 分组排序
+
+通过 `groupSortBy` 控制分组排序，支持按分组键、组内数量、分组原始值等排序。
+
+::: demo 按分组键排序
+```vue
+<template>
+  <XtList
+    :data="listData"
+    group-by="status"
+    title="订单列表（分组按名称排序）"
+    :group-sortable="true"
+    group-sort-by="_key"
+    group-sort-order="ascending"
+  />
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      listData: [
+        { id: 1, title: '订单 #001', status: '已完成', content: '¥299.00' },
+        { id: 2, title: '订单 #002', status: '待发货', content: '¥599.00' },
+        { id: 3, title: '订单 #003', status: '已完成', content: '¥199.00' },
+        { id: 4, title: '订单 #004', status: '待发货', content: '¥899.00' },
+        { id: 5, title: '订单 #005', status: '已取消', content: '¥129.00' }
+      ]
+    }
+  }
+}
+</script>
+```
+:::
+
+::: demo 按组内数量排序
+```vue
+<template>
+  <XtList
+    :data="listData"
+    group-by="status"
+    title="订单列表（分组按数量排序）"
+    :group-sortable="true"
+    group-sort-by="_count"
+    group-sort-order="descending"
+  />
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      listData: [
+        { id: 1, title: '订单 #001', status: '已完成', content: '¥299.00' },
+        { id: 2, title: '订单 #002', status: '待发货', content: '¥599.00' },
+        { id: 3, title: '订单 #003', status: '已完成', content: '¥199.00' },
+        { id: 4, title: '订单 #004', status: '已完成', content: '¥899.00' },
+        { id: 5, title: '订单 #005', status: '待发货', content: '¥399.00' },
+        { id: 6, title: '订单 #006', status: '已取消', content: '¥129.00' }
+      ]
+    }
+  }
+}
+</script>
+```
+:::
+
+### 分组排序 + 组内排序
+
+同时启用分组排序和组内排序，先排分组，再排组内。
+
+::: demo 分组排序 + 组内排序
+```vue
+<template>
+  <XtList
+    :data="listData"
+    group-by="status"
+    title="订单列表（分组按数量↓ + 组内按价格↓）"
+    :sortable="true"
+    sort-by="price"
+    sort-order="descending"
+    :group-sortable="true"
+    group-sort-by="_count"
+    group-sort-order="descending"
+  />
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      listData: [
+        { id: 1, title: '订单 #001', status: '已完成', price: 299 },
+        { id: 2, title: '订单 #002', status: '待发货', price: 599 },
+        { id: 3, title: '订单 #003', status: '已完成', price: 199 },
+        { id: 4, title: '订单 #004', status: '已完成', price: 899 },
+        { id: 5, title: '订单 #005', status: '待发货', price: 399 },
+        { id: 6, title: '订单 #006', status: '已取消', price: 129 }
+      ]
+    }
+  }
+}
+</script>
+```
+:::
+
 ### 多列布局
 
 ::: demo 多列布局
@@ -402,10 +508,14 @@ cardConfig 子属性：
 
 | 属性 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
-| `sortable` | Boolean | `false` | 是否启用排序 |
-| `sortBy` | String | `''` | 排序字段 |
+| `sortable` | Boolean | `false` | 是否启用组内排序 |
+| `sortBy` | String | `''` | 排序字段名 |
 | `sortOrder` | String | `''` | 默认排序方向（'ascending' / 'descending'） |
 | `sortMethod` | Function | - | 自定义排序方法 `(a, b) => number` |
+| `groupSortable` | Boolean | `false` | 是否启用分组排序 |
+| `groupSortBy` | String | `''` | 分组排序依据。内置值：`'_key'`（分组键）、`'_count'`（组内数量）、`'_value'`（分组原始值），也可以传入数据字段，按每组第一个 item 的该字段值排序 |
+| `groupSortOrder` | String | `''` | 分组默认排序方向（'ascending' / 'descending'） |
+| `groupSortMethod` | Function | - | 自定义分组排序方法 `(a, b) => number` |
 
 ### 加载更多
 
@@ -430,7 +540,8 @@ cardConfig 子属性：
 | `click-item` | 点击卡片 | `{ item, groupKey }` |
 | `group-toggle` | 分组展开/折叠 | `{ key, expanded }` |
 | `search` | 搜索输入变化 | `searchText` |
-| `sort-change` | 排序变化 | `{ prop, order }` |
+| `sort-change` | 组内排序变化 | `{ prop, order }` |
+| `group-sort-change` | 分组排序变化 | `{ prop, order }` |
 | `load-more` | 点击加载更多 | - |
 | `size-change` | 每页条数变化 | `size` |
 | `page-change` | 当前页变化 | `page` |

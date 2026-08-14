@@ -108,8 +108,8 @@ export default {
 />
 
 <xt-multi 
-  :data="multiData" 
-  :type="['line', 'bar']"
+  :chart-data="chartData" 
+  :series-map="seriesMap"
 />
 ```
 

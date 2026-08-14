@@ -1,3 +1,4 @@
+import './style/index.scss'
 import XtFormSchema from './index.vue'
 
 XtFormSchema.install = function (Vue) {

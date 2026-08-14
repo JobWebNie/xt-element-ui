@@ -26,6 +26,17 @@
         >
           {{ sortLabel }}
         </el-button>
+        <!-- 分组排序 -->
+        <el-button
+          v-if="groupSortable && groupSortBy && groupBy"
+          size="small"
+          icon="el-icon-sort"
+          :type="currentGroupSortOrder ? 'primary' : 'default'"
+          plain
+          @click="handleGroupSortToggle"
+        >
+          {{ groupSortLabel }}
+        </el-button>
         <slot name="toolbar"></slot>
       </div>
     </div>
@@ -271,11 +282,16 @@ export default {
     filterable: { type: Boolean, default: false },
     filterPlaceholder: { type: String, default: '请输入搜索内容' },
     filterMethod: { type: Function, default: null },
-    // 排序
+    // 排序（组内排序）
     sortable: { type: Boolean, default: false },
     sortBy: { type: String, default: '' },
     sortOrder: { type: String, default: '' },
-    sortMethod: { type: Function, default: null }
+    sortMethod: { type: Function, default: null },
+    // 分组排序
+    groupSortable: { type: Boolean, default: false },
+    groupSortBy: { type: String, default: '' },
+    groupSortOrder: { type: String, default: '' },
+    groupSortMethod: { type: Function, default: null }
   },
 
   data() {
@@ -286,7 +302,8 @@ export default {
       resizeObserver: null,
       rafId: null,
       searchText: '',
-      currentSortOrder: this.sortOrder || ''
+      currentSortOrder: this.sortOrder || '',
+      currentGroupSortOrder: this.groupSortOrder || ''
     }
   },
 
@@ -297,6 +314,10 @@ export default {
     sortLabel() {
       if (!this.currentSortOrder) return '排序'
       return this.currentSortOrder === 'ascending' ? '升序' : '降序'
+    },
+    groupSortLabel() {
+      if (!this.currentGroupSortOrder) return '分组排序'
+      return this.currentGroupSortOrder === 'ascending' ? '分组↑' : '分组↓'
     },
     bodyStyle() {
       const style = {}
@@ -372,11 +393,16 @@ export default {
         groups[key]._items.push({ ...item, _id: item._id || `item_${idx}` })
       })
 
-      const result = Object.keys(groups).sort().map(key => {
+      const result = Object.keys(groups).map(key => {
         const g = groups[key]
         g._expanded = this.groupExpandState[key] !== undefined ? this.groupExpandState[key] : this.expandAll
         return g
       })
+
+      // 分组排序
+      if (this.groupSortBy && this.currentGroupSortOrder) {
+        result.sort(this._getGroupSortFn())
+      }
 
       return result
     },
@@ -602,6 +628,47 @@ export default {
       const idx = orders.indexOf(this.currentSortOrder)
       this.currentSortOrder = orders[(idx + 1) % 3]
       this.$emit('sort-change', { prop: this.sortBy, order: this.currentSortOrder })
+    },
+
+    handleGroupSortToggle() {
+      const orders = ['', 'ascending', 'descending']
+      const idx = orders.indexOf(this.currentGroupSortOrder)
+      this.currentGroupSortOrder = orders[(idx + 1) % 3]
+      this.$emit('group-sort-change', { prop: this.groupSortBy, order: this.currentGroupSortOrder })
+    },
+
+    _getGroupSortFn() {
+      const order = this.currentGroupSortOrder === 'descending' ? -1 : 1
+      let fn
+
+      if (typeof this.groupSortMethod === 'function') {
+        fn = this.groupSortMethod
+      } else if (this.groupSortBy === '_key') {
+        fn = (a, b) => String(a._key).localeCompare(String(b._key), undefined, { numeric: true })
+      } else if (this.groupSortBy === '_count') {
+        fn = (a, b) => a._items.length - b._items.length
+      } else if (this.groupSortBy === '_value') {
+        fn = (a, b) => {
+          const va = a._value; const vb = b._value
+          if (va == null && vb == null) return 0
+          if (va == null) return -1
+          if (vb == null) return 1
+          if (typeof va === 'number' && typeof vb === 'number') return va - vb
+          return String(va).localeCompare(String(vb), undefined, { numeric: true })
+        }
+      } else {
+        fn = (a, b) => {
+          const va = a._items[0] ? a._items[0][this.groupSortBy] : null
+          const vb = b._items[0] ? b._items[0][this.groupSortBy] : null
+          if (va == null && vb == null) return 0
+          if (va == null) return -1
+          if (vb == null) return 1
+          if (typeof va === 'number' && typeof vb === 'number') return va - vb
+          return String(va).localeCompare(String(vb), undefined, { numeric: true })
+        }
+      }
+
+      return (a, b) => fn(a, b) * order
     },
 
     handleItemClick(item, groupKey) {

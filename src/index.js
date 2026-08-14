@@ -36,7 +36,6 @@ import XtChart from './components/xt-chart'  // XtChart 组件（基于 ECharts 
 import XtIcon from './components/xt-icon'    // XtIcon 组件（支持 el-icon / svg / 自定义字体）
 import XtTable from './components/xt-table'  // XtTable 组件（基于 ElementUI Table 封装）
 import XtList from './components/xt-list'  // XtList 组件（卡片列表）
-import XtScrollArrow from './components/xt-scroll-arrow'
 import XtScroll from './components/xt-scroll'  // XtScroll 组件（虚拟滚动容器）
 import XtBar from './components/xt-chart/XtBar.vue'
 import XtLine from './components/xt-chart/XtLine.vue'
@@ -75,7 +74,6 @@ const components = [
   XtIcon,
   XtTable,
   XtList,
-  XtScrollArrow,
   XtScroll,
   XtBar,
   XtLine,
@@ -156,7 +154,6 @@ export default {
   XtIcon,
   XtTable,
   XtList,
-  XtScrollArrow,
   XtScroll,
   XtBar,
   XtLine,
@@ -206,7 +203,6 @@ export {
   XtIcon,
   XtTable,
   XtList,
-  XtScrollArrow,
   XtScroll,
   XtBar,
   XtLine,

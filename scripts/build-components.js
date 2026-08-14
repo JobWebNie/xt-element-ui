@@ -27,7 +27,6 @@ const components = [
   'xt-table',
   'xt-list',
   'xt-scroll',
-  'xt-scroll-arrow',
   'xt-page',
   'xt-select-tree',
   'xt-upload',

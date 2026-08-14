@@ -138,36 +138,6 @@ export default {
 ```
 :::
 
-### 配合 XtScrollArrow 使用
-
-::: demo XtScrollArrow 内置了 XtScroll，开启虚拟滚动后支持海量数据带箭头导航。
-```vue
-<template>
-  <XtScrollArrow
-    direction="horizontal"
-    :v-scroll="true"
-    :v-scroll-data="arrowData"
-    :item-size="120"
-  >
-    <template #vitem="{ item }">
-      <div style="width: 100px; height: 40px; display: flex; align-items: center; justify-content: center; background: #ecf5ff; border-radius: 4px; margin: 0 4px;">
-        {{ item.label }}
-      </div>
-    </template>
-  </XtScrollArrow>
-</template>
-<script>
-export default {
-  data() {
-    return {
-      arrowData: Array.from({ length: 200 }, (_, i) => ({ id: i, label: `标签 ${i + 1}` }))
-    }
-  }
-}
-</script>
-```
-:::
-
 ### Attributes
 
 | 参数 | 说明 | 类型 | 默认值 |
@@ -215,23 +185,3 @@ export default {
 | scrollToEnd() | 滚动到底部/右侧 | — |
 | getScrollPos() | 获取当前滚动位置 | — |
 | getScrollContainer() | 获取原生滚动容器 DOM 元素 | — |
-
-### XtScrollArrow 新增属性
-
-| 参数 | 说明 | 类型 | 默认值 |
-|------|------|------|--------|
-| v-scroll | 是否启用虚拟滚动 | boolean | false |
-| v-scroll-data | 虚拟滚动数据源 | array | [] |
-| item-size | 每个 item 的固定尺寸（px） | number | 50 |
-| key-field | item 的唯一键字段名 | string | 'id' |
-| buffer-size | 预渲染缓冲区大小 | number | 5 |
-| v-scroll-loading | 虚拟滚动加载状态 | boolean | false |
-| load-more | 是否启用加载更多 | boolean | false |
-| load-more-text | 加载更多按钮文字 | string | '加载更多' |
-| load-more-loading | 加载更多按钮加载状态 | boolean | false |
-
-### XtScrollArrow 新增 Slot
-
-| 名称 | 说明 | 作用域 |
-|------|------|--------|
-| vitem | 虚拟滚动模式下每个 item 的渲染内容 | `{ item, index }` |

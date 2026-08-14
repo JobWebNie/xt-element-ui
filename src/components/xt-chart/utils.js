@@ -462,7 +462,6 @@ EchartsUtil.changeAllTheme = function(newTheme, newSize, primaryColor, brand) {
     }
     
     const option = EchartsUtil.mergeOptions(baseOption, customOption);
-    console.log('option1', option);
     newChart.setOption(option, true);
     item.chart = newChart;
     item.size = useSize;
