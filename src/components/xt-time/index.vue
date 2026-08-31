@@ -192,7 +192,7 @@ export default {
     },
 
     parsedTarget() {
-      return parseDate(this.targetTime)
+      return parseDate(this.targetTime) || this.parsedValue || new Date()
     },
 
     displayText() {
@@ -213,7 +213,12 @@ export default {
       // eslint-disable-next-line no-unused-vars
       const _ = this.tick
       if (!this.parsedTarget) return 0
-      const diff = this.parsedTarget.getTime() - Date.now()
+      const now = Date.now()
+      // value 有值时：到达 value 时间前保持静态差值，到达后开始实时倒计时
+      const baseTime = this.parsedValue
+        ? Math.max(this.parsedValue.getTime(), now)
+        : now
+      const diff = this.parsedTarget.getTime() - baseTime
       return diff > 0 ? diff : 0
     },
 

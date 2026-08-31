@@ -1,0 +1,100 @@
+@import '../../../styles/variables.scss';
+
+.xt-scroll-arrow {
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+
+  &--horizontal {
+    flex-direction: row;
+  }
+
+  &--vertical {
+    flex-direction: column;
+  }
+
+  &__content {
+    flex: 1;
+    overflow: hidden;
+
+    // 虚拟滚动模式下的内容容器
+    &--virtual {
+      width: 100%;
+    }
+  }
+
+  // 虚拟滚动 item
+  &__vitem {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 8px;
+    box-sizing: border-box;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  &__btn {
+    position: absolute;
+    z-index: 10;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    border: none;
+    padding: 0;
+
+    &:hover {
+      background: rgba(255, 255, 255, 1);
+      transform: scale(1.1);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+
+    &--left {
+      left: 8px;
+    }
+
+    &--right {
+      right: 8px;
+    }
+
+    &--top {
+      top: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+
+      &:hover {
+        transform: translateX(-50%) scale(1.1);
+      }
+
+      &:active {
+        transform: translateX(-50%) scale(0.95);
+      }
+    }
+
+    &--bottom {
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+
+      &:hover {
+        transform: translateX(-50%) scale(1.1);
+      }
+
+      &:active {
+        transform: translateX(-50%) scale(0.95);
+      }
+    }
+  }
+}

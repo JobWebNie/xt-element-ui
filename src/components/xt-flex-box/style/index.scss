@@ -80,3 +80,41 @@
 .wrap-unset {
   flex-wrap: wrap;
 }
+
+// flex gap 降级：不支持 gap 的浏览器使用 margin 方案（半间距双向偏移，兼容 wrap 换行）
+.xt-flex-box.no-flex-gap {
+  &.direction-row,
+  &.direction-row-reverse {
+    margin-left: calc(var(--xt-flex-gap, 0px) / -2);
+    margin-right: calc(var(--xt-flex-gap, 0px) / -2);
+    > * {
+      margin-left: calc(var(--xt-flex-gap, 0px) / 2);
+      margin-right: calc(var(--xt-flex-gap, 0px) / 2);
+    }
+    &.wrap-wrap {
+      margin-top: calc(var(--xt-flex-gap, 0px) / -2);
+      margin-bottom: calc(var(--xt-flex-gap, 0px) / -2);
+      > * {
+        margin-top: calc(var(--xt-flex-gap, 0px) / 2);
+        margin-bottom: calc(var(--xt-flex-gap, 0px) / 2);
+      }
+    }
+   }
+  &.direction-column,
+  &.direction-column-reverse {
+    margin-top: calc(var(--xt-flex-gap, 0px) / -2);
+    margin-bottom: calc(var(--xt-flex-gap, 0px) / -2);
+    > * {
+      margin-top: calc(var(--xt-flex-gap, 0px) / 2);
+      margin-bottom: calc(var(--xt-flex-gap, 0px) / 2);
+    }
+    &.wrap-wrap {
+      margin-left: calc(var(--xt-flex-gap, 0px) / -2);
+      margin-right: calc(var(--xt-flex-gap, 0px) / -2);
+      > * {
+        margin-left: calc(var(--xt-flex-gap, 0px) / 2);
+        margin-right: calc(var(--xt-flex-gap, 0px) / 2);
+      }
+    }
+  }
+}

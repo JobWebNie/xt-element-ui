@@ -47,6 +47,8 @@ import XtUpload from './components/xt-upload'
 import XtTransferTree from './components/xt-transfer-tree'  // XtTransferTree 组件（树形穿梭框）
 import XtFormSchema from './components/xt-form-schema'  // XtFormSchema 组件（表单配置化搜索）
 import XtFlow from './components/xt-flow'  // XtFlow 组件（审批流程轨迹）
+import XtMobileDatePicker from './components/xt-mobile-date-picker'  // XtMobileDatePicker 组件（移动端日期时间选择器）
+import XtMobilePicker from './components/xt-mobile-picker'  // XtMobilePicker 组件（移动端选项选择器）
 import Theme from './components/theme'  // Theme 模块（iframe 主题注入工具）
 
 
@@ -84,7 +86,9 @@ const components = [
   XtUpload,
   XtTransferTree,
   XtFormSchema,
-  XtFlow
+  XtFlow,
+  XtMobileDatePicker,
+  XtMobilePicker
 ]
 
 const install = function (Vue, options = {}) {
@@ -165,6 +169,8 @@ export default {
   XtTransferTree,
   XtFormSchema,
   XtFlow,
+  XtMobileDatePicker,
+  XtMobilePicker,
   Theme
 }
 
@@ -215,5 +221,7 @@ export {
   XtTransferTree,
   XtFormSchema,
   XtFlow,
+  XtMobileDatePicker,
+  XtMobilePicker,
   Theme
 }

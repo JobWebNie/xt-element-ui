@@ -43,7 +43,8 @@
 
 | 属性 | 类型 | 默认值 | 可选值 | 说明 |
 |------|------|--------|--------|------|
-| `target-time` | String / Number / Date | - | - | 目标时间，取值同 `value` |
+| `target-time` | String / Number / Date | - | - | 目标时间（结束时间），取值同 `value` |
+| `value` | String / Number / Date | - | - | 起始时间，达到该时间后开始实时倒计时；为空时立即开始 |
 | `countdown-format` | String | `DHMS` | `DHMS`、`HMS`、`MS`、`SEC` | 倒计时显示格式 |
 | `finished-text` | String | `已结束` | - | 倒计时结束后显示的文本 |
 
@@ -112,6 +113,8 @@
       :target-time="Date.now() + 5000"
       @finish="onFinish"
     />
+    <!-- value 为起始时间，targetTime 为目标时间 -->
+    <XtTime type="countdown" value="2026-08-17 08:37:00" target-time="2026-08-31 23:59:59" suffix=" 到期" />
   </div>
 </template>
 
@@ -158,6 +161,7 @@ export default {
 ## 注意事项
 
 - `value` / `target-time` 对**纯数字时间戳**自动识别：10 位数字视作秒级时间戳，13 位数字视作毫秒级时间戳。
+- `countdown` 模式下，`value` 为起始时间、`targetTime` 为目标时间。到达 `value` 时间前显示静态差值，到达 `value` 后开始实时倒计时。`value` 为空时立即开始倒计时。
 - `countdown` 模式下组件销毁、切出 `keep-alive` 缓存时会自动清理定时器，避免内存泄漏。
 - `type` 从 `now`/`countdown` 切换为 `text`（或反向），组件会自动重置定时器。
 - 如需不同的时区展示，可在父组件中将 `value` 先转换为本地时区 Date 对象再传入。
