@@ -2,17 +2,17 @@
 
 ## 基本用法
 
-::: demo 基本用法（日期范围）
+::: demo 基本用法（单选）
 ```vue
 <template>
-  <XtDatePicker v-model="dateRange" />
+  <XtDatePicker v-model="date" />
 </template>
 
 <script>
 export default {
   data() {
     return {
-      dateRange: ""
+      date: ""
     }
   }
 }
@@ -29,7 +29,7 @@ export default {
 | `separator` | String | `至` | - | 范围选择时的分隔符文本 |
 | `disabled` | Boolean | `false` | - | 是否禁用 |
 | `width` | String | `100%` | - | 组件宽度，如 `'500px'` |
-| `rangeMode` | Boolean | `true` | - | 是否为范围选择模式，false 时为单选 |
+| `rangeMode` | Boolean | `false` | - | 是否为范围选择模式，true 时为范围（数组），false 时为单选 |
 | `showDimension` | Boolean | `false` | - | 是否显示时间维度选择器（日/月/年/自定义） |
 | `dimension` | String | `date` | `date`、`month`、`year`、`daterange` | 当前时间维度 |
 | `immediate` | Boolean | `true` | - | 切换维度后是否立即触发事件 |
@@ -242,8 +242,8 @@ export default {
 
 ## 注意事项
 
-1. **范围模式**：默认开启范围选择（`rangeMode: true`），返回值为数组 `[start, end]`
-2. **单选模式**：设置 `rangeMode: false` 后，返回值为单个日期字符串
+1. **单选模式**：默认关闭范围选择（`rangeMode: false`），返回值为单个日期字符串
+2. **范围模式**：设置 `rangeMode: true` 后，返回值为数组 `[start, end]`
 3. **维度切换**：切换维度时会自动关闭下拉面板，避免页面布局跳动
 4. **季度格式**：季度类型使用自定义格式 `yyyy-Qq`，如 `2026-Q3`
 5. **值类型**：所有日期值均为字符串类型，便于后端交互

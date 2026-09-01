@@ -51,6 +51,8 @@
 </template>
 
 <script>
+import { toSafeNumber } from '../../utils/format-number'
+
 export default {
   name: 'XtStepPriceItem',
 
@@ -140,11 +142,9 @@ export default {
         priceVal
       }
     },
-    // 统一兜底：非数字输入一律转为 fallback（默认 0）
+    // 统一兜底：复用公共 toSafeNumber，非数字输入一律转为 fallback（默认 0）
     safeNumber(v, fallback = 0) {
-      if (v === null || v === undefined || v === '' || v === Infinity || v === -Infinity) return fallback
-      const n = Number(v)
-      return isNaN(n) ? fallback : n
+      return toSafeNumber(v, fallback)
     },
 
     emitChange(partial) {

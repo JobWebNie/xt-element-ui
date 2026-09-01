@@ -58,7 +58,7 @@ export default {
 | `data` | Array | `[]` | - | 树形数据源，支持嵌套 `children` 结构或扁平 `id/pid` 结构 |
 | `leftTitle` | String | `待选择` | - | 左侧面板标题 |
 | `rightTitle` | String | `已选择` | - | 右侧面板标题 |
-| `treeProps` | Object | `{ label, children, value }` | - | 树节点属性映射配置 |
+| `treeProps` | Object | `{ label: 'label', children: 'children', value: 'id' }` | - | 树节点属性映射配置 |
 | `pidKey` | String | `pid` | - | 扁平数据的父级字段名（扁平数据格式下使用） |
 | `rootPidValue` | String/Number/Array | `0` | - | 扁平数据的根节点 pid 值 |
 | `defaultExpandAll` | Boolean | `true` | - | 是否默认展开所有节点 |

@@ -4,6 +4,46 @@
 
 提供常用的数据格式化工具函数，包括数字格式化、日期格式化、金额格式化等。
 
+## 数字安全转换
+
+### toSafeNumber(value, fallback)
+
+将任意值安全转换为数字，空值 / `Infinity` / `NaN` 等非法值一律返回 `fallback`。
+
+| 参数 | 类型 | 必填 | 说明 |
+|------|------|------|------|
+| `value` | Any | 是 | 待转换的值 |
+| `fallback` | Number | 否 | 转换失败时的兜底值，默认 `0` |
+
+```vue
+<template>
+  <div>
+    <XtText>{{ toSafeNumber('123.45') }}</XtText>
+    <XtText>{{ toSafeNumber(null, -1) }}</XtText>
+    <XtText>{{ toSafeNumber('abc') }}</XtText>
+  </div>
+</template>
+
+<script>
+import { toSafeNumber } from 'xt-element-ui'
+
+export default {
+  methods: {
+    toSafeNumber
+  }
+}
+</script>
+```
+
+**转换规则**：
+
+| 输入 | 输出 |
+|------|------|
+| `'123.45'` | `123.45` |
+| `null` / `undefined` / `''` | `fallback`（默认 `0`） |
+| `Infinity` / `-Infinity` | `fallback`（默认 `0`） |
+| `'abc'`（非数字字符串） | `fallback`（默认 `0`） |
+
 ## 数字格式化
 
 ### formatNumber(value, options)

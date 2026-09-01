@@ -26,11 +26,46 @@
 | `gap` | String | - | - | 网格间距（同时控制行和列） |
 | `rowGap` | String | - | - | 行间距 |
 | `colGap` | String | - | - | 列间距 |
-| `flow` | String | `row` | `row`、`column`、`row dense`、`column dense` | 自动排列方向 |
+| `flow` | String | - | `row`、`column`、`row dense`、`column dense` | 自动排列方向，不设置遵循 CSS 默认 |
 | `areas` | String / Array | - | - | 命名区域布局 |
-| `align` | String | `stretch` | `start`、`end`、`center`、`stretch`、`baseline` | 子项对齐方式 |
-| `justify` | String | `start` | `start`、`end`、`center`、`space-between`、`space-around`、`space-evenly`、`stretch` | 内容对齐方式 |
-| `responsive` | Object | `{}` | - | 响应式断点配置 |
+| `align` | String | - | `start`、`end`、`center`、`stretch`、`baseline` | 子项对齐方式，不设置遵循 CSS 默认（stretch） |
+| `justify` | String | - | `start`、`end`、`center`、`space-between`、`space-around`、`space-evenly`、`stretch` | 内容对齐方式，不设置遵循 CSS 默认 |
+| `responsive` | Object | `{}` | - | 容器级响应式列配置，如 `{ sm: 2, md: 3, lg: 4 }` |
+
+## 响应式列数
+
+基于 `ResizeObserver` 监听**容器宽度**（而非视口宽度）自动切换列数，移动优先匹配：当前断点未配置时向下查找最近的已配置断点，全部未命中则回退到 `columns`。
+
+::: demo 响应式列数（拖动浏览器窗口宽度观察列数变化：lg 4列 / md 3列 / sm 2列 / xs 1列）
+```vue
+<template>
+  <XtGridBox :columns="1" :responsive="{ sm: 2, md: 3, lg: 4 }" gap="12px">
+    <div v-for="i in 8" :key="i" style="padding: 12px; background: #1890ff; color: white; text-align: center;">{{ i }}</div>
+  </XtGridBox>
+</template>
+```
+:::
+
+**断点约定**（与 Bootstrap 一致，基于容器宽度）：
+
+| 断点 | 容器宽度 |
+|------|---------|
+| `xs` | < 576px |
+| `sm` | >= 576px |
+| `md` | >= 768px |
+| `lg` | >= 992px |
+| `xl` | >= 1200px |
+
+::: demo 断点级联回退（未配置的断点向下查找：xl 命中 lg 的 3 列配置）
+```vue
+<template>
+  <!-- 只配置了 sm 和 lg：xs/sm 用 2 列，md 向下命中 sm 用 2 列，lg/xl 用 3 列 -->
+  <XtGridBox :columns="1" :responsive="{ sm: 2, lg: 3 }" gap="12px">
+    <div v-for="i in 6" :key="i" style="padding: 12px; background: #52c41a; color: white; text-align: center;">{{ i }}</div>
+  </XtGridBox>
+</template>
+```
+:::
 
 ## XtGridItem 子项组件
 
@@ -247,33 +282,17 @@
 
 **问题**：在不同屏幕尺寸下需要不同的列数
 
-**解决方案**：
+**解决方案**：直接使用 `responsive` 属性（见上方「响应式列数」章节），无需手写媒体查询：
+
+::: demo 响应式列数调整
 ```vue
 <template>
-  <!-- 使用 CSS 类配合媒体查询 -->
-  <XtGridBox class="responsive-grid" gap="12px">
+  <XtGridBox :columns="1" :responsive="{ sm: 2, md: 3 }" gap="12px">
     <div v-for="i in 6" :key="i" style="padding: 12px; background: #f0f0f0;">{{ i }}</div>
   </XtGridBox>
 </template>
-
-<style>
-.responsive-grid {
-  grid-template-columns: repeat(1, 1fr);
-}
-
-@media (min-width: 576px) {
-  .responsive-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 768px) {
-  .responsive-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-</style>
 ```
+:::
 
 ### 4. 网格项无法收缩
 
@@ -296,6 +315,6 @@
 ## 注意事项
 
 1. **min-height: 0**：当网格作为子元素嵌套在其他布局中时，建议设置 `min-height: 0` 以确保正确的收缩行为
-2. **响应式设计**：建议配合 CSS 媒体查询实现响应式布局
-3. **性能优化**：对于大量网格项，考虑使用 `flow="dense"` 优化空间利用率
+2. **响应式设计**：使用 `responsive` 属性即可，基于容器宽度而非视口宽度，适合侧边栏收起等局部布局变化场景
+3. **性能优化**：对于大量网格项，考虑使用 `flow="row dense"` 优化空间利用率
 4. **嵌套使用**：网格可以嵌套使用，但注意控制嵌套层级以避免性能问题

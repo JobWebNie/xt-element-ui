@@ -2,7 +2,6 @@
   <div
     class="xt-page-container"
     :class="containerClass"
-    :style="rootCssVars"
   >
     <!-- 主体左右容器 -->
     <el-container class="xt-page-main-wrap">
@@ -73,16 +72,11 @@ export default {
   data() {
     return {
       rawMainHeight: 0,
-      resizeTimer: null
+      resizeTimer: null,
+      resizeObserver: null
     };
   },
   computed: {
-    // 根节点注入CSS变量，业务页面外层style可直接覆盖
-    rootCssVars() {
-      return {
-        '--xt-page-aside-width': this.asideWidth
-      };
-    },
     // 传给插槽表格的可用高度
     tableContentHeight() {
       const usable = this.rawMainHeight - this.diffHeight - this.tableBorderHeight;
@@ -91,13 +85,12 @@ export default {
   },
   mounted() {
     this.$nextTick(() => this.calcMainHeight());
-    // 防抖监听窗口缩放
-    window.addEventListener('resize', this.handleResize);
+    this.setupResizeObserver();
   },
   beforeDestroy() {
     // 销毁解绑，防止内存泄漏
     clearTimeout(this.resizeTimer);
-    window.removeEventListener('resize', this.handleResize);
+    this.teardownResizeObserver();
   },
   methods: {
     // 防抖封装
@@ -106,6 +99,23 @@ export default {
       this.resizeTimer = setTimeout(() => {
         this.calcMainHeight();
       }, 120);
+    },
+    // 容器级响应式：优先 ResizeObserver，旧浏览器降级为 window resize
+    setupResizeObserver() {
+      if (typeof ResizeObserver !== 'undefined') {
+        this.resizeObserver = new ResizeObserver(() => this.handleResize());
+        this.resizeObserver.observe(this.$el);
+      } else {
+        window.addEventListener('resize', this.handleResize);
+      }
+    },
+    teardownResizeObserver() {
+      if (this.resizeObserver) {
+        this.resizeObserver.disconnect();
+        this.resizeObserver = null;
+      } else {
+        window.removeEventListener('resize', this.handleResize);
+      }
     },
     // 计算main可视高度
     calcMainHeight() {

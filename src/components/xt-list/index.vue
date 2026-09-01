@@ -224,6 +224,7 @@
 
 <script>
 import XtScroll from '../xt-scroll'
+import { compareValues } from '../../utils/sort'
 
 const CARD_ITEM_HEIGHT = 160
 const GROUP_HEADER_HEIGHT = 44
@@ -354,15 +355,7 @@ export default {
       const order = this.currentSortOrder === 'ascending' ? 1 : -1
       const sortFn = typeof this.sortMethod === 'function'
         ? this.sortMethod
-        : (a, b) => {
-          const va = a[this.sortBy]
-          const vb = b[this.sortBy]
-          if (va == null && vb == null) return 0
-          if (va == null) return -1
-          if (vb == null) return 1
-          if (typeof va === 'number' && typeof vb === 'number') return va - vb
-          return String(va).localeCompare(String(vb), undefined, { numeric: true })
-        }
+        : (a, b) => compareValues(a[this.sortBy], b[this.sortBy])
       return [...this.filteredData].sort((a, b) => sortFn(a, b) * order)
     },
 
@@ -644,28 +637,16 @@ export default {
       if (typeof this.groupSortMethod === 'function') {
         fn = this.groupSortMethod
       } else if (this.groupSortBy === '_key') {
-        fn = (a, b) => String(a._key).localeCompare(String(b._key), undefined, { numeric: true })
+        fn = (a, b) => compareValues(a._key, b._key)
       } else if (this.groupSortBy === '_count') {
         fn = (a, b) => a._items.length - b._items.length
       } else if (this.groupSortBy === '_value') {
-        fn = (a, b) => {
-          const va = a._value; const vb = b._value
-          if (va == null && vb == null) return 0
-          if (va == null) return -1
-          if (vb == null) return 1
-          if (typeof va === 'number' && typeof vb === 'number') return va - vb
-          return String(va).localeCompare(String(vb), undefined, { numeric: true })
-        }
+        fn = (a, b) => compareValues(a._value, b._value)
       } else {
-        fn = (a, b) => {
-          const va = a._items[0] ? a._items[0][this.groupSortBy] : null
-          const vb = b._items[0] ? b._items[0][this.groupSortBy] : null
-          if (va == null && vb == null) return 0
-          if (va == null) return -1
-          if (vb == null) return 1
-          if (typeof va === 'number' && typeof vb === 'number') return va - vb
-          return String(va).localeCompare(String(vb), undefined, { numeric: true })
-        }
+        fn = (a, b) => compareValues(
+          a._items[0] && a._items[0][this.groupSortBy],
+          b._items[0] && b._items[0][this.groupSortBy]
+        )
       }
 
       return (a, b) => fn(a, b) * order

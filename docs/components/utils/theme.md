@@ -17,7 +17,7 @@
 
 ```
 ┌─────────────────────────────────────────────┐
-│  utils/theme-vars.js                        │
+│  utils/theme.js                             │
 │  ┌─────────────────────────────────────┐    │
 │  │  applyThemeVars(element, config)   │    │  ← 唯一事实源
 │  │  - LIGHT_THEME_VARS / DARK_THEME_VARS│    │

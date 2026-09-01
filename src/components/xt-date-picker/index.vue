@@ -203,7 +203,6 @@ export default {
         return this.value;
       },
       set(val) {
-        this.$emit('update:value', val);
         this.$emit('change', val);
         this.$emit('dimension-change', {
           dimension: this.dimension,
@@ -218,7 +217,6 @@ export default {
         return this.value;
       },
       set(val) {
-        this.$emit('update:value', val);
         this.$emit('change', val);
         this.$emit('dimension-change', {
           dimension: this.dimension,

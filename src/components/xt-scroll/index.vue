@@ -85,6 +85,8 @@
 </template>
 
 <script>
+import { computeFixedVirtualRange } from '../../utils/virtual-scroll'
+
 export default {
   name: 'XtScroll',
 
@@ -176,19 +178,28 @@ export default {
       return this.dataCount * this.itemSize
     },
 
+    /** 虚拟滚动：可见范围计算（含缓冲区） */
+    virtualRange() {
+      if (!this.vScroll) {
+        return { startIndex: 0, endIndex: this.dataCount, offsetStart: 0 }
+      }
+      return computeFixedVirtualRange({
+        scrollOffset: this.scrollPos,
+        itemSize: this.itemSize,
+        containerSize: this.containerSize,
+        total: this.dataCount,
+        bufferSize: this.bufferSize
+      })
+    },
+
     /** 虚拟滚动：可见范围起始索引 */
     visibleStartIndex() {
-      if (!this.vScroll) return 0
-      const start = Math.floor(this.scrollPos / this.itemSize)
-      return Math.max(0, start - this.bufferSize)
+      return this.virtualRange.startIndex
     },
 
     /** 虚拟滚动：可见范围结束索引 */
     visibleEndIndex() {
-      if (!this.vScroll) return this.dataCount
-      const visibleCount = Math.ceil(this.containerSize / this.itemSize)
-      const end = Math.ceil(this.scrollPos / this.itemSize) + visibleCount
-      return Math.min(this.dataCount, end + this.bufferSize)
+      return this.virtualRange.endIndex
     },
 
     /** 可见数据 */
@@ -199,7 +210,7 @@ export default {
 
     /** 偏移量（px） */
     offsetStart() {
-      return this.visibleStartIndex * this.itemSize
+      return this.virtualRange.offsetStart
     },
 
     /** 是否显示加载更多 */

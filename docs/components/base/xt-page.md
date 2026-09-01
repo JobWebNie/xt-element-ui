@@ -47,9 +47,10 @@ export default {
 | `showHeader` | Boolean | `true` | 是否显示头部 |
 | `showFooter` | Boolean | `true` | 是否显示底部 |
 | `showAside` | Boolean | `true` | 是否显示侧边栏 |
-| `asideWidth` | String | - | 侧边栏宽度 |
-| `diffHeight` | Number | `60` | 差值高度 |
-| `minHeight` | Number | `200` | 最小高度 |
+| `asideWidth` | String | `'240px'` | 侧边栏宽度 |
+| `diffHeight` | Number | `0` | 差值高度（用于表格高度微调） |
+| `minTableHeight` | Number | `200` | 表格最小高度 |
+| `tableBorderHeight` | Number | `1` | 表格边框高度（参与自适应计算） |
 
 ## 插槽说明
 
@@ -94,4 +95,4 @@ export default {
 ## 注意事项
 
 - 默认插槽会传入 `tableHeight` 参数，用于表格高度自适应
-- 组件会监听窗口大小变化，自动调整表格高度
+- 组件通过 `ResizeObserver` 监听容器尺寸变化（旧浏览器降级为 `window.resize`），自动调整表格高度

@@ -1,6 +1,6 @@
 /**
  * 主题 CSS 变量常量
- * 供 utils/index.js 和 theme/iframe-injector.js 共同使用
+ * 供 utils/config.js 和 theme/iframe-injector.js 共同使用
  * 定义 Element UI 组件主题相关的 CSS 变量映射
  */
 import { generatePrimaryColorVars, generateXtPrimaryColorVars } from './color'
@@ -83,8 +83,8 @@ export const THEME_CHANGE_EVENT = 'xt-theme-change'
 
 /**
  * 将主题相关 CSS 变量应用到任意 DOM 元素
- * 统一 utils/index.js（主文档）和 iframe-injector.js（iframe）的变量设置逻辑
- * 
+ * 统一 utils/config.js（主文档）和 iframe-injector.js（iframe）的变量设置逻辑
+ *
  * @param {HTMLElement} element - 目标元素（通常是 document.documentElement）
  * @param {Object} config
  * @param {string} config.theme - 'white' | 'dark'

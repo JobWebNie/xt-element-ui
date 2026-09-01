@@ -37,7 +37,7 @@ export default {
 |------|------|--------|------|
 | `value` / `v-model` | String / Number / Array | - | 选中值，多选时为数组 |
 | `data` | Array | `[]` | 树数据 |
-| `props` | Object | `{ value: 'value', label: 'label', children: 'children' }` | 数据属性映射 |
+| `props` | Object | `{ value: 'value', label: 'label', children: 'children', disabled: 'disabled', isLeaf: 'isLeaf' }` | 数据属性映射 |
 | `multiple` | Boolean | `false` | 是否多选 |
 | `filterable` | Boolean | `true` | 是否可搜索 |
 | `clearable` | Boolean | `false` | 是否可清空 |
@@ -46,6 +46,14 @@ export default {
 | `defaultExpandAll` | Boolean | `false` | 是否默认展开所有节点 |
 | `lazy` | Boolean | `false` | 是否懒加载 |
 | `load` | Function | - | 懒加载函数 |
+| `nodeKey` | String | - | 作为树 key 的字段名（默认取 `props.value`） |
+| `size` | String | `''` | 输入框尺寸 |
+| `defaultValue` | String / Number / Array | `''` | 默认选中值 |
+| `popoverWidth` | Number | - | 弹出层宽度 |
+| `checkLeafOnly` | Boolean | `false` | 多选时是否只勾选叶子节点 |
+| `includeHalfChecked` | Boolean | `false` | 多选时是否包含半选节点 |
+| `iconClass` | String | - | 自定义节点图标类名 |
+| `filterNodeMethod` | Function | - | 搜索过滤方法 |
 | `placement` | String | `bottom-start` | 弹出位置 |
 | `placeholder` | String | `请选择` | 占位提示 |
 

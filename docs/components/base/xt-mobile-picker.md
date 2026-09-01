@@ -184,7 +184,7 @@ export default {
 
 | 参数 | 说明 | 类型 | 可选值 | 默认值 |
 |------|------|------|--------|--------|
-| visible / 弹窗显/隐 | 是否显示选择器，配合 `.sync` 使用 | Boolean | — | false |
+| visible | 是否显示选择器，配合 `.sync` 使用 | Boolean | — | false |
 | v-model | 选中值，单选为基本类型，多选为数组 | String / Number / Array | — | — |
 | mode | 选择模式 | String | `single` / `multiple` | single |
 | options | 选项数组 | Array | — | [] |

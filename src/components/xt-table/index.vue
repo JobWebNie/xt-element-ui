@@ -110,6 +110,7 @@
 <script>
 import XtTableCell from './XtTableCell.vue'
 import VirtualElTable from './VirtualElTable.vue'
+import { createSortComparator } from '../../utils/sort'
 
 export default {
   name: 'XtTable',
@@ -291,15 +292,7 @@ export default {
       if (col && typeof col.sortMethod === 'function') {
         return col.sortMethod
       }
-      return (a, b) => {
-        const va = a[prop]
-        const vb = b[prop]
-        if (va == null && vb == null) return 0
-        if (va == null) return -1
-        if (vb == null) return 1
-        if (typeof va === 'number' && typeof vb === 'number') return va - vb
-        return String(va).localeCompare(String(vb), undefined, { numeric: true })
-      }
+      return createSortComparator(prop)
     },
 
     findColumnByProp(prop) {

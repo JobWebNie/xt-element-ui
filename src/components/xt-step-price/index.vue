@@ -56,6 +56,7 @@
 
 <script>
 import XtStepPriceItem from '../xt-step-price-item/index.vue'
+import { toSafeNumber } from '../../utils/format-number'
 
 export default {
   name: 'XtStepPrice',
@@ -127,11 +128,9 @@ export default {
   },
 
   methods: {
-    // 统一数字转换：空值/非法值一律转为 fallback（默认 0）
+    // 统一数字转换：复用公共 toSafeNumber，空值/非法值一律转为 fallback（默认 0）
     safeNumber(v, fallback = 0) {
-      if (v === null || v === undefined || v === '' || v === Infinity || v === -Infinity) return fallback
-      const n = Number(v)
-      return isNaN(n) ? fallback : n
+      return toSafeNumber(v, fallback)
     },
 
     cloneItems(items) {

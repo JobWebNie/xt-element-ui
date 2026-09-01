@@ -18,7 +18,7 @@
  * ============================================================ */
 
 import { setTheme as _setTheme, setPrimaryColor as _setPrimaryColor, getConfig as _getConfig, onConfigChange as _onConfigChange } from '../../utils/index'
-import { applyThemeVars, BRAND_COLORS, THEME_STORAGE_KEY, THEME_CHANGE_EVENT } from '../../utils/theme-vars'
+import { applyThemeVars, BRAND_COLORS, THEME_STORAGE_KEY, THEME_CHANGE_EVENT } from '../../utils/theme'
 
 /**
  * IframeThemeInjector 类

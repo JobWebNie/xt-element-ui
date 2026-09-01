@@ -51,12 +51,12 @@ import XtMobileDatePicker from './components/xt-mobile-date-picker'  // XtMobile
 import XtMobilePicker from './components/xt-mobile-picker'  // XtMobilePicker 组件（移动端选项选择器）
 import Theme from './components/theme'  // Theme 模块（iframe 主题注入工具）
 
-
-const components = [
+// 可安装组件集合（key 与组件 name 一致），统一驱动 install 与默认导出，避免多处置复维护
+const Components = {
   XtButton,
   XtInput,
   XtFlexBox,
-  XtCard, 
+  XtCard,
   XtCardItem,
   XtConfigProvider,
   XtText,
@@ -89,16 +89,16 @@ const components = [
   XtFlow,
   XtMobileDatePicker,
   XtMobilePicker
-]
+}
 
 const install = function (Vue, options = {}) {
   if (install.installed) return
   install.installed = true
 
-  components.forEach(component => {
+  Object.values(Components).forEach(component => {
     Vue.component(component.name, component)
   })
-  
+
   Vue.prototype.$xt = {
     setTheme,
     setSize,
@@ -126,7 +126,6 @@ const install = function (Vue, options = {}) {
       setConfig(options.config)
     }
   }
-
 }
 
 // 支持全局 script 标签引入
@@ -134,50 +133,17 @@ if (typeof window !== 'undefined' && window.Vue) {
   install(window.Vue)
 }
 
-// 导出
+// 默认导出（安装入口 + 全部组件 + 主题模块）
 export default {
   install,
-  XtButton,
-  XtInput,
-  XtFlexBox,
-  XtCard,
-  XtCardItem,
-  XtConfigProvider,
-  XtText,
-  XtTime,
-  XtStepPrice,
-  XtStepPriceItem,
-  XtMap,
-  XtMapProvider,
-  XtGridBox,
-  XtGridItem,
-  XtProgress,
-  XtTabs,
-  XtBadge,
-  XtDatePicker,
-  XtIcon,
-  XtTable,
-  XtList,
-  XtScroll,
-  XtBar,
-  XtLine,
-  XtPie,
-  XtMulti,
-  XtPage,
-  XtSelectTree,
-  XtUpload,
-  XtTransferTree,
-  XtFormSchema,
-  XtFlow,
-  XtMobileDatePicker,
-  XtMobilePicker,
+  ...Components,
   Theme
 }
 
-// 导出工具函数和变量
+// 命名导出（配置函数 + 工具 + 全部组件 + 主题模块）
 export {
   utils,
-  // 配置管理函数（从 utils 导入）
+  // 配置管理函数
   getConfig,
   setConfig,
   getTheme,
@@ -188,6 +154,7 @@ export {
   setTheme,
   setSize,
   setPrimaryColor,
+  // 组件
   XtButton,
   XtInput,
   XtFlexBox,
@@ -203,16 +170,17 @@ export {
   XtGridBox,
   XtGridItem,
   XtProgress,
+  XtTabPane,
   XtTabs,
   XtBadge,
   XtDatePicker,
+  XtChart,
   XtIcon,
   XtTable,
   XtList,
   XtScroll,
   XtBar,
   XtLine,
-  XtChart,
   XtPie,
   XtMulti,
   XtPage,
@@ -223,5 +191,6 @@ export {
   XtFlow,
   XtMobileDatePicker,
   XtMobilePicker,
+  // 主题模块
   Theme
 }
