@@ -1,4 +1,3 @@
-import './style/index.scss'
 import XtMobileDatePicker from './index.vue'
 
 XtMobileDatePicker.install = function (Vue) {

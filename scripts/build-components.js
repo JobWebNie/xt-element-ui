@@ -34,7 +34,8 @@ const components = [
   'xt-form-schema',
   'xt-flow',
   'xt-mobile-date-picker',
-  'xt-mobile-picker'
+  'xt-mobile-picker',
+  'xt-mobile-sheet'
 ]
 
 const libDir = path.join(__dirname, '../lib')

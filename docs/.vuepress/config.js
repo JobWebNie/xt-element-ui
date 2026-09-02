@@ -118,6 +118,7 @@ module.exports = {
           ['/components/base/xt-scroll', 'XtScroll 滚动条'],
           ['/components/base/xt-form-schema', 'XtFormSchema 配置化表单'],
           ['/components/base/xt-flow', 'XtFlow 配置化流程'],
+          ['/components/base/xt-mobile-sheet', 'XtMobileSheet 移动端弹出面板'],
           ['/components/base/xt-mobile-date-picker', 'XtMobileDatePicker 移动端日期选择器'],
           ['/components/base/xt-mobile-picker', 'XtMobilePicker 移动端选项选择器']
         ]

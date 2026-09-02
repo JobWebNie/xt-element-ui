@@ -1,6 +1,8 @@
 # XtMobilePicker 移动端选项选择器
 
-底部弹出的移动端选项选择器，支持单选滚轮（替代 select / radio-group）和多选列表（替代 checkbox-group）。
+移动端选项选择面板，支持单选滚轮（替代 select / radio-group）和多选列表（替代 checkbox-group）。
+
+组件本身为纯面板，不包含弹层遮罩。需配合 `XtMobileSheet` 使用底部弹出效果。
 
 ## 单选模式 - 替代 select / radio-group
 
@@ -13,13 +15,15 @@
     </el-input>
     <p style="margin-top: 12px; color: #999; font-size: 13px;">当前值：{{ value }}</p>
 
-    <xt-mobile-picker
-      :visible.sync="show"
-      v-model="value"
-      title="请选择城市"
-      :options="options"
-      @confirm="onConfirm"
-    />
+    <xt-mobile-sheet :visible.sync="show">
+      <xt-mobile-picker
+        v-model="value"
+        title="请选择城市"
+        :options="options"
+        @confirm="show = false"
+        @cancel="show = false"
+      />
+    </xt-mobile-sheet>
   </div>
 </template>
 
@@ -45,11 +49,6 @@ export default {
       const item = this.options.find(o => o.value === this.value)
       return item ? item.label : ''
     }
-  },
-  methods: {
-    onConfirm(val) {
-      this.$message.success('已选择：' + val)
-    }
   }
 }
 </script>
@@ -65,14 +64,16 @@ export default {
     <el-button type="primary" @click="show = true">选择标签</el-button>
     <p style="margin-top: 12px; color: #999; font-size: 13px;">已选：{{ value.length }} 项 - {{ value.join(', ') }}</p>
 
-    <xt-mobile-picker
-      :visible.sync="show"
-      v-model="value"
-      title="请选择标签（多选）"
-      mode="multiple"
-      :options="options"
-      @confirm="onConfirm"
-    />
+    <xt-mobile-sheet :visible.sync="show">
+      <xt-mobile-picker
+        v-model="value"
+        title="请选择标签（多选）"
+        mode="multiple"
+        :options="options"
+        @confirm="show = false"
+        @cancel="show = false"
+      />
+    </xt-mobile-sheet>
   </div>
 </template>
 
@@ -93,11 +94,6 @@ export default {
         { label: 'Node.js', value: 'node' }
       ]
     }
-  },
-  methods: {
-    onConfirm(val) {
-      this.$message.success('已选择：' + val.join(', '))
-    }
   }
 }
 </script>
@@ -113,12 +109,15 @@ export default {
     <el-button @click="show = true">选择渠道</el-button>
     <p style="margin-top: 12px; color: #999; font-size: 13px;">当前值：{{ value }}</p>
 
-    <xt-mobile-picker
-      :visible.sync="show"
-      v-model="value"
-      title="请选择渠道"
-      :options="options"
-    />
+    <xt-mobile-sheet :visible.sync="show">
+      <xt-mobile-picker
+        v-model="value"
+        title="请选择渠道"
+        :options="options"
+        @confirm="show = false"
+        @cancel="show = false"
+      />
+    </xt-mobile-sheet>
   </div>
 </template>
 
@@ -150,13 +149,16 @@ export default {
     <el-button @click="show = true">选择部门</el-button>
     <p style="margin-top: 12px; color: #999; font-size: 13px;">当前值：{{ value }}</p>
 
-    <xt-mobile-picker
-      :visible.sync="show"
-      v-model="value"
-      title="请选择部门"
-      :options="options"
-      :field-keys="fieldKeys"
-    />
+    <xt-mobile-sheet :visible.sync="show">
+      <xt-mobile-picker
+        v-model="value"
+        title="请选择部门"
+        :options="options"
+        :field-keys="fieldKeys"
+        @confirm="show = false"
+        @cancel="show = false"
+      />
+    </xt-mobile-sheet>
   </div>
 </template>
 
@@ -184,7 +186,6 @@ export default {
 
 | 参数 | 说明 | 类型 | 可选值 | 默认值 |
 |------|------|------|--------|--------|
-| visible | 是否显示选择器，配合 `.sync` 使用 | Boolean | — | false |
 | v-model | 选中值，单选为基本类型，多选为数组 | String / Number / Array | — | — |
 | mode | 选择模式 | String | `single` / `multiple` | single |
 | options | 选项数组 | Array | — | [] |
@@ -197,11 +198,10 @@ export default {
 
 | 事件名 | 说明 | 回调参数 |
 |--------|------|----------|
-| update:visible | 弹窗显隐变化，配合 `.sync` | Boolean |
 | input | 值变化，配合 `v-model` | 单选为 String/Number，多选为 Array |
 | change | 值变化 | 同 input |
 | confirm | 点击确定按钮 | 同 input |
-| cancel | 点击取消按钮或遮罩层 | — |
+| cancel | 点击取消按钮 | — |
 
 ## 选项数据结构
 
@@ -216,6 +216,7 @@ export default {
 
 ## 特性
 
+- **纯面板组件**：不含弹层遮罩，配合 `XtMobileSheet` 实现底部弹出
 - **单选滚轮**：触摸滑动 + 惯性滚动 + 吸附对齐，体验与原生 Picker 一致
 - **多选列表**：带勾选标记的列表，支持多选切换
 - **禁用选项**：支持单选和多选模式下禁用特定选项

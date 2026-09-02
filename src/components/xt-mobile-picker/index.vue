@@ -1,55 +1,49 @@
 <template>
-  <div class="xt-mobile-select__wrapper">
-    <transition name="xt-msk-fade">
-      <div v-if="visible" class="xt-mobile-select__mask" @click="onCancel" />
-    </transition>
-    <transition name="xt-msk-slide">
-      <div v-if="visible" class="xt-mobile-select" @touchmove.prevent>
-        <!-- 顶部工具栏 -->
-        <div class="xt-mobile-select__toolbar">
-          <button class="xt-mobile-select__btn xt-mobile-select__btn--cancel" @click="onCancel">{{ cancelText }}</button>
-          <span class="xt-mobile-select__title">{{ title }}</span>
-          <button class="xt-mobile-select__btn xt-mobile-select__btn--confirm" @click="onConfirm">{{ confirmText }}</button>
-        </div>
+  <div class="xt-mobile-picker">
+    <!-- 顶部工具栏 -->
+    <div class="xt-mobile-picker__toolbar">
+      <button class="xt-mobile-picker__btn xt-mobile-picker__btn--cancel" @click="onCancel">{{ cancelText }}</button>
+      <span class="xt-mobile-picker__title">{{ title }}</span>
+      <button class="xt-mobile-picker__btn xt-mobile-picker__btn--confirm" @click="onConfirm">{{ confirmText }}</button>
+    </div>
 
-        <!-- 单选滚轮模式 -->
-        <div v-if="mode === 'single'" class="xt-mobile-select__body">
-          <div class="xt-mobile-select__highlight" />
-          <div class="xt-mobile-select__scroll" :style="scrollStyle" @touchstart="onTouchStart" @touchmove="onTouchMove" @touchend="onTouchEnd">
-            <div
-              v-for="(item, idx) in options"
-              :key="idx"
-              class="xt-mobile-select__item"
-              :class="{ 'is-selected': idx === selectedIndex, 'is-disabled': getDisabled(item) }"
-            >{{ getLabel(item) }}</div>
-          </div>
-        </div>
-
-        <!-- 多选列表模式 -->
-        <div v-else class="xt-mobile-select__list">
+    <!-- 单选滚轮模式 -->
+    <div v-if="mode === 'single'" class="xt-mobile-picker__body" @touchmove.prevent>
+      <div class="xt-mobile-picker__highlight" />
+      <div class="xt-mobile-date-picker__columns" :style="scrollStyle" @touchstart="onTouchStart" @touchmove="onTouchMove" @touchend="onTouchEnd" @mousedown="onMouseDown">
+        <div class="xt-mobile-date-picker__column">
           <div
             v-for="(item, idx) in options"
             :key="idx"
-            class="xt-mobile-select__list-item"
-            :class="{ 'is-checked': isChecked(item), 'is-disabled': getDisabled(item) }"
-            @click="toggleItem(item)"
-          >
-            <span class="xt-mobile-select__list-label">{{ getLabel(item) }}</span>
-            <span class="xt-mobile-select__checkmark">
-              <svg v-if="isChecked(item)" viewBox="0 0 24 24" width="18" height="18">
-                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="currentColor"/>
-              </svg>
-            </span>
-          </div>
+            class="xt-mobile-picker__item"
+            :class="{ 'is-selected': idx === selectedIndex, 'is-disabled': getDisabled(item) }"
+          >{{ getLabel(item) }}</div>
         </div>
       </div>
-    </transition>
+    </div>
+
+    <!-- 多选列表模式 -->
+    <div v-else class="xt-mobile-picker__list">
+      <div
+        v-for="(item, idx) in options"
+        :key="idx"
+        class="xt-mobile-picker__list-item"
+        :class="{ 'is-checked': isChecked(item), 'is-disabled': getDisabled(item) }"
+        @click="toggleItem(item)"
+      >
+        <span class="xt-mobile-picker__list-label">{{ getLabel(item) }}</span>
+        <span class="xt-mobile-picker__checkmark">
+          <svg v-if="isChecked(item)" viewBox="0 0 24 24" width="18" height="18">
+            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="currentColor"/>
+          </svg>
+        </span>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 var ITEM_HEIGHT = 44
-var VISIBLE_COUNT = 5
 var OFFSET_ROWS = 2
 
 export default {
@@ -59,10 +53,6 @@ export default {
     value: {
       type: [String, Number, Array],
       default: ''
-    },
-    visible: {
-      type: Boolean,
-      default: false
     },
     options: {
       type: Array,
@@ -97,20 +87,23 @@ export default {
       checkedValues: [],
       scrollStyle: { transform: '', transition: 'none' },
       currentTranslate: 0,
-      touch: { startY: 0, startTranslate: 0, lastY: 0, lastTime: 0, speed: 0 }
+      touch: { startY: 0, startTranslate: 0, lastY: 0, lastTime: 0, speed: 0 },
+      lastTouchEndTime: 0,
+      isMouseDragging: false
     }
   },
 
-  watch: {
-    visible: function (val) {
-      if (val) {
-        this.initFromValue()
-        var self = this
-        if (this.mode === 'single') {
-          this.$nextTick(function () { self.resetScroll() })
-        }
-      }
+  mounted: function () {
+    this.initFromValue()
+    if (this.mode === 'single') {
+      var self = this
+      this.$nextTick(function () { self.resetScroll() })
     }
+  },
+
+  beforeDestroy: function () {
+    document.removeEventListener('mousemove', this.onMouseMove)
+    document.removeEventListener('mouseup', this.onMouseUp)
   },
 
   methods: {
@@ -149,6 +142,12 @@ export default {
     getMaxTranslate: function () {
       return (this.options.length - 1) * ITEM_HEIGHT
     },
+    getMinTranslate: function () {
+      return -this.getMaxTranslate() + OFFSET_ROWS * ITEM_HEIGHT
+    },
+    getMaxTranslatePx: function () {
+      return OFFSET_ROWS * ITEM_HEIGHT
+    },
     resetScroll: function () {
       this.currentTranslate = this.getTargetTranslate()
       this.scrollStyle = {
@@ -165,8 +164,8 @@ export default {
       var t = e.touches[0]
       var dy = t.clientY - this.touch.startY
       var translate = this.touch.startTranslate + dy
-      var maxT = 0
-      var minT = -this.getMaxTranslate()
+      var maxT = this.getMaxTranslatePx()
+      var minT = this.getMinTranslate()
       var stiff = 0.3
       if (translate > maxT) translate = maxT + (translate - maxT) * stiff
       else if (translate < minT) translate = minT + (translate - minT) * stiff
@@ -181,10 +180,15 @@ export default {
       }
     },
     onTouchEnd: function () {
+      this.lastTouchEndTime = Date.now()
+      this.finishDrag()
+    },
+
+    finishDrag: function () {
       var inertia = this.touch.speed * 120
       var target = this.currentTranslate + inertia
-      var maxT = 0
-      var minT = -this.getMaxTranslate()
+      var maxT = this.getMaxTranslatePx()
+      var minT = this.getMinTranslate()
       target = Math.max(minT, Math.min(maxT, target))
       var adjusted = target - OFFSET_ROWS * ITEM_HEIGHT
       var index = Math.round(-adjusted / ITEM_HEIGHT)
@@ -193,6 +197,44 @@ export default {
       this.currentTranslate = target
       this.scrollStyle = { transform: 'translateY(' + target + 'px)', transition: 'transform 0.3s cubic-bezier(0.23, 1, 0.32, 1)' }
       this.selectedIndex = clamped
+    },
+
+    /* ===== 鼠标拖拽（PC 端） ===== */
+    onMouseDown: function (e) {
+      // 屏蔽触摸结束后浏览器派发的合成 mousedown（500ms 内）
+      if (Date.now() - this.lastTouchEndTime < 500) return
+      e.preventDefault()
+      this.isMouseDragging = true
+      this.touch = { startY: e.clientY, startTranslate: this.currentTranslate, lastY: e.clientY, lastTime: Date.now(), speed: 0 }
+      this.scrollStyle = { transform: 'translateY(' + this.currentTranslate + 'px)', transition: 'none' }
+      document.addEventListener('mousemove', this.onMouseMove)
+      document.addEventListener('mouseup', this.onMouseUp)
+    },
+    onMouseMove: function (e) {
+      if (!this.isMouseDragging) return
+      var dy = e.clientY - this.touch.startY
+      var translate = this.touch.startTranslate + dy
+      var maxT = this.getMaxTranslatePx()
+      var minT = this.getMinTranslate()
+      var stiff = 0.3
+      if (translate > maxT) translate = maxT + (translate - maxT) * stiff
+      else if (translate < minT) translate = minT + (translate - minT) * stiff
+      this.currentTranslate = translate
+      this.scrollStyle = { transform: 'translateY(' + translate + 'px)', transition: 'none' }
+      var now = Date.now()
+      var dt = now - this.touch.lastTime
+      if (dt > 0) {
+        this.touch.speed = (e.clientY - this.touch.lastY) / dt
+        this.touch.lastY = e.clientY
+        this.touch.lastTime = now
+      }
+    },
+    onMouseUp: function () {
+      if (!this.isMouseDragging) return
+      this.isMouseDragging = false
+      document.removeEventListener('mousemove', this.onMouseMove)
+      document.removeEventListener('mouseup', this.onMouseUp)
+      this.finishDrag()
     },
 
     /* ===== 多选列表 ===== */
@@ -215,20 +257,15 @@ export default {
       var val
       if (this.mode === 'single') {
         val = this.options.length ? this.getValue(this.options[this.selectedIndex]) : ''
-        this.$emit('input', val)
-        this.$emit('change', val)
-        this.$emit('confirm', val)
       } else {
         val = this.checkedValues.slice()
-        this.$emit('input', val)
-        this.$emit('change', val)
-        this.$emit('confirm', val)
       }
-      this.$emit('update:visible', false)
+      this.$emit('input', val)
+      this.$emit('change', val)
+      this.$emit('confirm', val)
     },
     onCancel: function () {
       this.$emit('cancel')
-      this.$emit('update:visible', false)
     }
   }
 }
@@ -239,31 +276,17 @@ $item-height: 44px;
 $visible-count: 5;
 $picker-height: $item-height * $visible-count;
 
-.xt-mobile-select__wrapper {}
-
-.xt-mobile-select__mask {
-  position: fixed;
-  inset: 0;
-  z-index: 2000;
-  background: rgba(0, 0, 0, 0.5);
-}
-
-.xt-mobile-select {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 2001;
+.xt-mobile-picker {
+  display: flex;
+  flex-direction: column;
   background: #fff;
   border-radius: 16px 16px 0 0;
   padding-bottom: env(safe-area-inset-bottom, 12px);
   user-select: none;
-  max-height: 70vh;
-  display: flex;
-  flex-direction: column;
+  -webkit-user-select: none;
 }
 
-.xt-mobile-select__toolbar {
+.xt-mobile-picker__toolbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -273,7 +296,7 @@ $picker-height: $item-height * $visible-count;
   flex-shrink: 0;
 }
 
-.xt-mobile-select__btn {
+.xt-mobile-picker__btn {
   border: none;
   background: none;
   font-size: 15px;
@@ -285,20 +308,20 @@ $picker-height: $item-height * $visible-count;
   &--confirm { color: var(--xt-color-primary, #409eff); font-weight: 600; }
 }
 
-.xt-mobile-select__title {
+.xt-mobile-picker__title {
   font-size: 15px;
   font-weight: 600;
   color: #333;
 }
 
 /* ===== 滚轮模式 ===== */
-.xt-mobile-select__body {
+.xt-mobile-picker__body {
   position: relative;
   height: $picker-height;
   overflow: hidden;
 }
 
-.xt-mobile-select__highlight {
+.xt-mobile-picker__highlight {
   position: absolute;
   top: $item-height * 2;
   left: 0;
@@ -311,8 +334,8 @@ $picker-height: $item-height * $visible-count;
   z-index: 1;
 }
 
-.xt-mobile-select__body::before,
-.xt-mobile-select__body::after {
+.xt-mobile-picker__body::before,
+.xt-mobile-picker__body::after {
   content: '';
   position: absolute;
   left: 0;
@@ -322,22 +345,28 @@ $picker-height: $item-height * $visible-count;
   z-index: 2;
 }
 
-.xt-mobile-select__body::before {
+.xt-mobile-picker__body::before {
   top: 0;
   background: linear-gradient(to bottom, #fff 0%, rgba(255, 255, 255, 0) 100%);
 }
 
-.xt-mobile-select__body::after {
+.xt-mobile-picker__body::after {
   bottom: 0;
   background: linear-gradient(to top, #fff 0%, rgba(255, 255, 255, 0) 100%);
 }
 
-.xt-mobile-select__scroll {
+.xt-mobile-date-picker__columns {
   display: flex;
   flex-direction: column;
+  cursor: grab;
+}
+.xt-mobile-date-picker__column {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
 }
 
-.xt-mobile-select__item {
+.xt-mobile-picker__item {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -360,14 +389,14 @@ $picker-height: $item-height * $visible-count;
 }
 
 /* ===== 列表模式 ===== */
-.xt-mobile-select__list {
+.xt-mobile-picker__list {
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   max-height: 50vh;
   padding: 4px 0;
 }
 
-.xt-mobile-select__list-item {
+.xt-mobile-picker__list-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -387,33 +416,14 @@ $picker-height: $item-height * $visible-count;
   }
 }
 
-.xt-mobile-select__list-label {
+.xt-mobile-picker__list-label {
   font-size: 16px;
   color: #333;
 }
 
-.xt-mobile-select__checkmark {
+.xt-mobile-picker__checkmark {
   display: flex;
   align-items: center;
   color: var(--xt-color-primary, #409eff);
-}
-
-/* ===== 动画 ===== */
-.xt-msk-fade-enter-active,
-.xt-msk-fade-leave-active {
-  transition: opacity 0.3s;
-}
-.xt-msk-fade-enter,
-.xt-msk-fade-leave-to {
-  opacity: 0;
-}
-
-.xt-msk-slide-enter-active,
-.xt-msk-slide-leave-active {
-  transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
-}
-.xt-msk-slide-enter,
-.xt-msk-slide-leave-to {
-  transform: translateY(100%);
 }
 </style>
